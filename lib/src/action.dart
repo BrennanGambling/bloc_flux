@@ -50,9 +50,3 @@ abstract class ErrorAction<T, E> extends Action<T> {
 
   ErrorAction({T data, this.error}): super(data: data);
 }
-
-//TODO: maybe remove this due to plans to initialize state in BaseBloc constructor.
-@immutable
-class InitialAction<T> extends Action<T> with ParentAction {
-
-}
