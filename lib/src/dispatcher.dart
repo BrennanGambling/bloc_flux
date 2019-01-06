@@ -22,8 +22,7 @@ abstract class BaseDispatcher {
   Stream<Action> removeInputStream(String key);
 }
 
-//TODO: add support for Middleware like action stream transformers and MAYBE
-//expose the actionStream so all of the actions can be logged. Maybe a new stream
+//TODO: add support for Middleware like action stream transformers. Maybe a new stream
 //should be created that is not modified by any of the Middleware transformers.
 ///A basic Singleton implementation of BaseDispatcher.
 class Dispatcher extends BaseDispatcher {
