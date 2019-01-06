@@ -8,9 +8,12 @@ import 'bloc.dart';
 ///Extend to create custom Dispatchers.
 abstract class BaseDispatcher {
   ///The Stream that ALL blocs receive Actions from.
-  final Observable<Action> actionObservable;
+  Observable<Action> _actionObservable;
 
-  BaseDispatcher(this.actionObservable);
+  ///Getter for public access to actionObservable.
+  Observable<Action> get actionObservable => _actionObservable;
+
+  BaseDispatcher(this._actionObservable);
 
   ///Call to dispatch an Action to the blocs.
   void dispatch(Action action);
@@ -95,7 +98,7 @@ class Dispatcher extends BaseDispatcher {
   ///Register the provided BaseBloc to receive dispatched Actions.
   void addBloc(BaseBloc bloc) {
     _blocMap[bloc.key] = bloc;
-    bloc.setActionObservable(actionObservable);
+    bloc.setActionObservable(_actionObservable);
   }
 
   ///Registers all of the provided BaseBlocs to receive dispatched Action.
