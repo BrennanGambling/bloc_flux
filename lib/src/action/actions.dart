@@ -2,9 +2,15 @@ import 'package:meta/meta.dart';
 
 //TODO: write proper documentation.
 
-//base action
+///Indicates that something that could potentially affect the application state.
+///
+///All [Action]s must either extend or implement this class.
+///
+///Contains an optional payload, [data] with any important information relating
+///to the [Action]. If the [Action] does not require a payload data will be null.
 @immutable
 abstract class Action<T> {
+  ///The payload. May be null.
   final T data;
 
   Action({this.data});
@@ -20,10 +26,10 @@ abstract class ErrorAction<T, E> implements Action<T> {
 
   //override the data field as this Action's data field will be null.
   //(it was not set with the super constructor.)
+  ErrorAction(this.action, this.error);
+
   @override
   T get data => action.data;
-
-  ErrorAction(this.action, this.error);
 }
 
 //marker interface for actions dispatched from other blocs
