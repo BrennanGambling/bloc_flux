@@ -7,10 +7,6 @@ part 'serializers.g.dart';
 
 //TODO: add proper documentation.
 
-@SerializersFor(const [
-  FieldState
-])
-
 bool isSerializable(Type type, {bool shouldThrow: true}) {
   final bool serializable = serializers.serializerForType(type) != null;
   if (!serializable && shouldThrow) {
@@ -21,4 +17,7 @@ bool isSerializable(Type type, {bool shouldThrow: true}) {
   return serializable;
 }
 
+@SerializersFor(const [
+  FieldState
+])
 final Serializers serializers = _$serializers;
