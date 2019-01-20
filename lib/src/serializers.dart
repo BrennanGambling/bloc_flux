@@ -26,4 +26,4 @@ bool isSerializable(Type type, {bool shouldThrow: true}) {
   FieldState
 ])
 final Serializers serializers = _$serializers;
-final Serializers standardSerializers = (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+final Serializers standardJSONSerializers = (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
