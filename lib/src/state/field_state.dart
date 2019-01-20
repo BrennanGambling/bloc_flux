@@ -7,6 +7,7 @@ import '../serializers.dart';
 
 part 'field_state.g.dart';
 
+///Contains the state of a [StateField].
 abstract class FieldState<T>
     implements Built<FieldState<T>, FieldStateBuilder<T>> {
   String get key;
