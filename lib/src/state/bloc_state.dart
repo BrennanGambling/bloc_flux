@@ -50,7 +50,7 @@ part 'bloc_state.g.dart';
 /////Create a BlocState using a BlocStateBuilder.
 ///BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
 ///  ..key = blocKey
-///  ..stateMap = builtMap.toBuilder());
+///  ..stateMap = builtMap);
 ///
 /////Create a BlocState from a Map.
 ///BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
@@ -81,6 +81,7 @@ part 'bloc_state.g.dart';
 /////newBlocKey and the stateMap is unchanges and they therefore are equal.
 ///assert(blocStateBuild == blocStateRebuild);
 ///```
+@BuiltValue(nestedBuilders: false)
 abstract class BlocState implements Built<BlocState, BlocStateBuilder> {
   ///The key of the [StateBloc] that this [BlocState] represents.
   String get key;
@@ -96,15 +97,12 @@ abstract class BlocState implements Built<BlocState, BlocStateBuilder> {
   factory BlocState(String key, BuiltMap<String, FieldState> stateMap) =>
       BlocState.fromBuilder((b) => b
         ..key = key
-        //built_collections declared in Built classes are represented as
-        //collection builders in Built class Builders.
-        ..stateMap = stateMap.toBuilder());
+        ..stateMap = stateMap);
 
   factory BlocState.fromMap(String key, Map<String, FieldState> stateMap) =>
       BlocState.fromBuilder((b) => b
         ..key = key
-        //Create a MapBuilder from the stateMap parameter.
-        ..stateMap = MapBuilder(stateMap));
+        ..stateMap = BuiltMap(stateMap));
 
   factory BlocState.fromBuilder([updates(BlocStateBuilder b)]) = _$BlocState;
 

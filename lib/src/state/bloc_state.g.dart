@@ -45,11 +45,11 @@ class _$BlocStateSerializer implements StructuredSerializer<BlocState> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'stateMap':
-          result.stateMap.replace(serializers.deserialize(value,
+          result.stateMap = serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(FieldState)
-              ])) as BuiltMap);
+              ])) as BuiltMap;
           break;
       }
     }
@@ -110,10 +110,9 @@ class BlocStateBuilder implements Builder<BlocState, BlocStateBuilder> {
   String get key => _$this._key;
   set key(String key) => _$this._key = key;
 
-  MapBuilder<String, FieldState> _stateMap;
-  MapBuilder<String, FieldState> get stateMap =>
-      _$this._stateMap ??= new MapBuilder<String, FieldState>();
-  set stateMap(MapBuilder<String, FieldState> stateMap) =>
+  BuiltMap<String, FieldState> _stateMap;
+  BuiltMap<String, FieldState> get stateMap => _$this._stateMap;
+  set stateMap(BuiltMap<String, FieldState> stateMap) =>
       _$this._stateMap = stateMap;
 
   BlocStateBuilder();
@@ -121,7 +120,7 @@ class BlocStateBuilder implements Builder<BlocState, BlocStateBuilder> {
   BlocStateBuilder get _$this {
     if (_$v != null) {
       _key = _$v.key;
-      _stateMap = _$v.stateMap?.toBuilder();
+      _stateMap = _$v.stateMap;
       _$v = null;
     }
     return this;
@@ -142,20 +141,7 @@ class BlocStateBuilder implements Builder<BlocState, BlocStateBuilder> {
 
   @override
   _$BlocState build() {
-    _$BlocState _$result;
-    try {
-      _$result = _$v ?? new _$BlocState._(key: key, stateMap: stateMap.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'stateMap';
-        stateMap.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'BlocState', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ?? new _$BlocState._(key: key, stateMap: stateMap);
     replace(_$result);
     return _$result;
   }

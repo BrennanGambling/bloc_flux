@@ -31,7 +31,7 @@ void main() {
   //Create a BlocState using a BlocStateBuilder.
   BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
     ..key = blocKey
-    ..stateMap = builtMap.toBuilder());
+    ..stateMap = builtMap);
 
   //Create a BlocState from a Map.
   BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
