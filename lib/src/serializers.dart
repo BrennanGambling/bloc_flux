@@ -11,7 +11,6 @@ part 'serializers.g.dart';
 //TODO: add proper documentation.
 
 bool isSerializable(Type type, {bool shouldThrow: true}) {
-  print(type);
   final bool serializable = serializers.serializerForType(type) != null || type == Object;
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
