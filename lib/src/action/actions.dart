@@ -57,7 +57,11 @@ abstract class InternalAction<T> extends Action<T> {}
 //most basic bloc class is.
 
 ///An [Action] indicating a new value from a bloc.
+///
+///[data] must not be null.
 @immutable
 abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
-  ValueAction(T data) : super(data: data);
+  ValueAction(T data)
+      : assert(data != null, "data must NOT be null."),
+        super(data: data);
 }
