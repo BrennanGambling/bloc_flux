@@ -25,12 +25,12 @@ void main() {
   //BlocState deserialized from blocState.
   final BlocState blocStateFromJSON = BlocState.fromJSON(blocStateToJSON);
 
-  print('''blocState:\n
-  $blocState\n\n
-  BlocState.toJSON(blocState):\n
-  $blocStateToJSON\n\n
-  BlocState.fromJSON(blocState:\n
-  $blocStateFromJSON\n\n''');
+  print('''blocState:
+  $blocState\n
+  BlocState.toJSON(blocState):
+  $blocStateToJSON\n
+  BlocState.fromJSON(blocState:
+  $blocStateFromJSON\n''');
 
   //verify that the original and deserialized blocStates are equal.
   final bool fromJSONCheck = blocState == blocStateFromJSON;
