@@ -1,14 +1,6 @@
 import 'package:bloc_flux/bloc_flux.dart';
 import 'dart:convert';
 
-void recursion(int i) {
-  if (i > 0) {
-    recursion(i - 1);
-  } else {
-    throw Exception("Exception");
-  }
-}
-
 void main() {
   //keys for BlocState.
   const String blocKey = "blocKey";
