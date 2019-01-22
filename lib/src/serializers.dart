@@ -11,7 +11,8 @@ part 'serializers.g.dart';
 //TODO: add proper documentation.
 
 bool isSerializable(Type type, {bool shouldThrow: true}) {
-  final bool serializable = serializers.serializerForType(type) != null || type == Object;
+  final bool serializable =
+      serializers.serializerForType(type) != null || type == Object;
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
     //basically that only the primitives, Built and BuiltCollections are serializable.
@@ -20,9 +21,7 @@ bool isSerializable(Type type, {bool shouldThrow: true}) {
   return serializable;
 }
 
-@SerializersFor(const [
-  BlocState,
-  FieldState
-])
+@SerializersFor(const [BlocState, FieldState])
 final Serializers serializers = _$serializers;
-final Serializers standardJSONSerializers = (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+final Serializers standardJSONSerializers =
+    (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
