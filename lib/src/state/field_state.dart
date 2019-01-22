@@ -19,6 +19,17 @@ abstract class FieldState<T>
   FieldState._() {
     isSerializable(T);
   }
-  factory FieldState([updates(FieldStateBuilder<T> b)]) = _$FieldState<T>;
+
+  //TODO: add reference to the serializers class where the types that are
+  //serializable is listed.
+
+  ///Throws if [data] is not serializable.
+  factory FieldState(String key, T data) => FieldState.fromBuilder((b) => b
+    ..key = key
+    ..data = data);
+
+  ///Throws if [data] is not serializable.
+  factory FieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
+      _$FieldState<T>;
   static Serializer<FieldState> get serializer => _$fieldStateSerializer;
 }

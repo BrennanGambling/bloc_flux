@@ -8,12 +8,8 @@ void main() {
   const String fieldKey2 = "fieldKey2";
 
   //create 2 FieldStates
-  final FieldState<String> field1 = FieldState((b) => b
-    ..key = fieldKey1
-    ..data = "somedata");
-  final FieldState<int> field2 = FieldState((b) => b
-    ..key = fieldKey2
-    ..data = 4);
+  FieldState<String> field1 = FieldState(fieldKey1, "someData");
+  FieldState<int> field2 = FieldState(fieldKey2, 4);
 
   //Create a Map of keys to FieldStates.
   final Map<String, FieldState> map = Map();
