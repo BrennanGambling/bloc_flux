@@ -16,6 +16,7 @@ bool isSerializable(Type type, {bool shouldThrow: true}) {
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
     //basically that only the primitives, Built and BuiltCollections are serializable.
+    //TODO: use a custom error. Maybe also add analyzer warnings.
     throw StateError("Type: $type is not serializable");
   }
   return serializable;
