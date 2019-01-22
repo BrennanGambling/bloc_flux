@@ -22,7 +22,7 @@ void main() {
   //Serialized blocState String.
   final String blocStateToJSON = BlocState.toJSON(blocState);
 
-  //BlocState deserialized from blocState.
+  //BlocState deserialized from blocStateToJSON.
   final BlocState blocStateFromJSON = BlocState.fromJSON(blocStateToJSON);
 
   print('''blocState:
