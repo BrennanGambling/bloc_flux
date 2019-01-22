@@ -29,7 +29,7 @@ void main() {
   $blocState\n
   BlocState.toJSON(blocState):
   $blocStateToJSON\n
-  BlocState.fromJSON(blocState:
+  BlocState.fromJSON(blocStateToJSON):
   $blocStateFromJSON\n''');
 
   //verify that the original and deserialized blocStates are equal.
