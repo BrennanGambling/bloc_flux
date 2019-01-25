@@ -17,6 +17,7 @@ part 'bloc_state.g.dart';
 //TODO: add the serializer examples and the [] fuctionality examples.
 //TODO: add link to the example code file under each H1 header. Usage and Serializer.
 //TODO: for the equality checks should the print statements be added or is this pointless as the full code will be linked in.
+//TODO: use @template and @macro comment tags to insert the example for there specific constructor pages.
 
 ///Contains the state of all of the [StateField]s in the [StateBloc] with the
 ///key [key].
@@ -27,7 +28,7 @@ part 'bloc_state.g.dart';
 ///with the [FieldState.key] as the "index".
 ///
 ///# Usage
-///## Setup
+///### Setup
 ///```dart
 /////keys for BlocState.
 ///const String blocKey = "blocKey";
@@ -49,13 +50,13 @@ part 'bloc_state.g.dart';
 ///BuiltMap<String, FieldState> builtMap = BuiltMap.of(map);
 ///```
 ///
-///## Basic Constructor
+///### Basic Constructor
 ///```dart
 /////Create a BlocState using the basic constructor.
 ///BlocState blocState = BlocState(blocKey, builtMap);
 ///```
 ///
-///## BlocState from BlocStateBuilder
+///### [BlocState] from [BlocStateBuilder]
 ///```dart
 /////Create a BlocState using a BlocStateBuilder.
 ///BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
@@ -63,20 +64,20 @@ part 'bloc_state.g.dart';
 ///  ..stateMap = builtMap);
 /// ```
 ///
-///## BlocState from String (key) and BuiltMap<String, FieldState> (stateMap)
+///### [BlocState] from [String] ([key]) and [BuiltMap<String, FieldState>] ([stateMap])
 ///```dart
 /////Create a BlocState from a Map.
 ///BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
 ///```
 ///
-///## BlocState from an existing BlocState using BlocStateBuilder
+///### [BlocState] from an existing [BlocState] using [BlocStateBuilder]
 ///```dart
 /////Rebuild a NEW BlocState from an existing BlocState.
 /////The original will be unchanged as BlocState is immutable.
 ///BlocState blocStateRebuild = blocState.rebuild((b) => b..key = newBlocKey);
 ///```
 ///
-///## Creating and using a BlocStateBuilder
+///### Creating and using a [BlocStateBuilder]
 ///```dart
 /////Create a BlocStateBuilder from a BlocState.
 /////Any changes made to this Builder will not result in changes in the original
@@ -92,7 +93,7 @@ part 'bloc_state.g.dart';
 ///BlocState blocStateBuild = blocStateBuilder.build();
 ///```
 ///
-///## BlocState equality
+///### [BlocState] equality
 ///```dart
 /////blocState, blocStateFromMap and blocStateFromBuilder all have fields with
 /////the same values and are therefore equal.
