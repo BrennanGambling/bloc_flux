@@ -15,7 +15,8 @@ import 'field_state.dart';
 part 'bloc_state.g.dart';
 
 //TODO: add the serializer examples and the [] fuctionality examples.
-//also added headers for the code block examples. maybe split the code blocks up.
+//TODO: add link to the example code file under each H1 header. Usage and Serializer.
+//TODO: for the equality checks should the print statements be added or is this pointless as the full code will be linked in.
 
 ///Contains the state of all of the [StateField]s in the [StateBloc] with the
 ///key [key].
@@ -25,8 +26,10 @@ part 'bloc_state.g.dart';
 ///To get a specific [FieldState] use the list access operator (square brackets)
 ///with the [FieldState.key] as the "index".
 ///
+///# Usage
+///## Setup
 ///```dart
-//////keys for BlocState.
+/////keys for BlocState.
 ///const String blocKey = "blocKey";
 ///const String newBlocKey = "newBlocKey";
 /////keys for FieldState.
@@ -44,22 +47,37 @@ part 'bloc_state.g.dart';
 ///
 /////Create BuiltMap from Map.
 ///BuiltMap<String, FieldState> builtMap = BuiltMap.of(map);
+///```
 ///
+///## Basic Constructor
+///```dart
 /////Create a BlocState using the basic constructor.
 ///BlocState blocState = BlocState(blocKey, builtMap);
+///```
 ///
+///## BlocState from BlocStateBuilder
+///```dart
 /////Create a BlocState using a BlocStateBuilder.
 ///BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
 ///  ..key = blocKey
 ///  ..stateMap = builtMap);
+/// ```
 ///
+///## BlocState from String (key) and BuiltMap<String, FieldState> (stateMap)
+///```dart
 /////Create a BlocState from a Map.
 ///BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
+///```
 ///
+///## BlocState from an existing BlocState using BlocStateBuilder
+///```dart
 /////Rebuild a NEW BlocState from an existing BlocState.
 /////The original will be unchanged as BlocState is immutable.
 ///BlocState blocStateRebuild = blocState.rebuild((b) => b..key = newBlocKey);
+///```
 ///
+///## Creating and using a BlocStateBuilder
+///```dart
 /////Create a BlocStateBuilder from a BlocState.
 /////Any changes made to this Builder will not result in changes in the original
 /////BlocState object.
@@ -72,7 +90,10 @@ part 'bloc_state.g.dart';
 ///
 /////build the BlocState.
 ///BlocState blocStateBuild = blocStateBuilder.build();
+///```
 ///
+///## BlocState equality
+///```dart
 /////blocState, blocStateFromMap and blocStateFromBuilder all have fields with
 /////the same values and are therefore equal.
 ///assert(blocState == blocStateFromBuilder);

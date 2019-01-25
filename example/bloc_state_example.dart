@@ -52,12 +52,16 @@ void main() {
   //blocState, blocStateFromMap and blocStateFromBuilder all have fields with
   //the same values and are therefore equal.
   final bool builderCheck = blocState == blocStateFromBuilder;
+  assert(builderCheck);
   print("blocState == blocStateFromBuilder:\n$builderCheck");
+
   final bool mapCheck = blocState == blocStateFromMap;
+  assert(mapCheck);
   print("blocState == blocStateFromMap:\n$mapCheck");
 
   //blocStateBuild and blocStateRebuild both had there key changed to the
   //newBlocKey and the stateMap is unchanges and they therefore are equal.
   final bool buildRebuildCheck = blocStateBuild == blocStateRebuild;
+  assert(buildRebuildCheck);
   print("blocStateBuild == blocStateRebuild:\n$buildRebuildCheck");
 }
