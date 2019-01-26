@@ -6,25 +6,19 @@ import 'package:built_value/serializer.dart';
 
 part 'field_query.g.dart';
 
+typedef UriTransformer = Uri Function(Uri uri);
+
 @BuiltValue(nestedBuilders: false)
 abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   static const String blocQueryScheme = "blocquery";
   static const String fieldQueryScheme = "fieldquery";
 
-  //map of field names to list of field parameters.
-  BuiltListMultimap<String, String> get fieldQuery;
-
-  //blocUri authority
-  String get blocKey;
-  Uri get blocUri;
-  //blocUri querys
-  //TODO: should this be removed
-  BuiltList<String> get fieldKeys;
   static const String fieldAttribute = "field";
-
-  //TODO: should this be removed.
-  BuiltList<Uri> get fieldUris;
   static const String dataAttribute = "data";
+
+  Uri get blocUri;
+
+  BuiltList<Uri> get fieldUris;
 
   FieldQuery._();
   factory FieldQuery(
@@ -58,10 +52,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
     BuiltList fieldUris = fieldUrisBuilder.build();
 
     return FieldQuery.fromBuilder((b) => b
-      ..fieldQuery = fieldQuery
-      ..blocKey = blocKey
       ..blocUri = blocUri
-      ..fieldKeys = fieldKeys
       ..fieldUris = fieldUris);
   }
 
