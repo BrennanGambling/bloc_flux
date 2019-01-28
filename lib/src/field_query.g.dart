@@ -75,6 +75,7 @@ class _$FieldQuery extends FieldQuery {
   @override
   final BuiltList<String> fieldKeys;
   bool __subscription;
+  BuiltList<FieldID> __fieldIDs;
 
   factory _$FieldQuery([void updates(FieldQueryBuilder b)]) =>
       (new FieldQueryBuilder()..update(updates)).build();
@@ -90,6 +91,9 @@ class _$FieldQuery extends FieldQuery {
 
   @override
   bool get subscription => __subscription ??= super.subscription;
+
+  @override
+  BuiltList<FieldID> get fieldIDs => __fieldIDs ??= super.fieldIDs;
 
   @override
   FieldQuery rebuild(void updates(FieldQueryBuilder b)) =>

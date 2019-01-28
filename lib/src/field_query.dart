@@ -1,5 +1,6 @@
 library field_query;
 
+import 'field_id.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -23,6 +24,13 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///Indicates this FieldQuery is a subscription.
   @memoized
   bool get subscription => !single;
+
+  @memoized
+  BuiltList<FieldID> get fieldIDs {
+    ListBuilder listBuilder = ListBuilder();
+    fieldKeys.forEach((key) => FieldID(blocKey, key));
+    return listBuilder.build();
+  }
 
   ///The key of the bloc containing the specified fields.
   String get blocKey;
