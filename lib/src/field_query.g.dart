@@ -18,13 +18,19 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
   Iterable serialize(Serializers serializers, FieldQuery object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'blocUri',
-      serializers.serialize(object.blocUri, specifiedType: const FullType(Uri)),
-      'fieldUris',
-      serializers.serialize(object.fieldUris,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Uri)])),
+      'single',
+      serializers.serialize(object.single, specifiedType: const FullType(bool)),
+      'blocKey',
+      serializers.serialize(object.blocKey,
+          specifiedType: const FullType(String)),
     ];
+    if (object.fieldKeys != null) {
+      result
+        ..add('fieldKeys')
+        ..add(serializers.serialize(object.fieldKeys,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
 
     return result;
   }
@@ -40,14 +46,18 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'blocUri':
-          result.blocUri = serializers.deserialize(value,
-              specifiedType: const FullType(Uri)) as Uri;
+        case 'single':
+          result.single = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
-        case 'fieldUris':
-          result.fieldUris = serializers.deserialize(value,
+        case 'blocKey':
+          result.blocKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'fieldKeys':
+          result.fieldKeys = serializers.deserialize(value,
                   specifiedType:
-                      const FullType(BuiltList, const [const FullType(Uri)]))
+                      const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList;
           break;
       }
@@ -59,21 +69,27 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
 
 class _$FieldQuery extends FieldQuery {
   @override
-  final Uri blocUri;
+  final bool single;
   @override
-  final BuiltList<Uri> fieldUris;
+  final String blocKey;
+  @override
+  final BuiltList<String> fieldKeys;
+  bool __subscription;
 
   factory _$FieldQuery([void updates(FieldQueryBuilder b)]) =>
       (new FieldQueryBuilder()..update(updates)).build();
 
-  _$FieldQuery._({this.blocUri, this.fieldUris}) : super._() {
-    if (blocUri == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'blocUri');
+  _$FieldQuery._({this.single, this.blocKey, this.fieldKeys}) : super._() {
+    if (single == null) {
+      throw new BuiltValueNullFieldError('FieldQuery', 'single');
     }
-    if (fieldUris == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'fieldUris');
+    if (blocKey == null) {
+      throw new BuiltValueNullFieldError('FieldQuery', 'blocKey');
     }
   }
+
+  @override
+  bool get subscription => __subscription ??= super.subscription;
 
   @override
   FieldQuery rebuild(void updates(FieldQueryBuilder b)) =>
@@ -86,20 +102,23 @@ class _$FieldQuery extends FieldQuery {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is FieldQuery &&
-        blocUri == other.blocUri &&
-        fieldUris == other.fieldUris;
+        single == other.single &&
+        blocKey == other.blocKey &&
+        fieldKeys == other.fieldKeys;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, blocUri.hashCode), fieldUris.hashCode));
+    return $jf($jc(
+        $jc($jc(0, single.hashCode), blocKey.hashCode), fieldKeys.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('FieldQuery')
-          ..add('blocUri', blocUri)
-          ..add('fieldUris', fieldUris))
+          ..add('single', single)
+          ..add('blocKey', blocKey)
+          ..add('fieldKeys', fieldKeys))
         .toString();
   }
 }
@@ -107,20 +126,25 @@ class _$FieldQuery extends FieldQuery {
 class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   _$FieldQuery _$v;
 
-  Uri _blocUri;
-  Uri get blocUri => _$this._blocUri;
-  set blocUri(Uri blocUri) => _$this._blocUri = blocUri;
+  bool _single;
+  bool get single => _$this._single;
+  set single(bool single) => _$this._single = single;
 
-  BuiltList<Uri> _fieldUris;
-  BuiltList<Uri> get fieldUris => _$this._fieldUris;
-  set fieldUris(BuiltList<Uri> fieldUris) => _$this._fieldUris = fieldUris;
+  String _blocKey;
+  String get blocKey => _$this._blocKey;
+  set blocKey(String blocKey) => _$this._blocKey = blocKey;
+
+  BuiltList<String> _fieldKeys;
+  BuiltList<String> get fieldKeys => _$this._fieldKeys;
+  set fieldKeys(BuiltList<String> fieldKeys) => _$this._fieldKeys = fieldKeys;
 
   FieldQueryBuilder();
 
   FieldQueryBuilder get _$this {
     if (_$v != null) {
-      _blocUri = _$v.blocUri;
-      _fieldUris = _$v.fieldUris;
+      _single = _$v.single;
+      _blocKey = _$v.blocKey;
+      _fieldKeys = _$v.fieldKeys;
       _$v = null;
     }
     return this;
@@ -141,8 +165,9 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
 
   @override
   _$FieldQuery build() {
-    final _$result =
-        _$v ?? new _$FieldQuery._(blocUri: blocUri, fieldUris: fieldUris);
+    final _$result = _$v ??
+        new _$FieldQuery._(
+            single: single, blocKey: blocKey, fieldKeys: fieldKeys);
     replace(_$result);
     return _$result;
   }
