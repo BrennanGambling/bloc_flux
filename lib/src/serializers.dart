@@ -11,6 +11,7 @@ part 'serializers.g.dart';
 //TODO: add proper documentation.
 
 bool isSerializable(Type type, {bool shouldThrow: true}) {
+  //TODO: make sure this works for Built class created outside of this package.
   final bool serializable =
       serializers.serializerForType(type) != null || type == Object;
   if (!serializable && shouldThrow) {
