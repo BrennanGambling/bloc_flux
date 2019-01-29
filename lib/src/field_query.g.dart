@@ -20,6 +20,8 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
     final result = <Object>[
       'single',
       serializers.serialize(object.single, specifiedType: const FullType(bool)),
+      'cancel',
+      serializers.serialize(object.cancel, specifiedType: const FullType(bool)),
       'blocKey',
       serializers.serialize(object.blocKey,
           specifiedType: const FullType(String)),
@@ -50,6 +52,10 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
           result.single = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'cancel':
+          result.cancel = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'blocKey':
           result.blocKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -71,23 +77,33 @@ class _$FieldQuery extends FieldQuery {
   @override
   final bool single;
   @override
+  final bool cancel;
+  @override
   final String blocKey;
   @override
   final BuiltList<String> fieldKeys;
+  bool __all;
   bool __subscription;
   BuiltList<FieldID> __fieldIDs;
 
   factory _$FieldQuery([void updates(FieldQueryBuilder b)]) =>
       (new FieldQueryBuilder()..update(updates)).build();
 
-  _$FieldQuery._({this.single, this.blocKey, this.fieldKeys}) : super._() {
+  _$FieldQuery._({this.single, this.cancel, this.blocKey, this.fieldKeys})
+      : super._() {
     if (single == null) {
       throw new BuiltValueNullFieldError('FieldQuery', 'single');
+    }
+    if (cancel == null) {
+      throw new BuiltValueNullFieldError('FieldQuery', 'cancel');
     }
     if (blocKey == null) {
       throw new BuiltValueNullFieldError('FieldQuery', 'blocKey');
     }
   }
+
+  @override
+  bool get all => __all ??= super.all;
 
   @override
   bool get subscription => __subscription ??= super.subscription;
@@ -121,6 +137,7 @@ class _$FieldQuery extends FieldQuery {
   String toString() {
     return (newBuiltValueToStringHelper('FieldQuery')
           ..add('single', single)
+          ..add('cancel', cancel)
           ..add('blocKey', blocKey)
           ..add('fieldKeys', fieldKeys))
         .toString();
@@ -133,6 +150,10 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   bool _single;
   bool get single => _$this._single;
   set single(bool single) => _$this._single = single;
+
+  bool _cancel;
+  bool get cancel => _$this._cancel;
+  set cancel(bool cancel) => _$this._cancel = cancel;
 
   String _blocKey;
   String get blocKey => _$this._blocKey;
@@ -147,6 +168,7 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   FieldQueryBuilder get _$this {
     if (_$v != null) {
       _single = _$v.single;
+      _cancel = _$v.cancel;
       _blocKey = _$v.blocKey;
       _fieldKeys = _$v.fieldKeys;
       _$v = null;
@@ -171,7 +193,10 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   _$FieldQuery build() {
     final _$result = _$v ??
         new _$FieldQuery._(
-            single: single, blocKey: blocKey, fieldKeys: fieldKeys);
+            single: single,
+            cancel: cancel,
+            blocKey: blocKey,
+            fieldKeys: fieldKeys);
     replace(_$result);
     return _$result;
   }
