@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -11,7 +12,6 @@ import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
-
   ///The subject that manages Action output to dispatcher.
   @protected
   final PublishSubject<Action> outputSubject;
@@ -44,49 +44,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
         super(key, actionObservable);
 
   @override
-  @mustCallSuper
-  void fieldQuery(FieldQuery fieldQuery) {
-    //make sure all fields in FieldQuery are in this bloc.
-    fieldQuery.fieldIDs.toList().forEach((id) => fieldMap.keys.contains(id));
-    if (fieldQuery.cancel) {
-      fieldQueries.remove(fieldQuery);
-    } else {
-      fieldQueries.add(fieldQuery);
-    }
-  }
-
-  @protected
-  @mustCallSuper
-  void fieldQueriesUpdated() {
-    final Set<FieldID> fieldIDSet = Set();
-    fieldQueries.forEach((fq) {
-      List<FieldID> fqFieldIds;
-      if (fq.fieldIDs == null) {
-        fqFieldIds = fieldMap.keys;
-      } else {
-        fqFieldIds = fq.fieldIDs.toList();
-      }
-      fieldIDSet.addAll(fqFieldIds);
-    });
-
-    final Set<FieldID> addSet = Set();
-    addSet.addAll(
-        fieldIDSet.where((fq) => !fieldSubscriptionMap.keys.contains(fq)));
-    addSet.forEach((id) {
-      final Field field = fieldMap[id];
-      final Observable<FieldValueAction> observable =
-          field.observable.map(field.getTypedValueAction);
-      fieldSubscriptionMap[id] = observable.listen(addAction);
-    });
-
-    final Set<FieldID> removeSet = Set();
-    removeSet.addAll(
-        fieldSubscriptionMap.keys.where((fq) => !fieldIDSet.contains(fq)));
-    removeSet.forEach((id) {
-      fieldSubscriptionMap[id].cancel();
-      fieldSubscriptionMap.remove(id);
-    });
-  }
+  Iterable<FieldID> get fieldIDs => fieldMap.keys;
 
   @protected
   @mustCallSuper
@@ -97,6 +55,76 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @protected
   @mustCallSuper
   void addField(Field field) => fieldMap[field.fieldID] = field;
+
+  ///This is called after [fieldQuery()] is called.
+  @protected
+  @mustCallSuper
+  void fieldQueriesUpdated() {
+    //Create a Set of all unique fieldIDs.
+    final Set<FieldID> fieldIDSet = Set();
+    fieldQueries.forEach((fq) {
+      List<FieldID> fqFieldIds;
+      if (fq.fieldIDs == null) {
+        fqFieldIds = fieldMap.keys.toList();
+      } else {
+        fqFieldIds = fq.fieldIDs.toList();
+      }
+      fieldIDSet.addAll(fqFieldIds);
+    });
+
+    //Create a Set of FieldIDs for Fields that need to be subscribed.
+    final Set<FieldID> addSet = Set();
+    addSet.addAll(
+        fieldIDSet.where((fq) => !fieldSubscriptionMap.keys.contains(fq)));
+    addSet.forEach((id) {
+      final Field field = fieldMap[id];
+      final Observable<FieldValueAction> observable =
+          field.observable.map(field.getTypedValueAction);
+      fieldSubscriptionMap[id] = observable.listen(addAction);
+    });
+
+    //Create a Set of FieldIDs for Fields that need their subscription cancelled.
+    final Set<FieldID> removeSet = Set();
+    removeSet.addAll(
+        fieldSubscriptionMap.keys.where((fq) => !fieldIDSet.contains(fq)));
+    removeSet.forEach((id) {
+      fieldSubscriptionMap[id].cancel();
+      fieldSubscriptionMap.remove(id);
+    });
+  }
+
+  ///This method is called to add a FieldQuery to this ValueBloc.
+  @override
+  @mustCallSuper
+  void fieldQuery(FieldQuery fieldQuery) {
+    //make sure all fields in FieldQuery are in this bloc.
+    assert(fieldQueryIsValid(fieldQuery));
+    if (fieldQuery.cancel) {
+      fieldQueries.remove(fieldQuery);
+    } else {
+      fieldQueries.add(fieldQuery);
+    }
+    fieldQueriesUpdated();
+  }
+
+  ///Check if all [Field]s specified are registered in this bloc.
+  @override
+  bool fieldQueryIsValid(FieldQuery fieldQuery) =>
+      fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
+
+  ///Returns a BuiltList of FieldIDs in [fieldQuery] not present in this [ValueBloc].
+  ///
+  ///An empty list will be returned if all [Field]s are valid.
+  @override
+  BuiltList<FieldID> invalidFields(FieldQuery fieldQuery) {
+    ListBuilder<FieldID> listBuilder = ListBuilder();
+    fieldQuery.fieldIDs.forEach((fq) {
+      if (!fieldMap.keys.contains(fq)) {
+        listBuilder.add(fq);
+      }
+    });
+    return listBuilder.build();
+  }
 
   @protected
   @mustCallSuper
