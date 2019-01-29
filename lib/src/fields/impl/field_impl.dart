@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../action/actions.dart';
+import '../../action/field_actions.dart';
 import '../../field_id.dart';
 import '../field.dart';
 

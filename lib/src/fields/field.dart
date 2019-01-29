@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../action/actions.dart';
+import '../action/field_actions.dart';
 import '../field_id.dart';
 import 'impl/field_impl.dart';
 

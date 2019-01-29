@@ -66,11 +66,3 @@ abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
       : assert(data != null, "data must NOT be null."),
         super(data: data);
 }
-
-///An [Action] indicating an update to a [Field] that a bloc is subscribed to.
-@immutable
-class FieldValueAction<T> extends ValueAction<T> {
-  final FieldID fieldID;
-
-  FieldValueAction(T data, this.fieldID) : super(data);
-}
