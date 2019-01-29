@@ -79,7 +79,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     final Set<FieldID> fieldIDSet = Set();
     fieldQueries.forEach((fq) {
       List<FieldID> fqFieldIds;
-      if (fq.fieldIDs == null) {
+      if (fq.all) {
         fqFieldIds = fieldMap.keys.toList();
       } else {
         fqFieldIds = fq.fieldIDs.toList();
@@ -114,7 +114,13 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   void fieldQuery(FieldQuery fieldQuery) {
     //make sure all fields in FieldQuery are in this bloc.
     assert(fieldQueryIsValid(fieldQuery));
-    if (fieldQuery.cancel) {
+    if (fieldQuery.single) {
+      //if this is a one time request dispatch the lastValues for the specified Fields.
+      fieldQuery.fieldIDs.forEach((id) {
+        final Field field = fieldMap[id];
+        addAction(field.getTypedValueAction(field.lastValue));
+      });
+    } else if (fieldQuery.cancel) {
       fieldQueries.remove(fieldQuery);
     } else {
       fieldQueries.add(fieldQuery);
