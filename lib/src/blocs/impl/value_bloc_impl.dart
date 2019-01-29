@@ -5,19 +5,30 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
 import '../../field_id.dart';
+import '../../field_query.dart';
 import '../../fields/field.dart';
 import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
+
+  ///The subject that manages Action output to dispatcher.
   @protected
   final PublishSubject<Action> outputSubject;
 
+  ///The observable for Action output to Dispatcher.
+  @override
   final Observable<Action> outputObservable;
 
+  ///A map of FieldIDs to StreamSubscriptions for currently subscribed fields.
   @protected
   final Map<FieldID, StreamSubscription<FieldValueAction>> fieldSubscriptionMap;
 
+  ///A list of all active field queries
+  @protected
+  final List<FieldQuery> fieldQueries;
+
+  ///a map of all FieldIDs to Fields.
   @protected
   final Map<FieldID, Field> fieldMap;
 
@@ -28,6 +39,66 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
       String key, Observable<Action> actionObservable, this.outputSubject)
       : outputObservable = outputSubject.stream,
         fieldSubscriptionMap = Map(),
+        fieldQueries = List(),
         fieldMap = Map(),
         super(key, actionObservable);
+
+  @override
+  @mustCallSuper
+  void fieldQuery(FieldQuery fieldQuery) {
+    //make sure all fields in FieldQuery are in this bloc.
+    fieldQuery.fieldIDs.toList().forEach((id) => fieldMap.keys.contains(id));
+    if (fieldQuery.cancel) {
+      fieldQueries.remove(fieldQuery);
+    } else {
+      fieldQueries.add(fieldQuery);
+    }
+  }
+
+  @protected
+  @mustCallSuper
+  void fieldQueriesUpdated() {
+    final Set<FieldID> fieldIDSet = Set();
+    fieldQueries.forEach((fq) {
+      List<FieldID> fqFieldIds;
+      if (fq.fieldIDs == null) {
+        fqFieldIds = fieldMap.keys;
+      } else {
+        fqFieldIds = fq.fieldIDs.toList();
+      }
+      fieldIDSet.addAll(fqFieldIds);
+    });
+
+    final Set<FieldID> addSet = Set();
+    addSet.addAll(
+        fieldIDSet.where((fq) => !fieldSubscriptionMap.keys.contains(fq)));
+    addSet.forEach((id) {
+      final Field field = fieldMap[id];
+      final Observable<FieldValueAction> observable =
+          field.observable.map(field.getTypedValueAction);
+      fieldSubscriptionMap[id] = observable.listen(addAction);
+    });
+
+    final Set<FieldID> removeSet = Set();
+    removeSet.addAll(
+        fieldSubscriptionMap.keys.where((fq) => !fieldIDSet.contains(fq)));
+    removeSet.forEach((id) {
+      fieldSubscriptionMap[id].cancel();
+      fieldSubscriptionMap.remove(id);
+    });
+  }
+
+  @protected
+  @mustCallSuper
+  void addAction(Action action) {
+    outputSubject.add(action);
+  }
+
+  @protected
+  @mustCallSuper
+  void addField(Field field) => fieldMap[field.fieldID] = field;
+
+  @protected
+  @mustCallSuper
+  void removeField(Field field) => fieldMap.remove(field.fieldID);
 }
