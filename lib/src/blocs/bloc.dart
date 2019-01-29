@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import '../action/actions.dart';
 
 //TODO: when source generation is added generate interfaces for blocs with just
-//the added fields and key visible.
+//the added fields and key visible. maybe for annotated members only
 
 ///Basic Bloc interface.
 ///
