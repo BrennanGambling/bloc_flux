@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../action/actions.dart';
 import '../../field_id.dart';
 import '../field.dart';
 
@@ -24,6 +25,10 @@ class FieldImpl<T> implements Field<T> {
 
   @protected
   final BehaviorSubject<T> subject;
+
+  @override
+  FieldValueAction<T> getTypedValueAction(T data) =>
+      FieldValueAction<T>(data, this.fieldID);
 
   //Stream subscription managing the inputObserbable
   //this needs to be canceled when the inputObservable is changed.

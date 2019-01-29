@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
+import '../action/actions.dart';
 import '../field_id.dart';
 import 'impl/field_impl.dart';
 
@@ -35,6 +36,8 @@ abstract class Field<T> {
   void dispose();
   //the observable that inputs to this field
   Observable<T> inputObservable;
+
+  FieldValueAction<T> getTypedValueAction(T data);
 
   factory Field(String key, String blocKey, Observable<T> inputObservable,
           {bool derived: false}) =>
