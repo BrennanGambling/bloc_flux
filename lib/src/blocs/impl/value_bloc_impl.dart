@@ -33,6 +33,9 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @protected
   final Map<FieldID, Field> fieldMap;
 
+  ///StreamSubscription for fieldQuery() onData listener.
+  StreamSubscription _fieldQueryActionSubscription;
+
   ValueBlocImpl(String key, Observable<Action> actionObservable)
       : this._(key, actionObservable, PublishSubject());
 
@@ -42,7 +45,12 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
         fieldSubscriptionMap = Map(),
         fieldQueries = List(),
         fieldMap = Map(),
-        super(key, actionObservable);
+        super(key, actionObservable) {
+    _fieldQueryActionSubscription = actionObservable
+        .where(((a) => a is FieldQueryAction))
+        .map<FieldQuery>((a) => (a as FieldQueryAction).fieldQuery)
+        .listen(fieldQuery);
+  }
 
   @override
   Iterable<FieldID> get fieldIDs => fieldMap.keys;
@@ -56,6 +64,12 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @protected
   @mustCallSuper
   void addField(Field field) => fieldMap[field.fieldID] = field;
+
+  @override
+  @mustCallSuper
+  void dispose() {
+    _fieldQueryActionSubscription?.cancel();
+  }
 
   ///This is called after [fieldQuery()] is called.
   @protected
@@ -94,8 +108,8 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     });
   }
 
-  ///This method is called to add a FieldQuery to this ValueBloc.
-  @override
+  ///This method is called to add a FieldQuery to this ValueBloc via a
+  ///[FieldQueryAction].
   @mustCallSuper
   void fieldQuery(FieldQuery fieldQuery) {
     //make sure all fields in FieldQuery are in this bloc.
