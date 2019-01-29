@@ -69,6 +69,7 @@ class FieldImpl<T> implements Field<T> {
 
   void add(T data) => subject.add(data);
 
+  @override
   @mustCallSuper
   void dispose() {
     inputSubscription?.cancel();
