@@ -66,10 +66,13 @@ abstract class QueryAction<T> implements InternalAction<T> {}
 
 ///An [Action] indicating a new value from a bloc.
 ///
-///[data] must not be null.
+///[data] must NOT be null.
 @immutable
 abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
-  ValueAction(T data)
-      : assert(data != null, "data must NOT be null."),
-        super(data: data);
+  ///[data] must NOT be null.
+  ValueAction(T data) : super(data: data) {
+    if (data == null) {
+      throw ArgumentError.notNull("data must not be null.");
+    }
+  }
 }
