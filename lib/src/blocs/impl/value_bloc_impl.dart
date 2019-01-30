@@ -137,7 +137,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   ///
   ///An empty list will be returned if all [Field]s are valid.
   @override
-  BuiltList<FieldID> invalidFields(FieldQuery fieldQuery) {
+  Iterable<FieldID> invalidFields(FieldQuery fieldQuery) {
     ListBuilder<FieldID> listBuilder = ListBuilder();
     fieldQuery.fieldIDs.forEach((fq) {
       if (!fieldMap.keys.contains(fq)) {

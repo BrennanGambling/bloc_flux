@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../action/actions.dart';
@@ -10,5 +9,5 @@ abstract class ValueBloc extends Bloc {
   Iterable<FieldID> get fieldIDs;
   Observable<Action> get outputObservable;
   bool fieldQueryIsValid(FieldQuery fieldQuery);
-  BuiltList<FieldID> invalidFields(FieldQuery fieldQuery);
+  Iterable<FieldID> invalidFields(FieldQuery fieldQuery);
 }
