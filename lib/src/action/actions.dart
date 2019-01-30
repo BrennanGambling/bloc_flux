@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import '../field_id.dart';
 
 ///Indicates that something that could potentially affect the application state.
 ///
@@ -46,13 +45,21 @@ abstract class ErrorAction<T, E> implements Action<T> {
 
 ///Marker interface indicating an [Action] was dispatched from another bloc.
 ///
-///DO NOT extend this class because the super classes data field will be left
+///DO NOT extend this class as the super classes data field will be left
 ///null as the super constructor is not called.
 ///
 ///In the future this will be used to distinguish user or externally
 ///dispatched [Action]s for logging and state serialization purposes.
 @immutable
-abstract class InternalAction<T> extends Action<T> {}
+abstract class InternalAction<T> implements Action<T> {}
+
+///Marker interface indicating an [Action] is related to the [StateQuery] or
+///[FieldQuery] functionality.
+///
+///DO NOT extend this class as the super classes data field will be left
+///null as the super constructor is not called.
+@immutable
+abstract class QueryAction<T> implements InternalAction<T> {}
 
 //TODO: add square brackets around bloc or whatever the final name for the
 //most basic bloc class is.
