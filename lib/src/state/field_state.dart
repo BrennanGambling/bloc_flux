@@ -1,48 +1,36 @@
 library field_state;
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
+
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:meta/meta.dart';
 
+import '../field_id.dart';
 import '../serializers.dart';
 
 part 'field_state.g.dart';
 
 ///Contains the last output of a [StateField] with the key [key] in field [data].
+@BuiltValue(nestedBuilders: false)
 abstract class FieldState<T>
     implements Built<FieldState<T>, FieldStateBuilder<T>> {
-  String get key;
+  static Serializer<FieldState> get serializer => _$fieldStateSerializer;
 
-  T get data;
+  ///Throws if [data] is not serializable.
+  factory FieldState(FieldID fieldID, T data) => FieldState.fromBuilder((b) => b
+    ..fieldID = fieldID
+    ..data = data);
 
   //TODO: make sure to document the fact that an error will be
   //thrown if the Type T is not serializable.
-  FieldState._() {
-    isSerializable(T);
-  }
-
-  //TODO: add reference to the serializers class where the types that are
-  //serializable is listed.
-
-  ///Throws if [data] is not serializable.
-  factory FieldState(String key, T data) => FieldState.fromBuilder((b) => b
-    ..key = key
-    ..data = data);
-
   ///Throws if [data] is not serializable.
   factory FieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
       _$FieldState<T>;
 
-  //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.
+  //TODO: add reference to the serializers class where the types that are
+  //serializable is listed.
 
-  static Serializer<FieldState> get serializer => _$fieldStateSerializer;
-
-  static String toJSON(FieldState fieldState) =>
-      json.encode(standardJSONSerializers.serialize(fieldState));
-
-  //this should fix the issue of serializers not being made for all possible
-  //generic parameter for a Built  class.
   factory FieldState.fromJSON(String jsonString) {
     //deserialize to FieldState with Object generic
     final FieldState<Object> fieldStateObject = standardJSONSerializers
@@ -51,7 +39,7 @@ abstract class FieldState<T>
       //try to cast the FieldState to a FieldState with tighter generic parameter
       //bounds
       final T data = fieldStateObject.data as T;
-      return FieldState(fieldStateObject.key, data);
+      return FieldState(fieldStateObject.fieldID, data);
     } catch (e) {
       print(e.runtimeType);
       if (e is CastError) {
@@ -63,6 +51,21 @@ abstract class FieldState<T>
       }
     }
   }
+
+  FieldState._() {
+    isSerializable(T);
+  }
+
+  //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.
+
+  T get data;
+
+  FieldID get fieldID;
+
+  //this should fix the issue of serializers not being made for all possible
+  //generic parameter for a Built  class.
+  static String toJSON(FieldState fieldState) =>
+      json.encode(standardJSONSerializers.serialize(fieldState));
 }
 
 //TODO: document this.-

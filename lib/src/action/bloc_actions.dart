@@ -22,7 +22,7 @@ class BlocStateAction extends Action<BlocState>
   }
 
   ///Helper method for getting the blocKey.
-  String get blocKey => data.key;
+  String get blocKey => data.blocKey;
 
   ///Helper method for getting the blocState.
   BlocState get blocState => data;
@@ -43,7 +43,7 @@ class BlocStateValueAction extends ValueAction<BlocState>
   BlocStateValueAction(BlocState blocState) : super(blocState);
 
   ///Helper method for getting the blocKey.
-  String get blocKey => data.key;
+  String get blocKey => data.blocKey;
 
   ///Helper method for getting the blocState.
   BlocState get blocState => data;

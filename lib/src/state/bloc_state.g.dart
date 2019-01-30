@@ -18,12 +18,13 @@ class _$BlocStateSerializer implements StructuredSerializer<BlocState> {
   Iterable serialize(Serializers serializers, BlocState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'key',
-      serializers.serialize(object.key, specifiedType: const FullType(String)),
+      'blocKey',
+      serializers.serialize(object.blocKey,
+          specifiedType: const FullType(String)),
       'stateMap',
       serializers.serialize(object.stateMap,
           specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(FieldState)])),
+              const [const FullType(FieldID), const FullType(FieldState)])),
     ];
 
     return result;
@@ -40,14 +41,14 @@ class _$BlocStateSerializer implements StructuredSerializer<BlocState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'key':
-          result.key = serializers.deserialize(value,
+        case 'blocKey':
+          result.blocKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'stateMap':
           result.stateMap = serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
+                const FullType(FieldID),
                 const FullType(FieldState)
               ])) as BuiltMap;
           break;
@@ -60,16 +61,16 @@ class _$BlocStateSerializer implements StructuredSerializer<BlocState> {
 
 class _$BlocState extends BlocState {
   @override
-  final String key;
+  final String blocKey;
   @override
-  final BuiltMap<String, FieldState> stateMap;
+  final BuiltMap<FieldID, FieldState> stateMap;
 
   factory _$BlocState([void updates(BlocStateBuilder b)]) =>
       (new BlocStateBuilder()..update(updates)).build();
 
-  _$BlocState._({this.key, this.stateMap}) : super._() {
-    if (key == null) {
-      throw new BuiltValueNullFieldError('BlocState', 'key');
+  _$BlocState._({this.blocKey, this.stateMap}) : super._() {
+    if (blocKey == null) {
+      throw new BuiltValueNullFieldError('BlocState', 'blocKey');
     }
     if (stateMap == null) {
       throw new BuiltValueNullFieldError('BlocState', 'stateMap');
@@ -86,18 +87,20 @@ class _$BlocState extends BlocState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is BlocState && key == other.key && stateMap == other.stateMap;
+    return other is BlocState &&
+        blocKey == other.blocKey &&
+        stateMap == other.stateMap;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, key.hashCode), stateMap.hashCode));
+    return $jf($jc($jc(0, blocKey.hashCode), stateMap.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('BlocState')
-          ..add('key', key)
+          ..add('blocKey', blocKey)
           ..add('stateMap', stateMap))
         .toString();
   }
@@ -106,20 +109,20 @@ class _$BlocState extends BlocState {
 class BlocStateBuilder implements Builder<BlocState, BlocStateBuilder> {
   _$BlocState _$v;
 
-  String _key;
-  String get key => _$this._key;
-  set key(String key) => _$this._key = key;
+  String _blocKey;
+  String get blocKey => _$this._blocKey;
+  set blocKey(String blocKey) => _$this._blocKey = blocKey;
 
-  BuiltMap<String, FieldState> _stateMap;
-  BuiltMap<String, FieldState> get stateMap => _$this._stateMap;
-  set stateMap(BuiltMap<String, FieldState> stateMap) =>
+  BuiltMap<FieldID, FieldState> _stateMap;
+  BuiltMap<FieldID, FieldState> get stateMap => _$this._stateMap;
+  set stateMap(BuiltMap<FieldID, FieldState> stateMap) =>
       _$this._stateMap = stateMap;
 
   BlocStateBuilder();
 
   BlocStateBuilder get _$this {
     if (_$v != null) {
-      _key = _$v.key;
+      _blocKey = _$v.blocKey;
       _stateMap = _$v.stateMap;
       _$v = null;
     }
@@ -141,7 +144,8 @@ class BlocStateBuilder implements Builder<BlocState, BlocStateBuilder> {
 
   @override
   _$BlocState build() {
-    final _$result = _$v ?? new _$BlocState._(key: key, stateMap: stateMap);
+    final _$result =
+        _$v ?? new _$BlocState._(blocKey: blocKey, stateMap: stateMap);
     replace(_$result);
     return _$result;
   }

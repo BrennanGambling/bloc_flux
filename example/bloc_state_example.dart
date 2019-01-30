@@ -7,26 +7,28 @@ void main() {
   const String newBlocKey = "newBlocKey";
   //keys for FieldState.
   const String fieldKey1 = "fieldKey1";
+  final FieldID fieldID1 = FieldID(blocKey, fieldKey1);
   const String fieldKey2 = "fieldKey2";
+  final FieldID fieldID2 = FieldID(blocKey, fieldKey2);
 
   //create 2 FieldStates
-  FieldState<String> field1 = FieldState(fieldKey1, "someData");
-  FieldState<int> field2 = FieldState(fieldKey2, 4);
+  FieldState<String> field1 = FieldState(fieldID1, "someData");
+  FieldState<int> field2 = FieldState(fieldID2, 4);
 
   //Create a Map of keys to FieldStates.
-  final Map<String, FieldState> map = Map();
-  map[field1.key] = field1;
-  map[field2.key] = field2;
+  final Map<FieldID, FieldState> map = Map();
+  map[field1.fieldID] = field1;
+  map[field2.fieldID] = field2;
 
   //Create BuiltMap from Map.
-  BuiltMap<String, FieldState> builtMap = BuiltMap.of(map);
+  BuiltMap<FieldID, FieldState> builtMap = BuiltMap.of(map);
 
   //Create a BlocState using the basic constructor.
   BlocState blocState = BlocState(blocKey, builtMap);
 
   //Create a BlocState using a BlocStateBuilder.
   BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
-    ..key = blocKey
+    ..blocKey = blocKey
     ..stateMap = builtMap);
 
   //Create a BlocState from a Map.
@@ -34,7 +36,8 @@ void main() {
 
   //Rebuild a NEW BlocState from an existing BlocState.
   //The original will be unchanged as BlocState is immutable.
-  BlocState blocStateRebuild = blocState.rebuild((b) => b..key = newBlocKey);
+  BlocState blocStateRebuild =
+      blocState.rebuild((b) => b..blocKey = newBlocKey);
 
   //Create a BlocStateBuilder from a BlocState.
   //Any changes made to this Builder will not result in changes in the original
@@ -42,9 +45,9 @@ void main() {
   BlocStateBuilder blocStateBuilder = blocState.toBuilder();
 
   //change the key a few times.
-  blocStateBuilder.key = fieldKey1;
+  blocStateBuilder.blocKey = fieldKey1;
   //Doing something else.
-  blocStateBuilder.key = newBlocKey;
+  blocStateBuilder.blocKey = newBlocKey;
 
   //build the BlocState.
   BlocState blocStateBuild = blocStateBuilder.build();

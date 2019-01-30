@@ -2,9 +2,10 @@ import 'package:bloc_flux/bloc_flux.dart';
 
 void main() {
   const String fieldStateKey = "fieldStateKey";
-  
+  final FieldID fieldID = FieldID("blocKey", fieldStateKey);
+
   //Create a FieldState using the basic constructor.
-  final FieldState<int> fieldState = FieldState(fieldStateKey, 6);
+  final FieldState<int> fieldState = FieldState(fieldID, 6);
 
   //Serialized FieldState String.
   final String fieldStateSerialized = FieldState.toJSON(fieldState);

@@ -24,10 +24,11 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
         isUnderspecified ? FullType.object : specifiedType.parameters[0];
 
     final result = <Object>[
-      'key',
-      serializers.serialize(object.key, specifiedType: const FullType(String)),
       'data',
       serializers.serialize(object.data, specifiedType: parameterT),
+      'fieldID',
+      serializers.serialize(object.fieldID,
+          specifiedType: const FullType(FieldID)),
     ];
 
     return result;
@@ -52,13 +53,13 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'key':
-          result.key = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'data':
           result.data =
               serializers.deserialize(value, specifiedType: parameterT);
+          break;
+        case 'fieldID':
+          result.fieldID = serializers.deserialize(value,
+              specifiedType: const FullType(FieldID)) as FieldID;
           break;
       }
     }
@@ -69,19 +70,19 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
 
 class _$FieldState<T> extends FieldState<T> {
   @override
-  final String key;
-  @override
   final T data;
+  @override
+  final FieldID fieldID;
 
   factory _$FieldState([void updates(FieldStateBuilder<T> b)]) =>
       (new FieldStateBuilder<T>()..update(updates)).build();
 
-  _$FieldState._({this.key, this.data}) : super._() {
-    if (key == null) {
-      throw new BuiltValueNullFieldError('FieldState', 'key');
-    }
+  _$FieldState._({this.data, this.fieldID}) : super._() {
     if (data == null) {
       throw new BuiltValueNullFieldError('FieldState', 'data');
+    }
+    if (fieldID == null) {
+      throw new BuiltValueNullFieldError('FieldState', 'fieldID');
     }
     if (T == dynamic) {
       throw new BuiltValueMissingGenericsError('FieldState', 'T');
@@ -98,19 +99,21 @@ class _$FieldState<T> extends FieldState<T> {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is FieldState && key == other.key && data == other.data;
+    return other is FieldState &&
+        data == other.data &&
+        fieldID == other.fieldID;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, key.hashCode), data.hashCode));
+    return $jf($jc($jc(0, data.hashCode), fieldID.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('FieldState')
-          ..add('key', key)
-          ..add('data', data))
+          ..add('data', data)
+          ..add('fieldID', fieldID))
         .toString();
   }
 }
@@ -119,20 +122,20 @@ class FieldStateBuilder<T>
     implements Builder<FieldState<T>, FieldStateBuilder<T>> {
   _$FieldState<T> _$v;
 
-  String _key;
-  String get key => _$this._key;
-  set key(String key) => _$this._key = key;
-
   T _data;
   T get data => _$this._data;
   set data(T data) => _$this._data = data;
+
+  FieldID _fieldID;
+  FieldID get fieldID => _$this._fieldID;
+  set fieldID(FieldID fieldID) => _$this._fieldID = fieldID;
 
   FieldStateBuilder();
 
   FieldStateBuilder<T> get _$this {
     if (_$v != null) {
-      _key = _$v.key;
       _data = _$v.data;
+      _fieldID = _$v.fieldID;
       _$v = null;
     }
     return this;
@@ -153,7 +156,7 @@ class FieldStateBuilder<T>
 
   @override
   _$FieldState<T> build() {
-    final _$result = _$v ?? new _$FieldState<T>._(key: key, data: data);
+    final _$result = _$v ?? new _$FieldState<T>._(data: data, fieldID: fieldID);
     replace(_$result);
     return _$result;
   }
