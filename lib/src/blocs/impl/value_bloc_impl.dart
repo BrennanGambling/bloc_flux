@@ -113,7 +113,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @mustCallSuper
   void fieldQuery(FieldQuery fieldQuery) {
     //make sure all fields in FieldQuery are in this bloc.
-    assert(fieldQueryIsValid(fieldQuery));
+    assert(isFieldQueryValid(fieldQuery));
     if (fieldQuery.single) {
       //if this is a one time request dispatch the lastValues for the specified Fields.
       fieldQuery.fieldIDs.forEach((id) {
@@ -128,11 +128,6 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     fieldQueriesUpdated();
   }
 
-  ///Check if all [Field]s specified are registered in this bloc.
-  @override
-  bool fieldQueryIsValid(FieldQuery fieldQuery) =>
-      fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
-
   ///Returns a BuiltList of FieldIDs in [fieldQuery] not present in this [ValueBloc].
   ///
   ///An empty list will be returned if all [Field]s are valid.
@@ -146,6 +141,11 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     });
     return listBuilder.build();
   }
+
+  ///Check if all [Field]s specified are registered in this bloc.
+  @override
+  bool isFieldQueryValid(FieldQuery fieldQuery) =>
+      fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
 
   @protected
   @mustCallSuper

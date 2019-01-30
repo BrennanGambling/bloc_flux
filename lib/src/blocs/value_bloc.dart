@@ -8,6 +8,6 @@ import 'bloc.dart';
 abstract class ValueBloc extends Bloc {
   Iterable<FieldID> get fieldIDs;
   Observable<Action> get outputObservable;
-  bool fieldQueryIsValid(FieldQuery fieldQuery);
   Iterable<FieldID> invalidFields(FieldQuery fieldQuery);
+  bool isFieldQueryValid(FieldQuery fieldQuery);
 }
