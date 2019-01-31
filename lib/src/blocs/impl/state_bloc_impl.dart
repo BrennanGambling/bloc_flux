@@ -53,7 +53,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
       if (isBlocStateValid(initialState)) {
         setState(initialState);
       } else {
-        throw InvalidInitialStateError(this, initialState);
+        throw InvalidStateBlocStateError(this, initialState);
       }
     }
     init();

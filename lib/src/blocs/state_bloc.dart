@@ -5,16 +5,20 @@ import '../state/bloc_state.dart';
 import '../state_query.dart';
 import 'value_bloc.dart';
 
-///Error thrown when the initial [blocState] provided to [stateBloc] is invalid.
+//TODO: add reference in InvalidStatebloc error doc comment to the StateBlocState
+//comment where what makes a StateBlocState invalid is listed.
+
+///Error thrown when a [StateBlocState] [blocState] provided to [stateBloc]
+///is invalid.
 @immutable
-class InvalidInitialStateError extends Error {
-  ///The [StateBloc] provided with invalid initial [StateBlocState].
+class InvalidStateBlocStateError extends Error {
+  ///The [StateBloc] provided with invalid [StateBlocState] [blocState].
   final StateBloc stateBloc;
 
   ///The invalid [StateBlocState].
   final StateBlocState blocState;
 
-  InvalidInitialStateError(this.stateBloc, this.blocState);
+  InvalidStateBlocStateError(this.stateBloc, this.blocState);
 
   ///The key of the [StateBloc].
   String get blocKey => stateBloc.key;
