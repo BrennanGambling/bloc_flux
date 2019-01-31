@@ -19,13 +19,13 @@ void main() {
   map[field2.fieldID] = field2;
 
   //Create a BlocState using the basic constructor.
-  final BlocState blocState = BlocState.fromMap(blocKey, map);
+  final StateBlocState blocState = StateBlocState.fromMap(blocKey, map);
 
   //Serialized blocState String.
-  final String blocStateToJSON = BlocState.toJSON(blocState);
+  final String blocStateToJSON = StateBlocState.toJSON(blocState);
 
   //BlocState deserialized from blocStateToJSON.
-  final BlocState blocStateFromJSON = BlocState.fromJSON(blocStateToJSON);
+  final StateBlocState blocStateFromJSON = StateBlocState.fromJSON(blocStateToJSON);
 
   print('''blocState:
   $blocState\n

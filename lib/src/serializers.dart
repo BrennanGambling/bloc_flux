@@ -12,7 +12,7 @@ part 'serializers.g.dart';
 
 //TODO: add proper documentation.
 
-@SerializersFor(const [BlocState, FieldState])
+@SerializersFor(const [StateBlocState, FieldState])
 final Serializers serializers = _$serializers;
 
 final Serializers standardJSONSerializers =

@@ -24,25 +24,25 @@ void main() {
   BuiltMap<FieldID, FieldState> builtMap = BuiltMap.of(map);
 
   //Create a BlocState using the basic constructor.
-  BlocState blocState = BlocState(blocKey, builtMap);
+  StateBlocState blocState = StateBlocState(blocKey, builtMap);
 
   //Create a BlocState using a BlocStateBuilder.
-  BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
+  StateBlocState blocStateFromBuilder = StateBlocState.fromBuilder((b) => b
     ..blocKey = blocKey
     ..stateMap = builtMap);
 
   //Create a BlocState from a Map.
-  BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
+  StateBlocState blocStateFromMap = StateBlocState.fromMap(blocKey, map);
 
   //Rebuild a NEW BlocState from an existing BlocState.
   //The original will be unchanged as BlocState is immutable.
-  BlocState blocStateRebuild =
+  StateBlocState blocStateRebuild =
       blocState.rebuild((b) => b..blocKey = newBlocKey);
 
   //Create a BlocStateBuilder from a BlocState.
   //Any changes made to this Builder will not result in changes in the original
   //BlocState object.
-  BlocStateBuilder blocStateBuilder = blocState.toBuilder();
+  StateBlocStateBuilder blocStateBuilder = blocState.toBuilder();
 
   //change the key a few times.
   blocStateBuilder.blocKey = fieldKey1;
@@ -50,7 +50,7 @@ void main() {
   blocStateBuilder.blocKey = newBlocKey;
 
   //build the BlocState.
-  BlocState blocStateBuild = blocStateBuilder.build();
+  StateBlocState blocStateBuild = blocStateBuilder.build();
 
   //blocState, blocStateFromMap and blocStateFromBuilder all have fields with
   //the same values and are therefore equal.

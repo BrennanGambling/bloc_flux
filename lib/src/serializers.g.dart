@@ -7,9 +7,9 @@ part of serializers;
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(BlocState.serializer)
       ..add(FieldID.serializer)
       ..add(FieldState.serializer)
+      ..add(StateBlocState.serializer)
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(FieldID), const FullType(FieldState)]),

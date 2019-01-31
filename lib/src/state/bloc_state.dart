@@ -58,7 +58,7 @@ part 'bloc_state.g.dart';
 ///BlocState blocState = BlocState(blocKey, builtMap);
 ///```
 ///
-///### [BlocState] from [BlocStateBuilder]
+///### [StateBlocState] from [BlocStateBuilder]
 ///```dart
 /////Create a BlocState using a BlocStateBuilder.
 ///BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
@@ -66,13 +66,13 @@ part 'bloc_state.g.dart';
 ///  ..stateMap = builtMap);
 /// ```
 ///
-///### [BlocState] from [String] ([key]) and [BuiltMap<String, FieldState>] ([stateMap])
+///### [StateBlocState] from [String] ([key]) and [BuiltMap<String, FieldState>] ([stateMap])
 ///```dart
 /////Create a BlocState from a Map.
 ///BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
 ///```
 ///
-///### [BlocState] from an existing [BlocState] using [BlocStateBuilder]
+///### [StateBlocState] from an existing [StateBlocState] using [BlocStateBuilder]
 ///```dart
 /////Rebuild a NEW BlocState from an existing BlocState.
 /////The original will be unchanged as BlocState is immutable.
@@ -95,7 +95,7 @@ part 'bloc_state.g.dart';
 ///BlocState blocStateBuild = blocStateBuilder.build();
 ///```
 ///
-///### [BlocState] equality
+///### [StateBlocState] equality
 ///```dart
 /////blocState, blocStateFromMap and blocStateFromBuilder all have fields with
 /////the same values and are therefore equal.
@@ -107,11 +107,14 @@ part 'bloc_state.g.dart';
 ///assert(blocStateBuild == blocStateRebuild);
 ///```
 @BuiltValue(nestedBuilders: false)
-abstract class BlocState implements Built<BlocState, BlocStateBuilder> {
-  static Serializer<BlocState> get serializer => _$blocStateSerializer;
+abstract class StateBlocState
+    implements Built<StateBlocState, StateBlocStateBuilder> {
+  static Serializer<StateBlocState> get serializer =>
+      _$stateBlocStateSerializer;
 
-  factory BlocState(String blocKey, BuiltMap<FieldID, FieldState> stateMap) =>
-      BlocState.fromBuilder((b) => b
+  factory StateBlocState(
+          String blocKey, BuiltMap<FieldID, FieldState> stateMap) =>
+      StateBlocState.fromBuilder((b) => b
         ..blocKey = blocKey
         ..stateMap = stateMap);
 
@@ -121,25 +124,26 @@ abstract class BlocState implements Built<BlocState, BlocStateBuilder> {
   ///
   ///This method will ALWAYS THROW an [UnimplementedError](dart:core).
   @alwaysThrows
-  factory BlocState.deserialize(String string) => throw UnimplementedError(
+  factory StateBlocState.deserialize(String string) => throw UnimplementedError(
       "deserialize has not yet been correctly implemented. Use fromJSON instead.");
 
-  factory BlocState.fromBuilder([updates(BlocStateBuilder b)]) = _$BlocState;
+  factory StateBlocState.fromBuilder([updates(StateBlocStateBuilder b)]) =
+      _$StateBlocState;
 
   ///Deserializes a [String] using the [standardJSONSerializers] and
   ///the [json.encode()](dart:conver) method.
-  factory BlocState.fromJSON(String string) => standardJSONSerializers
-      .deserializeWith(BlocState.serializer, json.decode(string));
+  factory StateBlocState.fromJSON(String string) => standardJSONSerializers
+      .deserializeWith(StateBlocState.serializer, json.decode(string));
 
-  factory BlocState.fromMap(
+  factory StateBlocState.fromMap(
           String blocKey, Map<FieldID, FieldState> stateMap) =>
-      BlocState.fromBuilder((b) => b
+      StateBlocState.fromBuilder((b) => b
         ..blocKey = blocKey
         ..stateMap = BuiltMap(stateMap));
 
-  BlocState._();
+  StateBlocState._();
 
-  ///The key of the [StateBloc] that this [BlocState] represents.
+  ///The key of the [StateBloc] that this [StateBlocState] represents.
   String get blocKey;
 
   ///A [BuiltMap] of the [FieldState.key] to [FieldState]s.
@@ -155,12 +159,12 @@ abstract class BlocState implements Built<BlocState, BlocStateBuilder> {
   ///
   ///This method will ALWAYS THROW an [UnimplementedError](dart:core).
   @alwaysThrows
-  static String serialize(BlocState blocState) => throw UnimplementedError(
+  static String serialize(StateBlocState blocState) => throw UnimplementedError(
       "serialize has not yet been correctly implemented. Use toJSON instead.");
   //serializers.deserializeWith(BlocState.serializer, json.decode(string));
 
-  ///Serializes a [BlocState] using the [standardJSONSerializers] and
+  ///Serializes a [StateBlocState] using the [standardJSONSerializers] and
   ///the [json.encode()](dart:convert) method.
-  static String toJSON(BlocState blocState) =>
+  static String toJSON(StateBlocState blocState) =>
       json.encode(standardJSONSerializers.serialize(blocState));
 }

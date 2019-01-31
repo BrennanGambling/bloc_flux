@@ -12,10 +12,10 @@ import 'actions.dart';
 ///
 ///[blocState] must NOT be null.
 @immutable
-class BlocStateAction extends Action<BlocState>
-    implements QueryAction<BlocState> {
+class BlocStateAction extends Action<StateBlocState>
+    implements QueryAction<StateBlocState> {
   ///[blocState] must NOT be null.
-  BlocStateAction(BlocState blocState) : super(data: blocState) {
+  BlocStateAction(StateBlocState blocState) : super(data: blocState) {
     if (blocState == null) {
       throw ArgumentError.notNull("blocState must not be null.");
     }
@@ -25,7 +25,7 @@ class BlocStateAction extends Action<BlocState>
   String get blocKey => data.blocKey;
 
   ///Helper method for getting the blocState.
-  BlocState get blocState => data;
+  StateBlocState get blocState => data;
 }
 
 ///Dispatch an instance of this [Action] to communicate a state change in a
@@ -37,16 +37,16 @@ class BlocStateAction extends Action<BlocState>
 ///
 ///[blocState] must NOT be null.
 @immutable
-class BlocStateValueAction extends ValueAction<BlocState>
-    implements QueryAction<BlocState> {
+class BlocStateValueAction extends ValueAction<StateBlocState>
+    implements QueryAction<StateBlocState> {
   ///blocState must NOT be null.
-  BlocStateValueAction(BlocState blocState) : super(blocState);
+  BlocStateValueAction(StateBlocState blocState) : super(blocState);
 
   ///Helper method for getting the blocKey.
   String get blocKey => data.blocKey;
 
   ///Helper method for getting the blocState.
-  BlocState get blocState => data;
+  StateBlocState get blocState => data;
 }
 
 ///Dispatch an instance of this [Action] to register a [StateQuery].
