@@ -43,13 +43,7 @@ abstract class BlocImpl implements Bloc {
     }
   }
 
-  ///Perform cleanup operations.
-  ///
-  ///{@macro closed_state_error}
-  ///
-  ///All registered [Field]s will have their [Field.dispose] methods called.
-  ///
-  ///If overriding this method super must be called.
+  ///{@macro dispose_impl}
   @mustCallSuper
   void dispose() {
     checkClosed();
@@ -62,4 +56,13 @@ abstract class BlocImpl implements Bloc {
 ///**If this Bloc is already [closed] calling this method will result in a
 ///[StateError] being thrown.** For more information on when a [Bloc]
 ///is considered closed see [Bloc.closed].
+///{@endtemplate}
+
+///{@template dispose_impl}
+///Perform clean up operations including calling dispose method of all
+///registered [Field]s.
+///
+///{@macro closed_state_error}
+///
+///If overriding this method super.dispose() must be called.
 ///{@endtemplate}
