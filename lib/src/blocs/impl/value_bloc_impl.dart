@@ -29,13 +29,6 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @protected
   final List<FieldQuery> fieldQueries;
 
-  //TODO: fieldMap should be moved to BlocImpl so any class extending BlocImpl
-  //will have the stream of all of its fields closed when dispose is called.
-
-  ///a map of all FieldIDs to Fields.
-  @protected
-  final Map<FieldID, Field> fieldMap;
-
   ///StreamSubscription for fieldQuery() onData listener.
   StreamSubscription _fieldQueryActionSubscription;
 
@@ -47,7 +40,6 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
       : outputObservable = outputSubject.stream,
         fieldSubscriptionMap = Map(),
         fieldQueries = List(),
-        fieldMap = Map(),
         super(key, actionObservable) {
     _fieldQueryActionSubscription = actionObservable
         .where(((a) => a is FieldQueryAction))
