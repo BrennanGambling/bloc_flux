@@ -12,6 +12,10 @@ import '../../fields/field.dart';
 import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
+/*TODO: any methods in the interface for this bloc impl should be marked as
+@mustCallSuper and there should be a check to make sure the bloc has not
+yet had dispose called or have its actionObservable closed.*/
+
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   ///The subject that manages Action output to dispatcher.
   @protected
@@ -60,9 +64,11 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @mustCallSuper
   void addField(Field field) => fieldMap[field.fieldID] = field;
 
+  ///{@macro dispose_impl}
   @override
   @mustCallSuper
   void dispose() {
+    super.dispose();
     _fieldQueryActionSubscription?.cancel();
   }
 
@@ -123,11 +129,10 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     fieldQueriesUpdated();
   }
 
-  ///Returns a BuiltList of FieldIDs in [fieldQuery] not present in this [ValueBloc].
-  ///
-  ///An empty list will be returned if all [Field]s are valid.
+  ///{@macro invalid_fields}
   @override
   Iterable<FieldID> invalidFields(FieldQuery fieldQuery) {
+    checkClosed();
     ListBuilder<FieldID> listBuilder = ListBuilder();
     fieldQuery.fieldIDs.forEach((fq) {
       if (!fieldMap.keys.contains(fq)) {
@@ -137,10 +142,12 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     return listBuilder.build();
   }
 
-  ///Check if all [Field]s specified are registered in this bloc.
+  ///{@macro is_field_query_valid}
   @override
-  bool isFieldQueryValid(FieldQuery fieldQuery) =>
-      fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
+  bool isFieldQueryValid(FieldQuery fieldQuery) {
+    checkClosed();
+    return fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
+  }
 
   @protected
   @mustCallSuper
