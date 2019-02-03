@@ -10,12 +10,15 @@ import '../action/actions.dart';
 ///
 ///Extend this class to create the interface for a Bloc.
 abstract class Bloc {
-  ///A unique identifer for this bloc.
-  String get key;
-  
   ///The observable with [Action]s from the dispatcher.
   @protected
   Observable<Action> get actionObservable;
+
+  ///True if this [Bloc] has been closed or [actionObservable] has finished.
+  bool get closed;
+
+  ///A unique identifer for this bloc.
+  String get key;
 
   ///Dispose of all resources.
   void dispose();
