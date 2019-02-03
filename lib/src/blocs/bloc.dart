@@ -21,5 +21,7 @@ abstract class Bloc {
   String get key;
 
   ///Dispose of all resources.
+  ///
+  ///{@macro closed_state_error}.
   void dispose();
 }

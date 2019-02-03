@@ -45,8 +45,7 @@ abstract class BlocImpl implements Bloc {
 
   ///Perform cleanup operations.
   ///
-  ///If this Bloc is already [closed] calling this method will result in a
-  ///[StateError] being thrown.
+  ///{@macro closed_state_error}
   ///
   ///All registered [Field]s will have their [Field.dispose] methods called.
   ///
@@ -58,3 +57,9 @@ abstract class BlocImpl implements Bloc {
     fieldMap.values.forEach((field) => field.dispose());
   }
 }
+
+///{@template closed_state_error}
+///**If this Bloc is already [closed] calling this method will result in a
+///[StateError] being thrown.** For more information on when a [Bloc]
+///is considered closed see [Bloc.closed].
+///{@endtemplate}
