@@ -131,6 +131,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
 
   ///{@macro invalid_fields}
   @override
+  @mustCallSuper
   Iterable<FieldID> invalidFields(FieldQuery fieldQuery) {
     checkClosed();
     ListBuilder<FieldID> listBuilder = ListBuilder();
@@ -144,6 +145,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
 
   ///{@macro is_field_query_valid}
   @override
+  @mustCallSuper
   bool isFieldQueryValid(FieldQuery fieldQuery) {
     checkClosed();
     return fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
