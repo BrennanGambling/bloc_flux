@@ -32,6 +32,17 @@ abstract class BlocImpl implements Bloc {
   ///True if [dispose] has been called or [actionObservable] has finished.
   bool get closed => _closed;
 
+  ///If [closed] is equal to true a [StateError] is thrown.
+  @protected
+  void checkClosed() {
+    if (closed) {
+      throw StateError("This Bloc has already been closed.\n"
+          "It is closed due to one of the following reasons:\n"
+          "\t1. The dispose method has been called.\n"
+          "\t2. The actiobObservable has finished.");
+    }
+  }
+
   ///Perform cleanup operations.
   ///
   ///If this Bloc is already [closed] calling this method will result in a
@@ -42,19 +53,8 @@ abstract class BlocImpl implements Bloc {
   ///If overriding this method super must be called.
   @mustCallSuper
   void dispose() {
-    _checkClosed();
+    checkClosed();
     _closed = true;
     fieldMap.values.forEach((field) => field.dispose());
-  }
-
-  ///@nodoc
-  ///If [closed] is equal to true a [StateError] is thrown.
-  void _checkClosed() {
-    if (closed) {
-      throw StateError("This Bloc has already been closed.\n"
-          "It is closed due to one of the following reasons:\n"
-          "\t1. The dispose method has been called.\n"
-          "\t2. The actiobObservable has finished.");
-    }
   }
 }
