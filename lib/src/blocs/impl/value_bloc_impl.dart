@@ -12,10 +12,6 @@ import '../../fields/field.dart';
 import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
-/*TODO: any methods in the interface for this bloc impl should be marked as
-@mustCallSuper and there should be a check to make sure the bloc has not
-yet had dispose called or have its actionObservable closed.*/
-
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   ///The subject that manages Action output to dispatcher.
   @protected
