@@ -126,6 +126,8 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   }
 
   ///{@macro invalid_fields}
+  ///
+  ///{@macro closed_state_error}
   @override
   @mustCallSuper
   Iterable<FieldID> invalidFields(FieldQuery fieldQuery) {
@@ -140,6 +142,8 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   }
 
   ///{@macro is_field_query_valid}
+  ///
+  ///{@macro closed_state_error}
   @override
   @mustCallSuper
   bool isFieldQueryValid(FieldQuery fieldQuery) {
