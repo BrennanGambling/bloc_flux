@@ -38,6 +38,8 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   final Observable<StateBlocState> blocStateObservable;
 
+  final StateBlocState initialState;
+
   ///@nodoc
   ///The [StreamSubscription] for the [stateQuery()] onData listener of the
   ///[stateQueryObservable].
@@ -56,12 +58,6 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///Internal variable for the [dispatchState] getter and setter.
   bool _dispatchState;
 
-  /*TODO: initialState should only be checked to see if it is valid AFTER
-  the child constructor is finished. Otherwise the initialState will
-  always be invalid as the fields have not yet been added to the map.
-  The initial state should probably be checked and sent to setState when the
-  bloc is registered with the Dispatcher via a special action.*/
-
   ///Creates an instance of this class with the unique identifier [key] and
   ///the input [actionObservable] from the [Dispather].
   ///
@@ -71,7 +67,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///with equal [FieldID]s. The initial state of the registered [StateField]s
   ///will not be set until this is registered with a [Dispatcher].
   StateBlocImpl(String key, Observable<Action> actionObservable,
-      {StateBlocState initialState, bool forceDispatch: false})
+      {this.initialState, bool forceDispatch: false})
       : stateFieldMap = Map(),
         _forceDispatch = forceDispatch,
         _permanentForceDispatch = forceDispatch,
@@ -82,13 +78,6 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
         super(key, actionObservable) {
     _createQuerySubscription();
     _createStateSubscription();
-    if (initialState != null) {
-      if (isBlocStateValid(initialState)) {
-        setState(initialState);
-      } else {
-        throw InvalidStateBlocStateError(this, initialState);
-      }
-    }
   }
 
   ///The number of [StateQueries] currently registered for this [StateBloc].
@@ -167,6 +156,14 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @override
   void init(Action first) {
     super.init(first);
+    if (initialState != null) {
+      if (isBlocStateValid(initialState)) {
+        setState(initialState);
+      } else {
+        throw InvalidStateBlocStateError(this, initialState,
+            causedByInitialState: true);
+      }
+    }
   }
 
   ///{macro invalid_state_fields}
@@ -205,7 +202,8 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   bool isBlocStateValid(StateBlocState blocState) {
     checkClosed();
     return blocState.blocKey == key &&
-        blocState.stateMap.keys.every((id) => stateFieldMap.keys.contains(id));
+        blocState.stateMap.keys.every((id) => stateFieldMap.keys.contains(id)) &&
+        blocState.stateMap.keys.every((id) => stateFieldMap[id].isValidType(blocState.stateMap[id]));
   }
 
   ///{@macro is_state_query_valid}
@@ -228,17 +226,29 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///Called when a BlocStateAction with the right key is recieved.
   @protected
   @mustCallSuper
-  void setState(StateBlocState blocState) {}
+  void setState(StateBlocState blocState) {
+    if (blocState == null || !isBlocStateValid(blocState)) {
+      throw InvalidStateBlocStateError(this, blocState);
+    } else {
+      blocState.stateMap.forEach((id, state) {
+        //TODO:add the data using addDynamic
+      });
+    }
+  }
 
   ///Called when a StateQueryAction with the right key is recieved.
   @protected
   @mustCallSuper
-  void stateQuery(StateQuery stateQuery) {}
+  void stateQuery(StateQuery stateQuery) {
+    //TODO: implement stateQuery.
+  }
 
   ///Called when a new [StateBlocState] is avaliable.
   @protected
   @mustCallSuper
-  void stateUpdated(StateBlocState stateBlocState) {}
+  void stateUpdated(StateBlocState stateBlocState) {
+    //TODO: implement stateUpdated
+  }
 
   ///@nodoc
   ///Sets [_stateQuerySubscription] to the [StreamSubscription] returned when
