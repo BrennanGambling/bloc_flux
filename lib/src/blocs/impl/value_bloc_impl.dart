@@ -56,10 +56,6 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     outputSubject.add(action);
   }
 
-  @protected
-  @mustCallSuper
-  void addField(Field field) => fieldMap[field.fieldID] = field;
-
   ///{@macro dispose_impl}
   @override
   @mustCallSuper
@@ -150,8 +146,4 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     checkClosed();
     return fieldQuery.fieldIDs.every((id) => fieldMap.keys.contains(id));
   }
-
-  @protected
-  @mustCallSuper
-  void removeField(Field field) => fieldMap.remove(field.fieldID);
 }

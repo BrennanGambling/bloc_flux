@@ -47,6 +47,14 @@ abstract class BlocImpl implements Bloc {
   ///[actionObservable].
   bool get isInitialized => _init;
 
+  ///Adds [field] to [fieldMap].
+  ///
+  ///If a [Field] with the same [FieldID] as the [field] argument has
+  ///already be added it will be replaced.
+  @protected
+  @mustCallSuper
+  void addField(Field field) => fieldMap[field.fieldID] = field;
+
   ///If [closed] is equal to true a [StateError] is thrown.
   @protected
   void checkClosed() {
@@ -91,4 +99,10 @@ abstract class BlocImpl implements Bloc {
   void init(Action first) {
     _init = true;
   }
+
+  ///Removes the [Field] from [fieldMap] with the same [FieldID] as the
+  ///[field] argument if it is present.
+  @protected
+  @mustCallSuper
+  void removeField(Field field) => fieldMap.remove(field.fieldID);
 }
