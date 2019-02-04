@@ -22,6 +22,6 @@ abstract class Bloc {
 
   ///Dispose of all resources.
   ///
-  ///{@macro closed_state_error}.
+  ///{@macro closed_state_error}
   void dispose();
 }

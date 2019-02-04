@@ -43,7 +43,18 @@ abstract class BlocImpl implements Bloc {
     }
   }
 
-  ///{@macro dispose_impl}
+  ///{@template dispose_impl}
+  ///Perform clean up operations including calling dispose method of all
+  ///registered [Field]s.
+  ///
+  ///If overriding this method super.dispose() must be called.
+  ///{@endtemplate}
+  ///
+  ///{@template closed_state_error}
+  ///**If this Bloc is already [closed] calling this method will result in a
+  ///[StateError] being thrown.** For more information on when a [Bloc]
+  ///is considered closed see [Bloc.closed].
+  ///{@endtemplate}
   @mustCallSuper
   void dispose() {
     checkClosed();
@@ -51,18 +62,3 @@ abstract class BlocImpl implements Bloc {
     fieldMap.values.forEach((field) => field.dispose());
   }
 }
-
-///{@template closed_state_error}
-///**If this Bloc is already [closed] calling this method will result in a
-///[StateError] being thrown.** For more information on when a [Bloc]
-///is considered closed see [Bloc.closed].
-///{@endtemplate}
-
-///{@template dispose_impl}
-///Perform clean up operations including calling dispose method of all
-///registered [Field]s.
-///
-///{@macro closed_state_error}
-///
-///If overriding this method super.dispose() must be called.
-///{@endtemplate}
