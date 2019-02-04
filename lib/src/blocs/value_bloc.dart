@@ -13,6 +13,8 @@ abstract class ValueBloc extends Bloc {
   ///Returns an [Iterable] of [FieldID]s in [fieldQuery] that do not have [Field]s
   ///in this [ValueBloc] with equal [FieldID]s.
   ///
+  ///All [FieldID]s will be returned if [FieldQuery.blocKey] does not equal [key].
+  ///
   ///An empty list will be returned if all [Field]s are valid.
   ///{@endtemplate}
   ///

@@ -130,7 +130,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///has been called one or more times calls to this method will not effect the
   ///value returned by the [forceDispatch] getter. This can be checked using
   ///the [isForceDispatchPermanent()] method.
-  set forceDispatch(bool forceDispatch) { 
+  set forceDispatch(bool forceDispatch) {
     _forceDispatch;
     _updateDispatchState();
   }
@@ -169,16 +169,14 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   void init() {}
 
-  ///Returns any the [FieldID]s of any [FieldState]s that do not have a
-  ///[StateField] in this [StateBloc] with the same key.
+  ///{macro invalid_state_fields}
   ///
-  ///If the blocKey of [blocState] is not equal to [key] all of the [FieldID]s
-  ///will be returned.
+  ///{@macro closed_state_error}
   ///
-  ///If [blocState] is valid for this [StateBloc] the returned [Iterable] will
-  ///be empty.
+  ///{@macro field_state_match}
   @override
   Iterable<FieldID> invalidStateFields(StateBlocState blocState) {
+    checkClosed();
     final BuiltList<FieldID> fieldIDs = blocState.stateMap.keys;
     final ListBuilder<FieldID> listBuilder = ListBuilder();
     if (blocState.blocKey == key) {
@@ -198,21 +196,26 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   //to stateUpdated if it is not the same as the previous state. This is required
   //as otherwise actions like fieldQueries would be considered statechanges.
 
-  ///Whether or not [blocState] is a vlaid [StateBlocState] for this [StateBloc].
+  ///{@macro is_bloc_state_valid}
   ///
-  ///[blocState] will be valid if [blocState.blocKey] is equal to [key] and
-  ///all of the [FieldID]s in it have [StateField]s in this [StateBloc] with
-  ///matching [FieldID]s
+  ///{@macro closed_state_error}
+  ///
+  ///{@macro bloc_state_valid}
   @override
-  bool isBlocStateValid(StateBlocState blocState) =>
-      blocState.blocKey == key &&
-      blocState.stateMap.keys.every((id) => stateFieldMap.keys.contains(id));
+  bool isBlocStateValid(StateBlocState blocState) {
+    checkClosed();
+    return blocState.blocKey == key &&
+        blocState.stateMap.keys.every((id) => stateFieldMap.keys.contains(id));
+  }
 
-  ///Whether or not [stateQuery] is a valid [StateQuery] for this [StateBloc].
+  ///{@macro is_state_query_valid}
   ///
-  ///[stateQuery] will be valid if [stateQuery.blocKey] and [key] are equal.
+  ///{@macro closed_state_error}
   @override
-  bool isStateQueryValid(StateQuery stateQuery) => stateQuery.blocKey == key;
+  bool isStateQueryValid(StateQuery stateQuery) {
+    checkClosed();
+    return stateQuery.blocKey == key;
+  }
 
   ///Permanently sets the value of [forceDispatch] to true.
   ///

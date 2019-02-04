@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../field_id.dart';
 import '../state/bloc_state.dart';
+import '../state/field_state.dart';
 import '../state_query.dart';
 import 'value_bloc.dart';
 
@@ -59,7 +60,44 @@ class InvalidStateBlocStateError extends Error {
 
 abstract class StateBloc extends ValueBloc {
   Iterable<FieldID> get stateFieldIDs;
+
+  ///{@template invalid_state_fields}
+  ///Returns an [Iterable] of all of the [FieldID]s of the [FieldState]s  in
+  ///[blocState] without a matching registered [StateField]
+  ///
+  ///**OR**
+  ///
+  ///All of the [FieldID]s in [blocState] if the [StateBlocState.blocKey] of
+  ///[blocState] is not equal to [key].
+  ///{@endtemplate}
+  ///
+  ///{@macro closed_state_error}
+  ///
+  ///{@template field_state_match}
+  ///A [FieldState] and a [StateField] are considered matching if they have
+  ///equal [FieldID]s.
+  ///{@endtemplate}
   Iterable<FieldID> invalidStateFields(StateBlocState blocState);
+
+  ///{@template is_bloc_state_valid}
+  ///Returns whether or not [blocState] is valid for this [StateBloc].
+  ///{@endtemplate}
+  ///
+  ///{@macro closed_state_error}
+  ///
+  ///{@template bloc_state_valid}
+  ///A [StateBlocState] is considered valid if all of the [FieldState]s it
+  ///contains have matching [StateField]s in this [StateBloc] and the
+  ///[StateBlocState.blocKey] is equal to [key].
+  ///{@endtemplate}
+  ///
+  ///{@macro field_state_match}
   bool isBlocStateValid(StateBlocState blocState);
+
+  ///{@template is_state_query_valid}
+  ///Checks if the [StateQuery.blocKey] is equal to [key].
+  ///{@endtemplate}
+  ///
+  ///{@macro closed_state_error}
   bool isStateQueryValid(StateQuery stateQuery);
 }
