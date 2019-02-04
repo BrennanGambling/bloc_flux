@@ -6,40 +6,56 @@ import 'impl/field_impl.dart';
 
 //TODO: add option to pass in bloc to auto register
 
-class FieldView<T> {
-  final Field<T> _field;
-
-  ValueObservable<T> get observable => _field.observable;
-  T get lastValue => _field.lastValue;
-
-  FieldView(this._field);
-}
-
 ///Represents a single output from a bloc.
 abstract class Field<T> {
-  ///A unique identifier for this field.
-  String get key;
-
-  FieldID get fieldID;
-
-  ///true if the fields output is derived from the output of another field.
-  bool get derived;
-
-  ///the output observable of this field.
-  ValueObservable<T> get observable;
-
-  ///the last value emitted from [observable]
-  T get lastValue;
-  //add a value to the output stream.
-  void add(T data);
-  //dispose of resources.
-  void dispose();
-  //the observable that inputs to this field
   Observable<T> inputObservable;
-
-  FieldValueAction<T> getTypedValueAction(T data);
 
   factory Field(String key, String blocKey, Observable<T> inputObservable,
           {bool derived: false}) =>
       FieldImpl<T>(key, blocKey, inputObservable, derived);
+
+  ///true if the fields output is derived from the output of another field.
+  bool get derived;
+
+  FieldID get fieldID;
+
+  ///A unique identifier for this field.
+  String get key;
+  //add a value to the output stream.
+  ///the last value emitted from [observable]
+  T get lastValue;
+
+  ///the output observable of this field.
+  ValueObservable<T> get observable;
+
+  void add(T data);
+
+  //dispose of resources.
+  ///{@template add_dynamic}
+  ///Set the data in this [Field] to [data].
+  ///
+  ///**If [data]'s runtimeType is not T or a subtype of T a [CastError] will
+  ///be thrown.**
+  ///
+  ///Use [Field.isValidType] to check if [data] can be cast.
+  ///{@endtemplate}
+  void addDynamic(dynamic data);
+  //the observable that inputs to this field
+  void dispose();
+
+  FieldValueAction<T> getTypedValueAction(T data);
+
+  ///{@template is_valid_type}
+  ///Whether or not [data]'s runtimeType is T or a subtype of T.
+  ///{@endtemplate}
+  bool isValidType(dynamic data);
+}
+
+class FieldView<T> {
+  final Field<T> _field;
+
+  FieldView(this._field);
+  T get lastValue => _field.lastValue;
+
+  ValueObservable<T> get observable => _field.observable;
 }

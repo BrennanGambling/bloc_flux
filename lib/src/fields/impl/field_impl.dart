@@ -20,21 +20,16 @@ class FieldImpl<T> implements Field<T> {
   @override
   final ValueObservable<T> observable;
 
-  @override
-  T get lastValue => subject.value;
-
   @protected
   final BehaviorSubject<T> subject;
 
-  @override
-  FieldValueAction<T> getTypedValueAction(T data) =>
-      FieldValueAction<T>(data, this.fieldID);
-
-  //Stream subscription managing the inputObserbable
-  //this needs to be canceled when the inputObservable is changed.
   @protected
   StreamSubscription<T> inputSubscription;
 
+  Observable<T> _inputObservable;
+
+  //Stream subscription managing the inputObserbable
+  //this needs to be canceled when the inputObservable is changed.
   FieldImpl(
       String key, String blocKey, Observable<T> inputObservable, bool derived)
       : this._(key, FieldID(blocKey, key), inputObservable, BehaviorSubject(),
@@ -46,10 +41,9 @@ class FieldImpl<T> implements Field<T> {
     inputObservableChanged();
   }
 
-  //local input observable
-  Observable<T> _inputObservable;
-
   Observable<T> get inputObservable => _inputObservable;
+
+  //local input observable
   set inputObservable(Observable<T> observable) {
     //when the observable is changed the old subscription needs to be cancelled
     //and a new one created.
@@ -57,7 +51,28 @@ class FieldImpl<T> implements Field<T> {
     inputObservableChanged();
   }
 
+  @override
+  T get lastValue => subject.value;
+  void add(T data) => subject.add(data);
+
+  ///{@macro add_dynamic}
+  @override
+  void addDynamic(dynamic data) {
+    add(data as T);
+  }
+
+  @override
+  @mustCallSuper
+  void dispose() {
+    inputSubscription?.cancel();
+    subject.close();
+  }
+
   //override to preform other work when the input obersvable changes.
+  @override
+  FieldValueAction<T> getTypedValueAction(T data) =>
+      FieldValueAction<T>(data, this.fieldID);
+
   @mustCallSuper
   @protected
   void inputObservableChanged() {
@@ -67,12 +82,14 @@ class FieldImpl<T> implements Field<T> {
     inputSubscription = _inputObservable.listen(subject.add);
   }
 
-  void add(T data) => subject.add(data);
-
+  ///{@macro is_valid_type}
   @override
-  @mustCallSuper
-  void dispose() {
-    inputSubscription?.cancel();
-    subject.close();
+  bool isValidType(dynamic data) {
+    try {
+      data as T;
+    } on CastError {
+      return false;
+    }
+    return true;
   }
 }
