@@ -16,7 +16,15 @@ class InvalidStateBlocStateError extends Error {
   ///The invalid [StateBlocState].
   final StateBlocState blocState;
 
-  InvalidStateBlocStateError(this.stateBloc, this.blocState);
+  ///True if this error was thrown because an invalid initial [StateBlocState]
+  ///was provided.
+  ///
+  ///This is information is important as the initial [StateBlocState] is **not
+  ///checked until the first [Action] is received.**
+  final bool causedByInitialState;
+
+  InvalidStateBlocStateError(this.stateBloc, this.blocState,
+      {this.causedByInitialState: false});
 
   ///The key of the [StateBloc].
   String get blocKey => stateBloc.key;
@@ -38,6 +46,10 @@ class InvalidStateBlocStateError extends Error {
     if (keysMatch) {
       stringBuffer.writeln(
           "BlocState contain FieldStates with no matching StateFields in StateBloc.");
+      if (causedByInitialState) {
+        stringBuffer.writeln(
+            "This error was caused by an invalid initialState provided to a StateBloc.");
+      }
       stringBuffer.writeln("FieldIDs of invalid FieldStates:");
       stringBuffer.writeAll(invalidFields, "\n");
     } else {
@@ -86,6 +98,10 @@ abstract class StateBloc extends ValueBloc {
   ///A [StateBlocState] is considered valid if all of the [FieldState]s it
   ///contains have matching [StateField]s in this [StateBloc] and the
   ///[StateBlocState.blocKey] is equal to [key].
+  ///
+  ///The generic types of the [FieldState]s must also be the same type or a
+  ///subtype of the matching [StateField]s generic type. This can be checked
+  ///using the [Field.isValidType] method.
   ///{@endtemplate}
   ///
   ///{@macro field_state_match}
