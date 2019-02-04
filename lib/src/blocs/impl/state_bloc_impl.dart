@@ -161,13 +161,13 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     _blocStateSubscription?.cancel();
   }
 
-  /*TODO: add this method to bloc class. The method should be called when
-  the first initial action from the dispatcher is received.*/
-  ///This method is called as the last statement in the constructor.
-  ///
-  ///Override to perform any initialization work.
+  ///{@macro init}
   @protected
-  void init() {}
+  @mustCallSuper
+  @override
+  void init(Action first) {
+    super.init(first);
+  }
 
   ///{macro invalid_state_fields}
   ///

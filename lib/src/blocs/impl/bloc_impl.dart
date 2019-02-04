@@ -12,6 +12,12 @@ abstract class BlocImpl implements Bloc {
   ///A unique identifier for the [Bloc].
   final String key;
 
+  ///@nodoc
+  ///Internal variable for [isInitialized].
+  ///
+  ///Initially false but set to true when [init] is called.
+  bool _init;
+
   ///The [Observable] carrying [Action]s from the dispatcher.
   final Observable<Action> actionObservable;
 
@@ -19,18 +25,27 @@ abstract class BlocImpl implements Bloc {
   ///Internal variable for managing the closes state of this [Bloc].
   bool _closed;
 
-  ///a map of all FieldIDs to Fields.
+  ///A map of all FieldIDs to Fields.
   @protected
   final Map<FieldID, Field> fieldMap;
 
   BlocImpl(this.key, this.actionObservable)
       : _closed = false,
+        _init = false,
         fieldMap = Map() {
     actionObservable.listen(null, onDone: () => dispose());
+    //When the first Action is received pass it to init.
+    actionObservable.first.then(init);
   }
 
   ///True if [dispose] has been called or [actionObservable] has finished.
   bool get closed => _closed;
+
+  ///Whether or not [init()] has been called.
+  ///
+  ///[init()] is called when the first [Action] is received from the
+  ///[actionObservable].
+  bool get isInitialized => _init;
 
   ///If [closed] is equal to true a [StateError] is thrown.
   @protected
@@ -60,5 +75,20 @@ abstract class BlocImpl implements Bloc {
     checkClosed();
     _closed = true;
     fieldMap.values.forEach((field) => field.dispose());
+  }
+
+  ///{@template init}
+  ///This method is called when the first [Action] is received from [actionObservable].
+  ///
+  ///Override this method to perform any setup work here that cannot be
+  ///performed in the constructor. An example of this would be initialization
+  ///for components of a mixin. The mixin would just use the 'on BlocImpl'
+  ///and override (and call the super) of init. This needs to be done as mixins
+  ///do not have constructors.
+  ///{@endtemplate}
+  @mustCallSuper
+  @protected
+  void init(Action first) {
+    _init = true;
   }
 }

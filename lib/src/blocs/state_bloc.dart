@@ -6,9 +6,6 @@ import '../state/field_state.dart';
 import '../state_query.dart';
 import 'value_bloc.dart';
 
-//TODO: add reference in InvalidStatebloc error doc comment to the StateBlocState
-//comment where what makes a StateBlocState invalid is listed.
-
 ///Error thrown when a [StateBlocState] [blocState] provided to [stateBloc]
 ///is invalid.
 @immutable
