@@ -251,7 +251,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     _updateDispatchState();
   }
 
-  ///Called when a BlocStateAction with the right key is recieved.
+  ///Called when a [BlocStateAction] with the right key is recieved.
   @protected
   @mustCallSuper
   void setState(StateBlocState blocState) {
@@ -259,7 +259,19 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
       throw InvalidStateBlocStateError(this, blocState);
     } else {
       blocState.stateMap.forEach((id, state) {
-        //TODO:add the data using addDynamic
+        stateFieldMap[id].add(state.data);
+        /*final StateField field = stateFieldMap[id];
+        final dynamic data = state.data;
+        if (field.isValidType(data)) {
+          field.add(data);
+        } else {
+          throw InvalidStateBlocStateError(this, blocState,
+              extraMessage: "Types for StateField: ${field.fieldID}\n"
+                  "and FieldState: ${field.fieldID}\n"
+                  "do not match.\n"
+                  "${field.runtimeType}\n"
+                  "${state}\n");
+        }*/
       });
     }
   }

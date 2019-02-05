@@ -16,6 +16,9 @@ class InvalidStateBlocStateError extends Error {
   ///The invalid [StateBlocState].
   final StateBlocState blocState;
 
+  ///An optional extra message with more details.
+  final String extraMessage;
+
   ///True if this error was thrown because an invalid initial [StateBlocState]
   ///was provided.
   ///
@@ -24,7 +27,7 @@ class InvalidStateBlocStateError extends Error {
   final bool causedByInitialState;
 
   InvalidStateBlocStateError(this.stateBloc, this.blocState,
-      {this.causedByInitialState: false});
+      {this.causedByInitialState: false, this.extraMessage});
 
   ///The key of the [StateBloc].
   String get blocKey => stateBloc.key;
@@ -46,6 +49,9 @@ class InvalidStateBlocStateError extends Error {
     if (keysMatch) {
       stringBuffer.writeln(
           "BlocState contain FieldStates with no matching StateFields in StateBloc.");
+      if (extraMessage != null) {
+        stringBuffer.writeln(extraMessage);
+      }
       if (causedByInitialState) {
         stringBuffer.writeln(
             "This error was caused by an invalid initialState provided to a StateBloc.");
