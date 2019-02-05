@@ -93,7 +93,6 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
         stateQueryObservable = _createQueryObservable(actionObservable, key),
         blocStateObservable = _createStateObservable(actionObservable, key),
         super(key, actionObservable) {
-    _createSaveSubscription();
     _createQuerySubscription();
     _createStateSubscription();
   }
@@ -195,6 +194,12 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
             causedByInitialState: true);
       }
     }
+    /*
+    This listener must be added last as all Fields must be able to handle
+    the action before the state is saved. Saving before all Fields have the 
+    chance to update would result in an inpartially updated state being saved.
+    */
+    _createSaveSubscription();
   }
 
   ///{macro invalid_state_fields}
