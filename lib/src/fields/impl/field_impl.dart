@@ -55,12 +55,6 @@ class FieldImpl<T> implements Field<T> {
   T get lastValue => subject.value;
   void add(T data) => subject.add(data);
 
-  ///{@macro add_dynamic}
-  @override
-  void addDynamic(dynamic data) {
-    add(data as T);
-  }
-
   @override
   @mustCallSuper
   void dispose() {

@@ -30,16 +30,6 @@ abstract class Field<T> {
 
   void add(T data);
 
-  //dispose of resources.
-  ///{@template add_dynamic}
-  ///Set the data in this [Field] to [data].
-  ///
-  ///**If [data]'s runtimeType is not T or a subtype of T a [CastError] will
-  ///be thrown.**
-  ///
-  ///Use [Field.isValidType] to check if [data] can be cast.
-  ///{@endtemplate}
-  void addDynamic(dynamic data);
   //the observable that inputs to this field
   void dispose();
 
