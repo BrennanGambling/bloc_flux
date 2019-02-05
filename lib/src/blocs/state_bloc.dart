@@ -68,6 +68,11 @@ class InvalidStateBlocStateError extends Error {
 //(sync)
 
 abstract class StateBloc extends ValueBloc {
+  ///{@template state}
+  ///Gets the current [StateBlocState] of this [StateBloc].
+  ///{@endtemplate}
+  StateBlocState get state;
+
   Iterable<FieldID> get stateFieldIDs;
 
   ///{@template invalid_state_fields}

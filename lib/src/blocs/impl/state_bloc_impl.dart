@@ -9,6 +9,7 @@ import '../../action/bloc_actions.dart';
 import '../../field_id.dart';
 import '../../fields/state_field.dart';
 import '../../state/bloc_state.dart';
+import '../../state/field_state.dart';
 import '../../state_query.dart';
 import '../state_bloc.dart';
 import 'value_bloc_impl.dart';
@@ -38,21 +39,37 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   final Observable<StateBlocState> blocStateObservable;
 
+  ///The initial [StateBlocState] of this [StateBloc].
+  ///
+  ///If [initialState] was not specified in the constructor this will be null.
   final StateBlocState initialState;
+
+  ///@nodoc
+  ///Internal variable for [lastState].
+  StateBlocState _lastState;
 
   ///@nodoc
   ///The [StreamSubscription] for the [stateQuery()] onData listener of the
   ///[stateQueryObservable].
   ///
-  ///This [StreamSubscription] is cancelled in the [dispose()] method.
+  ///{@template is_canceled_in_dispose}
+  ///This [StreamSubscription] is canceled in the [dispose()] method.
+  ///{@endtemplate}
   StreamSubscription _stateQuerySubscription;
 
   ///@nodoc
   ///The [StreamSubscription] for the [setState()] onData listener of the
   ///[blocStateObservable].
   ///
-  ///This [StreamSubscription] is cancelled in the [dispose()] method.
+  ///{@macro is_canceled_in_dispose}
   StreamSubscription _blocStateSubscription;
+
+  ///@nodoc
+  ///The [StreamSubscription] for the [_saveState()] onData listener of the
+  ///[actionObservable].
+  ///
+  ///{@macro is_canceled_in_dispose}
+  StreamSubscription _saveStateSubscription;
 
   ///@nodoc
   ///Internal variable for the [dispatchState] getter and setter.
@@ -76,6 +93,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
         stateQueryObservable = _createQueryObservable(actionObservable, key),
         blocStateObservable = _createStateObservable(actionObservable, key),
         super(key, actionObservable) {
+    _createSaveSubscription();
     _createQuerySubscription();
     _createStateSubscription();
   }
@@ -130,6 +148,18 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///[permanentForceDispatch] has been called one or more times.
   bool get isForceDispatchPermanent => _permanentForceDispatch;
 
+  ///The [StateBlocState] containing the [FieldState]s of all registered
+  ///[StateField]s before the last [Action] was recieved.
+  StateBlocState get lastState => _lastState;
+
+  ///{@macro state}
+  @override
+  StateBlocState get state {
+    final MapBuilder<FieldID, FieldState> mapBuilder = MapBuilder();
+    stateFieldMap.forEach((id, field) => mapBuilder[id] = field.lastFieldState);
+    return StateBlocState(key, mapBuilder.build());
+  }
+
   ///Returns the [FieldID]s of all registered [StateField]s.
   @override
   Iterable<FieldID> get stateFieldIDs => stateFieldMap.keys;
@@ -146,6 +176,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @mustCallSuper
   void dispose() {
     super.dispose();
+    _saveStateSubscription?.cancel();
     _stateQuerySubscription?.cancel();
     _blocStateSubscription?.cancel();
   }
@@ -188,11 +219,6 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     return listBuilder.build();
   }
 
-  //TODO: register a listener on the actionObservable (before other listeners that effect state)
-  //that calls a method to get the state of this bloc. State should only be sent
-  //to stateUpdated if it is not the same as the previous state. This is required
-  //as otherwise actions like fieldQueries would be considered statechanges.
-
   ///{@macro is_bloc_state_valid}
   ///
   ///{@macro closed_state_error}
@@ -202,8 +228,10 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   bool isBlocStateValid(StateBlocState blocState) {
     checkClosed();
     return blocState.blocKey == key &&
-        blocState.stateMap.keys.every((id) => stateFieldMap.keys.contains(id)) &&
-        blocState.stateMap.keys.every((id) => stateFieldMap[id].isValidType(blocState.stateMap[id]));
+        blocState.stateMap.keys
+            .every((id) => stateFieldMap.keys.contains(id)) &&
+        blocState.stateMap.keys.every(
+            (id) => stateFieldMap[id].isValidType(blocState.stateMap[id]));
   }
 
   ///{@macro is_state_query_valid}
@@ -259,8 +287,40 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///@nodoc
   ///Sets [_blocStateSubscription] to the [StreamSubscription] returned when
   ///[setState()] is added as an onData listener for the [blocStateObservable].
+
+  ///@nodoc
+  ///Sets [_saveStateSubscription] to the [StreamSubscription] returned when
+  ///[_saveState()] is added as an onData listener for the [actionObservable].
+  void _createSaveSubscription() =>
+      _saveStateSubscription = actionObservable.listen((_) => _saveState());
+
+  ///@nodoc
+  ///Sets [_blocStateSubscription] to the [StreamSubscription] returned when
+  ///[setState()] is added as an onData listener for the [blocStateObservable].
   void _createStateSubscription() =>
       _blocStateSubscription = blocStateObservable.listen(setState);
+
+  ///@nodoc
+  ///This method gets the current state from the [state] getter and compares
+  ///it to the last saved state from the [lastState] getter.
+  ///
+  ///If the [StateBlocState]s are not equal [lastState] will be set to the
+  ///current state and passed to the [stateUpdated] method.
+  ///
+  ///This method will always be called before any other listeners of
+  ///[actionObservable] as it is registered before them. This means the state
+  ///is saved **BEFORE** each field reacts to the [Action]. The state is only
+  ///checked for differences once for each [Action] as the state can change
+  ///multiple times in response to one [Action]. Having multiple state changes
+  ///for one [Action] would make features like undo significantly harder to
+  ///implement.
+  void _saveState() {
+    final StateBlocState newState = state;
+    if (_lastState != newState) {
+      _lastState = newState;
+      stateUpdated(_lastState);
+    }
+  }
 
   ///@nodoc
   ///Sets the _dispatchState if it has changed as a result of a method call and
@@ -278,6 +338,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     }
   }
 
+  ///@nodoc
   ///Creates the [stateQueryObservable].
   ///
   ///Operations:
@@ -297,6 +358,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
           .map<StateQuery>((a) => (a as StateQueryAction).stateQuery)
           .where((stateQuery) => stateQuery.blocKey == key);
 
+  ///@nodoc
   ///Creates the [blocStateObservable].
   ///
   ///Operations:
