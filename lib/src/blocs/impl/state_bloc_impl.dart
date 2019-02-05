@@ -287,7 +287,9 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   @mustCallSuper
   void stateUpdated(StateBlocState stateBlocState) {
-    //TODO: implement stateUpdated
+    if (dispatchState) {
+      outputSubject.add(BlocStateValueAction(stateBlocState));
+    }
   }
 
   ///@nodoc
