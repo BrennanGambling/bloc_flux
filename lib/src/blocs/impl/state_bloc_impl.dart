@@ -19,9 +19,9 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   final Map<FieldID, StateField> stateFieldMap;
 
-  ///@nodoc
-  ///Internal variable for [activeStateQueries] getter and setter.
-  int _activeStateQueries;
+  ///A list of all active [StateQuery]s.
+  @protected
+  final List<StateQuery> stateQueries;
 
   ///@nodoc
   ///Internal variable for [forceDispatch] getter and setter.
@@ -86,9 +86,9 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   StateBlocImpl(String key, Observable<Action> actionObservable,
       {this.initialState, bool forceDispatch: false})
       : stateFieldMap = Map(),
+        stateQueries = List(),
         _forceDispatch = forceDispatch,
         _permanentForceDispatch = forceDispatch,
-        _activeStateQueries = 0,
         _dispatchState = forceDispatch,
         stateQueryObservable = _createQueryObservable(actionObservable, key),
         blocStateObservable = _createStateObservable(actionObservable, key),
@@ -100,22 +100,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///The number of [StateQueries] currently registered for this [StateBloc].
   ///
   ///Will always be greater than or equal to 0.
-  int get activeStateQueries => _activeStateQueries;
-
-  ///The number of [StateQueries] currently registered for this [StateBloc].
-  ///
-  ///Must be greater than or equal to 0. If this condition is not met
-  ///an [ArgumentError] will be thrown.
-  set activeStateQueries(int activeStateQueries) {
-    if (activeStateQueries >= 0) {
-      _activeStateQueries = activeStateQueries;
-      _updateDispatchState();
-    } else {
-      throw ArgumentError(
-          "activeStateQueries must be equal to or greater than 0."
-          "\nactiveStateQueries: $activeStateQueries");
-    }
-  }
+  int get activeStateQueries => stateQueries.length;
 
   ///Whether or not to dispatch new [StateBlocState]s.
   @protected
@@ -283,7 +268,16 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @protected
   @mustCallSuper
   void stateQuery(StateQuery stateQuery) {
-    //TODO: implement stateQuery.
+    if (stateQuery.single) {
+      outputSubject.add(BlocStateValueAction(state));
+    } else {
+      if (stateQuery.cancel) {
+        stateQueries.remove(stateQuery);
+      } else {
+        stateQueries.add(stateQuery);
+      }
+    }
+    _updateDispatchState();
   }
 
   ///Called when a new [StateBlocState] is avaliable.
@@ -344,11 +338,11 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///calls [dispatchStateChanged()].
   ///
   ///Called by:
-  ///1. [activeStateQueries]
-  ///2. [forceDispatch]
-  ///3. [permanentForceDispatch]
+  ///1. [forceDispatch]
+  ///2. [permanentForceDispatch]
+  ///3. [stateQuery]
   void _updateDispatchState() {
-    final bool newDispatchState = _activeStateQueries > 0 || _forceDispatch;
+    final bool newDispatchState = activeStateQueries > 0 || _forceDispatch;
     if (_dispatchState != newDispatchState) {
       _dispatchState = newDispatchState;
       dispatchStateChanged();
