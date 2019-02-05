@@ -24,12 +24,15 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
         isUnderspecified ? FullType.object : specifiedType.parameters[0];
 
     final result = <Object>[
-      'data',
-      serializers.serialize(object.data, specifiedType: parameterT),
       'fieldID',
       serializers.serialize(object.fieldID,
           specifiedType: const FullType(FieldID)),
     ];
+    if (object.data != null) {
+      result
+        ..add('data')
+        ..add(serializers.serialize(object.data, specifiedType: parameterT));
+    }
 
     return result;
   }
@@ -78,9 +81,6 @@ class _$FieldState<T> extends FieldState<T> {
       (new FieldStateBuilder<T>()..update(updates)).build();
 
   _$FieldState._({this.data, this.fieldID}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('FieldState', 'data');
-    }
     if (fieldID == null) {
       throw new BuiltValueNullFieldError('FieldState', 'fieldID');
     }

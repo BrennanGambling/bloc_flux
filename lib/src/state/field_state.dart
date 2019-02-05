@@ -11,6 +11,10 @@ import '../serializers.dart';
 
 part 'field_state.g.dart';
 
+/*TODO: make sure the changing of data field to nullable does not have
+any unintended side effects. This was done because the state of some 
+state fields will be mull if an initial state is not given.*/
+
 ///Contains the last output of a [StateField] with the key [key] in field [data].
 @BuiltValue(nestedBuilders: false)
 abstract class FieldState<T>
@@ -58,6 +62,7 @@ abstract class FieldState<T>
 
   //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.
 
+  @nullable
   T get data;
 
   FieldID get fieldID;
