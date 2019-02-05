@@ -166,9 +166,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///Called when the value of dispatchState has changed.
   @protected
   @mustCallSuper
-  void dispatchStateChanged() {
-    //TODO: enable and disable state dispatching.
-  }
+  void dispatchStateChanged() {}
 
   ///Call this method to perform clean up when this is no longer needed.
   @override
