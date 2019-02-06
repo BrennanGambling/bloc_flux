@@ -1,21 +1,35 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart';
-import '../../action/actions.dart';
-import '../../blocs/state_bloc.dart';
-import '../../blocs/bloc.dart';
-import '../../blocs/value_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../action/actions.dart';
+import '../../blocs/bloc.dart';
+import '../../blocs/state_bloc.dart';
+import '../../blocs/value_bloc.dart';
 import '../dispatcher.dart';
 
 class DispatcherImpl implements Dispatcher {
+  ///The [Subject] managing the [actionObservable].
   @protected
-  final PublishSubject<Action> subject;
+  final Subject<Action> subject;
 
+  ///@nodoc
+  ///The [Subject] managing the [inputObservable].
+  ///
+  ///This was done because the [inputObservable] was previously being changed
+  ///every time a input observable was added or removed. This means the
+  ///subscriptions on the previous observable would have to be canceled and
+  ///a new subscription would have to be created in the new one.
+  final Subject<Action> _inputSubject;
+
+  ///{@macro action_observable}
   final Observable<Action> actionObservable;
 
-  Observable<Action> _inputObservable;
-
-  Observable<Action> get inputObservable => _inputObservable;
+  ///The [Observable] carrying the [Action]s being dispatched through all
+  ///added [Observable]s.
+  @protected
+  final Observable<Action> inputObservable;
 
   @protected
   final Map<String, Bloc> blocMap;
@@ -27,28 +41,82 @@ class DispatcherImpl implements Dispatcher {
   final Map<String, StateBloc> stateBlocMap;
 
   @protected
-  final Map<String, Observable> inputObservableMap;
+  final Map<String, Observable<Action>> inputObservableMap;
 
-  DispatcherImpl() : this._(PublishSubject());
+  ///@nodoc
+  ///[StreamSubscription] for the [dispatch] onData listener for
+  ///the [inputObservable].
+  ///
+  ///This [StreamSubscription] is created in the constructor body and will be
+  ///canceled in the [dispose] method.
+  StreamSubscription _inputObservableDispatchSubscription;
 
-  DispatcherImpl._(this.subject) :
-  actionObservable = subject.stream,
-  _inputObservable = Observable.never(),
-  blocMap = Map(),
-  valueBlocMap = Map(),
-  stateBlocMap = Map(),
-  inputObservableMap = Map();
+  ///@nodoc
+  ///[StreamSubscription] for [_inputSubject.add] onData listener for the
+  ///[Observable] resulting from merging all of the [Observable]s in
+  ///[inputObservableMap].
+  ///
+  ///This [StreamSubscription] is canceled (if not null) and recreated in every
+  ///call to [_createInputObservable]. It is also canceled (if not null) in the
+  ///[dispose] method.
+  StreamSubscription _inputObservableSubjectSubscription;
 
-  void addInputObservable(String key, Observable<Action> observable) {
-  
+  DispatcherImpl() : this._(PublishSubject(), PublishSubject());
+
+  ///@nodoc
+  ///This internal constructor is needed as only static variable and variables
+  ///passed in as parameters can be used in the initializer list. To make the
+  ///[actionObservable] and [inputObservable] final they must be set here and
+  ///[subject] and [_inputSubject] must have been already created to do this.
+  DispatcherImpl._(this.subject, this._inputSubject)
+      : actionObservable = subject.stream,
+        inputObservable = _inputSubject.stream,
+        blocMap = Map(),
+        valueBlocMap = Map(),
+        stateBlocMap = Map(),
+        inputObservableMap = Map() {
+    _inputObservableDispatchSubscription = inputObservable.listen(dispatch);
   }
 
-  void dispatch(Action action) {}
+  ///{@macro add_input_observable}
+  void addInputObservable(String key, Observable<Action> observable) {
+    inputObservableMap[key] = observable;
+    _createInputObservable();
+  }
 
+  ///{@macro dispatch}
+  @mustCallSuper
+  void dispatch(Action action) {
+    subject.add(action);
+  }
+
+  ///{@macro dispatcher_dispose}
   void dispose() {
     //TODO: call dispose on all blocs
     //cleanup any resources.
+    _inputObservableDispatchSubscription?.cancel();
+    _inputObservableSubjectSubscription?.cancel();
+    //TODO:dispose blocs
+
+    _inputSubject.close();
+    subject.close();
   }
 
-  void removeInputObservable(String key) {}
+  ///{@macro remove_input_observable}
+  void removeInputObservable(String key) {
+    inputObservableMap.remove(key);
+    _createInputObservable();
+  }
+
+  ///@nodoc
+  ///This method cancels the current [_inputObservableSubjectSubscription]
+  ///(if not null) creates a new one by adding the [_inputSubject.add] onData
+  ///listener to the [Observable] resulting from merging all of the
+  ///[Observable]s in [inputObservableMap].
+  void _createInputObservable() {
+    //TODO: subscription may not be cancelled sync does this matter
+    _inputObservableSubjectSubscription?.cancel();
+    _inputObservableSubjectSubscription =
+        Observable.merge(inputObservableMap.values).listen(_inputSubject.add);
+  }
 }
