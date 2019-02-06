@@ -51,7 +51,6 @@ abstract class BlocImpl implements Bloc {
   ///
   ///If a [Field] with the same [FieldID] as the [field] argument has
   ///already be added it will be replaced.
-  @protected
   @mustCallSuper
   void addField(Field field) => fieldMap[field.fieldID] = field;
 
@@ -102,7 +101,6 @@ abstract class BlocImpl implements Bloc {
 
   ///Removes the [Field] from [fieldMap] with the same [FieldID] as the
   ///[field] argument if it is present.
-  @protected
   @mustCallSuper
   void removeField(Field field) => fieldMap.remove(field.fieldID);
 }

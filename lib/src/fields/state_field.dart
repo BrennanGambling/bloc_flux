@@ -7,15 +7,16 @@
 
 import 'package:rxdart/rxdart.dart';
 
+import '../blocs/impl/state_bloc_impl.dart';
 import '../state/field_state.dart';
 import 'field.dart';
 import 'impl/state_field_impl.dart';
 
 abstract class StateField<T> implements Field<T> {
-  ValueObservable<FieldState<T>> get fieldStateObservable;
-  FieldState<T> get lastFieldState;
-
   factory StateField(String key, String blocKey, Observable<T> inputObservable,
-          bool derived) =>
-      StateFieldImpl(key, blocKey, inputObservable, derived);
+          {bool derived: false, StateBlocImpl stateBloc}) =>
+      StateFieldImpl(key, blocKey, inputObservable, derived, stateBloc);
+  ValueObservable<FieldState<T>> get fieldStateObservable;
+
+  FieldState<T> get lastFieldState;
 }

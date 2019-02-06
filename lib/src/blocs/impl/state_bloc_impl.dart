@@ -14,6 +14,8 @@ import '../../state_query.dart';
 import '../state_bloc.dart';
 import 'value_bloc_impl.dart';
 
+//TODO: get list of fields fieldid
+
 abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///The map of all [StateField] [FieldID]s to registered [StateField]s.
   @protected
@@ -148,6 +150,23 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   @override
   Iterable<FieldID> get stateFieldIDs => stateFieldMap.keys;
 
+  ///Register [stateField] with this [StateBlocImpl].
+  ///
+  ///[stateField] will **NOT** be added to [BlocImpl.fieldMap] if its
+  ///[Field.fieldID] is already contained as a key. It can still be added
+  ///(or overwritten) be calling [BlocImpl.addField].
+  ///
+  ///If [stateField] should **NOT** be added to the [BlocImpl.fieldMap] set
+  ///[addToFieldMap] to false. When not specified it defaults to true.
+  @mustCallSuper
+  void addStateField(StateField stateField, {bool addToFieldMap: true}) {
+    final FieldID fieldID = stateField.fieldID;
+    stateFieldMap[fieldID] = stateField;
+    if (!fieldMap.containsKey(fieldID) && addToFieldMap) {
+      addField(stateField);
+    }
+  }
+
   ///Called when the value of dispatchState has changed.
   @protected
   @mustCallSuper
@@ -237,6 +256,20 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   void permanentForceDispatch() {
     _permanentForceDispatch = true;
     _updateDispatchState();
+  }
+
+  ///Removes [stateField] from this [StateBlocImpl].
+  ///
+  ///If [stateField] should **NOT** be removed from [BlocImpl.fieldMap] set
+  ///[removeFromFieldMap] to false. When not specified it defaults to true.
+  @mustCallSuper
+  void removeStateField(StateField stateField,
+      {bool removeFromFieldMap: true}) {
+    final FieldID fieldID = stateField.fieldID;
+    stateFieldMap.remove(fieldID);
+    if (fieldMap.containsKey(fieldID) && removeFromFieldMap) {
+      removeField(stateField);
+    }
   }
 
   ///Called when a [BlocStateAction] with the right key is recieved.

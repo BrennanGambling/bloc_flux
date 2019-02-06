@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import '../action/field_actions.dart';
+import '../blocs/impl/bloc_impl.dart';
 import '../field_id.dart';
 import 'impl/field_impl.dart';
 
@@ -11,8 +12,8 @@ abstract class Field<T> {
   Observable<T> inputObservable;
 
   factory Field(String key, String blocKey, Observable<T> inputObservable,
-          {bool derived: false}) =>
-      FieldImpl<T>(key, blocKey, inputObservable, derived);
+          {bool derived: false, BlocImpl bloc}) =>
+      FieldImpl<T>(key, blocKey, inputObservable, derived, bloc);
 
   ///true if the fields output is derived from the output of another field.
   bool get derived;

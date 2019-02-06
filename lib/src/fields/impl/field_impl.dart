@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../action/field_actions.dart';
+import '../../blocs/impl/bloc_impl.dart';
 import '../../field_id.dart';
 import '../field.dart';
 
@@ -30,15 +31,18 @@ class FieldImpl<T> implements Field<T> {
 
   //Stream subscription managing the inputObserbable
   //this needs to be canceled when the inputObservable is changed.
-  FieldImpl(
-      String key, String blocKey, Observable<T> inputObservable, bool derived)
+  FieldImpl(String key, String blocKey, Observable<T> inputObservable,
+      bool derived, BlocImpl bloc)
       : this._(key, FieldID(blocKey, key), inputObservable, BehaviorSubject(),
-            derived);
+            derived, bloc);
 
-  FieldImpl._(
-      this.key, this.fieldID, this._inputObservable, this.subject, this.derived)
+  FieldImpl._(this.key, this.fieldID, this._inputObservable, this.subject,
+      this.derived, BlocImpl bloc)
       : observable = subject.stream {
     inputObservableChanged();
+    if (bloc != null) {
+      bloc.addField(this);
+    }
   }
 
   Observable<T> get inputObservable => _inputObservable;
