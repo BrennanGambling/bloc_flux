@@ -31,12 +31,28 @@ class DispatcherImpl implements Dispatcher {
   @protected
   final Observable<Action> inputObservable;
 
+  ///{@template bloc_map}
+  ///A map of all registered [Bloc]s with the [Bloc]s key as the maps key
+  ///and the [Bloc] as the value.
+  ///
+  ///This includes the [Bloc]s in [valueBlocMap] and [stateBlocMap].
+  ///{@endtemplate}
   @protected
   final Map<String, Bloc> blocMap;
 
+  ///{@template value_bloc_map}
+  ///A map of all registered [ValueBloc]s with the [ValueBloc]s key as the maps
+  ///key and the [ValueBloc] as the value.
+  ///
+  ///This includes the [Bloc]s in [stateBlocMap].
+  ///{@endtemplate}
   @protected
   final Map<String, ValueBloc> valueBlocMap;
 
+  ///{@template state_bloc_map}
+  ///A map of all registered [StateBloc]s with the [StateBloc]s key as the maps
+  ///key and the [StateBloc] as the value.
+  ///{@endtemplate}
   @protected
   final Map<String, StateBloc> stateBlocMap;
 
@@ -78,6 +94,18 @@ class DispatcherImpl implements Dispatcher {
     _inputObservableDispatchSubscription = inputObservable.listen(dispatch);
   }
 
+  ///{@macro add_bloc}
+  void addBloc(Bloc bloc) {
+    final String key = bloc.key;
+    blocMap[key] = bloc;
+    if (bloc is ValueBloc) {
+      valueBlocMap[key] = bloc;
+    }
+    if (bloc is StateBloc) {
+      stateBlocMap[key] = bloc;
+    }
+  }
+
   ///{@macro add_input_observable}
   void addInputObservable(String key, Observable<Action> observable) {
     inputObservableMap[key] = observable;
@@ -100,6 +128,25 @@ class DispatcherImpl implements Dispatcher {
 
     _inputSubject.close();
     subject.close();
+  }
+
+  ///{@macro remove_bloc}
+  void removeBloc(Bloc bloc) {
+    final String key = bloc.key;
+    blocMap.remove(key);
+    if (bloc is ValueBloc) {
+      valueBlocMap.remove(key);
+    }
+    if (bloc is StateBloc) {
+      stateBlocMap.remove(key);
+    }
+  }
+
+  ///{@macro remove_bloc_with_key}
+  void removeBlocWithKey(String key) {
+    blocMap.remove(key);
+    valueBlocMap.remove(key);
+    stateBlocMap.remove(key);
   }
 
   ///{@macro remove_input_observable}
