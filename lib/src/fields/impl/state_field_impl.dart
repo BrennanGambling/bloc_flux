@@ -9,7 +9,6 @@ import '../field.dart';
 import '../state_field.dart';
 import 'field_impl.dart';
 
-//TODO: add option to pass in state bloc to auto register
 class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
   static const String stateFieldConcat = "_stateField";
   Field<FieldState<T>> _stateField;

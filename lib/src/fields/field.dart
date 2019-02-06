@@ -5,8 +5,6 @@ import '../blocs/impl/bloc_impl.dart';
 import '../field_id.dart';
 import 'impl/field_impl.dart';
 
-//TODO: add option to pass in bloc to auto register
-
 ///Represents a single output from a bloc.
 abstract class Field<T> {
   Observable<T> inputObservable;
