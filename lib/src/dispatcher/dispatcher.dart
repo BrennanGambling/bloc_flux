@@ -18,6 +18,8 @@ abstract class Dispatcher implements BaseDispatcher {
   ///If a [Bloc] with the same [Bloc.key] is already registered it will be
   ///replaced with [bloc].
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void addBloc(Bloc bloc);
 
   ///{@template remove_bloc}
@@ -25,6 +27,8 @@ abstract class Dispatcher implements BaseDispatcher {
   ///
   ///If [bloc] is not registered with this [Dispatcher] nothing will happen.
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void removeBloc(Bloc bloc);
 
   ///{@template remove_bloc_with_key}
@@ -33,5 +37,7 @@ abstract class Dispatcher implements BaseDispatcher {
   ///If a [Bloc] with [Bloc.key] [key] has not been registered with this
   ///[Dispatcher] nothing will happen.
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void removeBlocWithKey(String key);
 }

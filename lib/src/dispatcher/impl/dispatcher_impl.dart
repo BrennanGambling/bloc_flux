@@ -77,6 +77,8 @@ class DispatcherImpl implements Dispatcher {
   ///[dispose] method.
   StreamSubscription _inputObservableSubjectSubscription;
 
+  bool _closed;
+
   DispatcherImpl() : this._(PublishSubject(), PublishSubject());
 
   ///@nodoc
@@ -87,6 +89,7 @@ class DispatcherImpl implements Dispatcher {
   DispatcherImpl._(this.subject, this._inputSubject)
       : actionObservable = subject.stream,
         inputObservable = _inputSubject.stream,
+        _closed = false,
         blocMap = Map(),
         valueBlocMap = Map(),
         stateBlocMap = Map(),
@@ -94,8 +97,14 @@ class DispatcherImpl implements Dispatcher {
     _inputObservableDispatchSubscription = inputObservable.listen(dispatch);
   }
 
+  ///{@macro dispatcher_closed_getter}
+  bool get closed => _closed;
+
   ///{@macro add_bloc}
+  ///
+  ///{@macro dispatcher_closed}
   void addBloc(Bloc bloc) {
+    checkClosed();
     final String key = bloc.key;
     blocMap[key] = bloc;
     if (bloc is ValueBloc) {
@@ -107,19 +116,41 @@ class DispatcherImpl implements Dispatcher {
   }
 
   ///{@macro add_input_observable}
+  ///
+  ///{@macro dispatcher_closed}
   void addInputObservable(String key, Observable<Action> observable) {
+    checkClosed();
     inputObservableMap[key] = observable;
     _createInputObservable();
   }
 
+  ///@nodoc
+  ///Checks if this [Dispatcher] has been closed and if it has throws a [StateError].
+  void checkClosed() {
+    if (closed) {
+      throw StateError(
+          "This Dispatcher has already had dispose() called on it.");
+    }
+  }
+
   ///{@macro dispatch}
+  ///
+  ///{@macro dispatcher_closed}
   @mustCallSuper
   void dispatch(Action action) {
+    checkClosed();
     subject.add(action);
   }
 
   ///{@macro dispatcher_dispose}
+  ///
+  ///{@template dispatcher_closed}
+  ///This method will throw a [StateError] if this is closed. A [Dispatcher] is
+  ///closed after its [dispose] method is called. To see if a [Dispatcher] is
+  ///closed use getter [closed].
+  ///{@endtemplate}
   void dispose() {
+    checkClosed();
     _inputObservableDispatchSubscription?.cancel();
     _inputObservableSubjectSubscription?.cancel();
 
@@ -127,10 +158,14 @@ class DispatcherImpl implements Dispatcher {
 
     _inputSubject.close();
     subject.close();
+    _closed = true;
   }
 
   ///{@macro remove_bloc}
+  ///
+  ///{@macro dispatcher_closed}
   void removeBloc(Bloc bloc) {
+    checkClosed();
     final String key = bloc.key;
     blocMap.remove(key);
     if (bloc is ValueBloc) {
@@ -142,14 +177,20 @@ class DispatcherImpl implements Dispatcher {
   }
 
   ///{@macro remove_bloc_with_key}
+  ///
+  ///{@macro dispatcher_closed}
   void removeBlocWithKey(String key) {
+    checkClosed();
     blocMap.remove(key);
     valueBlocMap.remove(key);
     stateBlocMap.remove(key);
   }
 
   ///{@macro remove_input_observable}
+  ///
+  ///{@macro dispatcher_closed}
   void removeInputObservable(String key) {
+    checkClosed();
     inputObservableMap.remove(key);
     _createInputObservable();
   }
@@ -159,7 +200,10 @@ class DispatcherImpl implements Dispatcher {
   ///(if not null) creates a new one by adding the [_inputSubject.add] onData
   ///listener to the [Observable] resulting from merging all of the
   ///[Observable]s in [inputObservableMap].
+  ///
+  ///{@macro dispatcher_closed}
   void _createInputObservable() {
+    checkClosed();
     //TODO: subscription may not be cancelled sync does this matter
     _inputObservableSubjectSubscription?.cancel();
     _inputObservableSubjectSubscription =

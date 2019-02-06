@@ -9,6 +9,13 @@ abstract class BaseDispatcher {
   ///{@endtemplate}
   Observable<Action> get actionObservable;
 
+  ///{@template dispatcher_closed_getter}
+  ///Check if this [BaseDispatcher] is closed.
+  ///
+  ///A [BaseDispatcher] is closed after it's [dispose] method has been called.
+  ///{@endtemplate}
+  bool get closed;
+
   ///{@template add_input_observable}
   ///Start dispatching all [Action]s from [observable].
   ///
@@ -18,11 +25,15 @@ abstract class BaseDispatcher {
   ///[key] can be passed to [removeInputObservable] to stop dispatching the
   ///[Action]s from [observable].
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void addInputObservable(String key, Observable<Action> observable);
 
   ///{@template dispatch}
   ///Dispatch [action] to all observers of [actionObservable].
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void dispatch(Action action);
 
   ///{@template dispatcher_dispose}
@@ -32,6 +43,8 @@ abstract class BaseDispatcher {
   ///
   ///This dispatcher should **NOT** be used again.
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void dispose();
 
   ///{@template remove_input_observable}
@@ -39,5 +52,7 @@ abstract class BaseDispatcher {
   ///
   ///If no [Observable]s have been added with [key] nothing will happen.
   ///{@endtemplate}
+  ///
+  ///{@macro dispatcher_closed}
   void removeInputObservable(String key);
 }
