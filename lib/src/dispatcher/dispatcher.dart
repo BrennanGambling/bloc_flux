@@ -8,17 +8,9 @@ import 'package:rxdart/rxdart.dart';
 
 //TODO: does dispatcher need to handle field/state queries
 
+//TODO: document all functionality in class doc.
+
+///A standard implementation of [BaseDispatcher].
 abstract class Dispatcher implements BaseDispatcher {
-
-  void addInputObservable(String key, Observable<Action> observable);
-
-  void dispatch(Action action);
-
-  void dispose() {
-    //TODO: call dispose on all blocs
-    //cleanup any resources.
-  }
-
-  void removeInputObservable(String key);
 
 }
