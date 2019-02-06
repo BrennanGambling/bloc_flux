@@ -120,11 +120,10 @@ class DispatcherImpl implements Dispatcher {
 
   ///{@macro dispatcher_dispose}
   void dispose() {
-    //TODO: call dispose on all blocs
-    //cleanup any resources.
     _inputObservableDispatchSubscription?.cancel();
     _inputObservableSubjectSubscription?.cancel();
-    //TODO:dispose blocs
+
+    blocMap.values.forEach((bloc) => bloc.dispose());
 
     _inputSubject.close();
     subject.close();

@@ -28,6 +28,8 @@ abstract class BaseDispatcher {
   ///{@template dispatcher_dispose}
   ///Perfrom any cleanup operations required.
   ///
+  ///**ALL REGISTERED BLOCS WILL ALSO HAVE THEIR DISPOSE METHOD CALLED.**
+  ///
   ///This dispatcher should **NOT** be used again.
   ///{@endtemplate}
   void dispose();
