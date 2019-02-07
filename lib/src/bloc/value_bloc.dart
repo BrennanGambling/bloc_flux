@@ -2,7 +2,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../action/actions.dart';
 import '../field_id.dart';
-import '../field_query.dart';
+import '../query/field_query.dart';
 import 'bloc.dart';
 
 abstract class ValueBloc extends Bloc {

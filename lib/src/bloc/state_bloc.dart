@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import '../field_id.dart';
 import '../state/bloc_state.dart';
 import '../state/field_state.dart';
-import '../state_query.dart';
+import '../query/state_query.dart';
 import 'value_bloc.dart';
 
 ///Error thrown when a [StateBlocState] [blocState] provided to [stateBloc]

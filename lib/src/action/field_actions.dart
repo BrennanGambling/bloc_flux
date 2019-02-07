@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../field_id.dart';
-import '../field_query.dart';
+import '../query/field_query.dart';
 import 'actions.dart';
 
 ///Dispatch an instance of this [Action] to register a [FieldQuery].

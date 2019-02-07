@@ -13,7 +13,7 @@ export 'src/bloc/impl/value_bloc_impl.dart';
 export 'src/bloc/state_bloc.dart';
 export 'src/bloc/value_bloc.dart';
 export 'src/field_id.dart';
-export 'src/field_query.dart';
+export 'src/query/field_query.dart';
 export 'src/field/field.dart';
 export 'src/field/impl/field_impl.dart';
 export 'src/field/impl/state_field_impl.dart';
@@ -21,6 +21,6 @@ export 'src/field/state_field.dart';
 export 'src/serializers.dart';
 export 'src/state/bloc_state.dart';
 export 'src/state/field_state.dart';
-export 'src/state_query.dart';
+export 'src/query/state_query.dart';
 
 // TODO: Export any libraries intended for clients of this package.

@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../state/bloc_state.dart';
-import '../state_query.dart';
+import '../query/state_query.dart';
 import 'actions.dart';
 
 ///Dispatch an instance of this [Action] to set the state of the [StateBloc].

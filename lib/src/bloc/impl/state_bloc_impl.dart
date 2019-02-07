@@ -10,7 +10,7 @@ import '../../field_id.dart';
 import '../../field/state_field.dart';
 import '../../state/bloc_state.dart';
 import '../../state/field_state.dart';
-import '../../state_query.dart';
+import '../../query/state_query.dart';
 import '../state_bloc.dart';
 import 'value_bloc_impl.dart';
 
