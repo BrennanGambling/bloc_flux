@@ -14,13 +14,10 @@ abstract class Action<T> {
   Action({this.data});
 }
 
-//The Decorator pattern is used so any Action can be decorated as an ErrorAction
-//without having to extend or implement this class.
-
 ///A Decorator for the [Action] class which indicates the request [Action]
-///resulted in an error represented by [E] [error].
+///resulted in an error represented by [error].
 ///
-///If the [ErrorAction] does not require a payload [error] can be left null.
+///If the [ErrorAction] does not require a payload, [error] can be left null.
 @immutable
 abstract class ErrorAction<T, E> implements Action<T> {
   ///The [Action<T>] to wrap.
@@ -29,47 +26,38 @@ abstract class ErrorAction<T, E> implements Action<T> {
   ///The error payload. May be null.
   final E error;
 
-  ///Creates an [ErrorAction] wrapping [Action] [action] with payload [error].
+  ///Creates an [ErrorAction] wrapping [action] with payload [error].
   ErrorAction(this.action, this.error);
 
-  //data is overriden as the super constrctor is called implicitly with no
-  //parameters meaning the super classes data field will always be null.
-
   ///The [data] payload from the wrapped [Action].
+  ///
+  ///This is [action]'s [data] field, not the superclass's [data] field.
   @override
   T get data => action.data;
 }
 
-//TODO: add square brackets around bloc or whatever the final name for the
-//most basic bloc class is.
-
-///Marker interface indicating an [Action] was dispatched from another bloc.
+///Marker interface indicating an [Action] was dispatched from another [Bloc].
 ///
-///DO NOT extend this class as the super classes data field will be left
-///null as the super constructor is not called.
-///
-///In the future this will be used to distinguish user or externally
-///dispatched [Action]s for logging and state serialization purposes.
+///{@template dont_extend_super_not_called}
+///**DO NOT** extend this class as the super classes [Action.data] field will be
+///left null as the super constructor is not called.
+///{@endtemplate}
 @immutable
 abstract class InternalAction<T> implements Action<T> {}
 
 ///Marker interface indicating an [Action] is related to the [StateQuery] or
 ///[FieldQuery] functionality.
 ///
-///DO NOT extend this class as the super classes data field will be left
-///null as the super constructor is not called.
+///{@macro dont_extend_super_not_called}
 @immutable
 abstract class QueryAction<T> implements InternalAction<T> {}
 
-//TODO: add square brackets around bloc or whatever the final name for the
-//most basic bloc class is.
-
-///An [Action] indicating a new value from a bloc.
+///An [Action] indicating a new value from a [Field].
 ///
-///[data] must NOT be null.
+///[data]{@template data_not_null}&#8197;must **NOT** be null otherwise an [ArgumentError] will be thrown.{@endtemplate}
 @immutable
 abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
-  ///[data] must NOT be null.
+  ///[data]{@macro data_not_null}
   ValueAction(T data) : super(data: data) {
     if (data == null) {
       throw ArgumentError.notNull("data must not be null.");
