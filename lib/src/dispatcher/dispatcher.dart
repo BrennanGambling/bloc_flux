@@ -1,6 +1,6 @@
-import '../blocs/bloc.dart';
-import '../blocs/state_bloc.dart';
-import '../blocs/value_bloc.dart';
+import '../bloc/bloc.dart';
+import '../bloc/state_bloc.dart';
+import '../bloc/value_bloc.dart';
 import 'base_dispatcher.dart';
 
 //TODO: does dispatcher need to handle field/state queries
