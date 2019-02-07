@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 import '../../action/actions.dart';
 import '../../action/bloc_actions.dart';
 import '../../field_id.dart';
-import '../../fields/state_field.dart';
+import '../../field/state_field.dart';
 import '../../state/bloc_state.dart';
 import '../../state/field_state.dart';
 import '../../state_query.dart';

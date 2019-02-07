@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
 import '../../field_id.dart';
-import '../../fields/field.dart';
+import '../../field/field.dart';
 import '../bloc.dart';
 
 ///An implementation of a bloc. Extend this for creating a bloc without any
