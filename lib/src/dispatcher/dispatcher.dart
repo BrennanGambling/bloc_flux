@@ -2,6 +2,7 @@ import '../bloc/bloc.dart';
 import '../bloc/state_bloc.dart';
 import '../bloc/value_bloc.dart';
 import 'base_dispatcher.dart';
+import 'impl/dispatcher_impl.dart';
 
 //TODO: does dispatcher need to handle field/state queries
 
@@ -9,6 +10,8 @@ import 'base_dispatcher.dart';
 
 ///A standard implementation of [BaseDispatcher].
 abstract class Dispatcher implements BaseDispatcher {
+  factory Dispatcher() => DispatcherImpl();
+
   ///{@template add_bloc}
   ///Registers [bloc] with this [Dispatcher].
   ///
