@@ -11,7 +11,8 @@ import '../bloc.dart';
 ///{@template impl_needs_interface}
 ///An interface class that extends or implements [Bloc] should be created for
 ///every created subclass of [BlocImpl]. The interface is not required but
-///prevents access from internal variables.
+///prevents access from internal variables. See section at the bottom of
+///[BlocImpl] class documentation for reasoning.
 ///{@endtemplate}
 ///
 ///{@template why_impl_class}

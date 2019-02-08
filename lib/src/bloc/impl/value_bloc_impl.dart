@@ -12,6 +12,17 @@ import '../../query/field_query.dart';
 import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
+///The implementation for [ValueBloc]. Extend this class to create a [Bloc]
+///with automatic dispatching of [ValueAction]s when the data contained in
+///any registered [Field] is updated. This is only done for [Field]s whose
+///[FieldID] have been specified in an active [FieldQuery].
+///
+///[FieldQuery]s can be registered with this [ValueBloc] by dispatching a
+///a [FieldQueryAction] to the [Dispatcher] managing [actionObservable]. The
+///updated values will be dispatched via [outputObservable] to the dispatcher
+///(if this [ValueBloc] is registered with one) in the form of a [FieldValueAction].
+///
+///{@macro impl_needs_interface}
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   ///The [PublishSubject] managing [outputObservable].
   @protected
