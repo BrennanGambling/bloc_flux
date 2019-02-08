@@ -25,7 +25,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   @protected
   final Map<FieldID, StreamSubscription<FieldValueAction>> fieldSubscriptionMap;
 
-  ///A list of all active [FieldQuery]s/
+  ///A list of all active [FieldQuery]s.
   @protected
   final List<FieldQuery> fieldQueries;
 
