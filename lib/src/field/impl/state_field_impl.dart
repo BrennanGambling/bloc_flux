@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../blocs/impl/state_bloc_impl.dart';
+import '../../bloc/impl/state_bloc_impl.dart';
 import '../../field_id.dart';
 import '../../serializers.dart';
 import '../../state/field_state.dart';

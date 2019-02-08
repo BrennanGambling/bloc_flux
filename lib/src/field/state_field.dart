@@ -6,7 +6,7 @@
 
 import 'package:rxdart/rxdart.dart';
 
-import '../blocs/impl/state_bloc_impl.dart';
+import '../bloc/impl/state_bloc_impl.dart';
 import '../state/field_state.dart';
 import 'field.dart';
 import 'impl/state_field_impl.dart';

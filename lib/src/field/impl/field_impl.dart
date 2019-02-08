@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../action/field_actions.dart';
-import '../../blocs/impl/bloc_impl.dart';
+import '../../bloc/impl/bloc_impl.dart';
 import '../../field_id.dart';
 import '../field.dart';
 
