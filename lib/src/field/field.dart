@@ -11,15 +11,22 @@ If not add an analyzer plugin to check.*/
 
 ///A single unit of output from a [Bloc].
 ///
-///This class is an interface for [FieldImpl] but should **only be implemented
+///This class is used as an interface for [FieldImpl] and contains a factory
+///constructor to instantiate one.
+///
+///{@template has_factory_dont_extend}
+///This class is an interface and should **only be implemented
 ///not extended** as it includes a factory constructor.
+///{@endtemplate}
 abstract class Field<T> {
   ///{@template field_constructor}
   ///Instantiates a [FieldImpl] with given parameters.
   ///
-  ///A [bloc] can also be specified to automatically register this Field with
+  ///A [bloc] can also be specified to automatically register this [Field] with
   ///it.
+  ///{@endtemplate}
   ///
+  ///{@template derived_parameter}
   ///If this [Field]s input is derived from the output of another [Field]
   ///set the [derived] optional to true (defaults to false).
   ///{@endtemplate}

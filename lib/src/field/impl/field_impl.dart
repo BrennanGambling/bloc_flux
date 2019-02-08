@@ -45,6 +45,8 @@ class FieldImpl<T> implements Field<T> {
   FieldView<T> _fieldView;
 
   ///{@macro field_constructor}
+  ///
+  ///{@macro derived_parameter}
   FieldImpl(String key, String blocKey, Observable<T> inputObservable,
       bool derived, BlocImpl bloc)
       : this._(FieldID(blocKey, key), inputObservable, BehaviorSubject(),
