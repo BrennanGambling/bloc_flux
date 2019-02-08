@@ -6,16 +6,35 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
 import '../../action/bloc_actions.dart';
-import '../../field_id.dart';
 import '../../field/state_field.dart';
+import '../../field_id.dart';
+import '../../query/state_query.dart';
 import '../../state/bloc_state.dart';
 import '../../state/field_state.dart';
-import '../../query/state_query.dart';
 import '../state_bloc.dart';
 import 'value_bloc_impl.dart';
 
-//TODO: get list of fields fieldid
-
+///The implementation for [StateBlocImpl].
+///
+///Extend this class to create a [Bloc] with automatic creation and dispatching
+///of a [StateBlocState] whenever new data is avaliable from any of the
+///registered [StateField]s.
+///
+///The [StateBlocState] of this [StateBlocImpl] can be obtained by dispatching a
+///[StateQueryAction] to the [Dispatcher] managing [actionObservable].
+///
+///The [StateBlocState] of this [StateBlocImpl] can be set by dispatching a
+///[BlocStateAction] to the [Dispatcher] managing [actionObservable].
+///
+///For setting the, the [StateBlocState.blocKey] must be equal to [key] to set
+///the [StateBlocState] of this [StateBloc]. If it is not equal it will be
+///ignored. It must also be a valid [StateBlocState] for this [StateBloc]. If
+///an invaid [StateBlocState] that has the a [StateBlocState.blocKey] is provided
+///an [InvalidStateBlocStateError] will be thrown.
+///{@macro bloc_state_valid}
+///
+///For requesting the [StateBlocState] the [StateQueryAction.blocKey] must be
+///equal to [key].
 abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///The map of all [StateField] [FieldID]s to registered [StateField]s.
   @protected
@@ -74,17 +93,24 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   StreamSubscription _saveStateSubscription;
 
   ///@nodoc
-  ///Internal variable for the [dispatchState] getter and setter.
+  ///Internal variable for the [dispatchState] getter.
+  ///
+  ///This variable is set to the value of [forceDispatch] specified in the
+  ///constructor and in [_updateDispatchState].
   bool _dispatchState;
 
   ///Creates an instance of this class with the unique identifier [key] and
   ///the input [actionObservable] from the [Dispather].
   ///
-  ///An initialState can be set by specifiy [initialState]. The initial state
-  ///must have the a [StateBlocState.blocKey] equal to [key]. All [FieldState]s
-  ///in the initial state must also have [StateField]s in the [stateFieldMap]
-  ///with equal [FieldID]s. The initial state of the registered [StateField]s
-  ///will not be set until this is registered with a [Dispatcher].
+  ///If the [StateBlocState] should be dispatched everytime it changes set
+  ///[forceDispatch] to true. Forced dispatching cannot be disable once enabled.
+  ///
+  ///An initial [StateBlocState] can be set by specifiy [initialState]. If
+  ///[initailState] is not a valid [StateBlocState] for this [StateBloc]
+  ///an [InvalidStateBlocStateError] will be thrown when the first [Action] is
+  ///recieved from the [Dispatcher] managing [actionObservable].
+  ///
+  ///{@macro bloc_state_valid}
   StateBlocImpl(String key, Observable<Action> actionObservable,
       {this.initialState, bool forceDispatch: false})
       : stateFieldMap = Map(),
@@ -146,7 +172,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     return StateBlocState(key, mapBuilder.build());
   }
 
-  ///Returns the [FieldID]s of all registered [StateField]s.
+  ///{@macro stateFieldIDs_getter}
   @override
   Iterable<FieldID> get stateFieldIDs => stateFieldMap.keys;
 
@@ -167,7 +193,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     }
   }
 
-  ///Called when the value of dispatchState has changed.
+  ///Called when the value of [dispatchState] has changed.
   @protected
   @mustCallSuper
   void dispatchStateChanged() {}
@@ -252,7 +278,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
 
   ///Permanently sets the value of [forceDispatch] to true.
   ///
-  ///Any calls to the [forceDispatch] getter will be ignored after this.
+  ///Any calls to the [forceDispatch] setter will be ignored after this.
   void permanentForceDispatch() {
     _permanentForceDispatch = true;
     _updateDispatchState();
@@ -272,7 +298,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     }
   }
 
-  ///Called when a [BlocStateAction] with the right key is recieved.
+  ///Called when a [BlocStateAction] with a matching [key] is recieved.
   @protected
   @mustCallSuper
   void setState(StateBlocState blocState) {
@@ -297,7 +323,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
     }
   }
 
-  ///Called when a StateQueryAction with the right key is recieved.
+  ///Called when a [StateQueryAction] with a matching [key] is recieved.
   @protected
   @mustCallSuper
   void stateQuery(StateQuery stateQuery) {

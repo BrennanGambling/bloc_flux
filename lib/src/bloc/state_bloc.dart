@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
 
 import '../field_id.dart';
+import '../query/state_query.dart';
 import '../state/bloc_state.dart';
 import '../state/field_state.dart';
-import '../query/state_query.dart';
 import 'value_bloc.dart';
 
 ///Error thrown when a [StateBlocState] [blocState] provided to [stateBloc]
@@ -29,7 +29,7 @@ class InvalidStateBlocStateError extends Error {
   InvalidStateBlocStateError(this.stateBloc, this.blocState,
       {this.causedByInitialState: false, this.extraMessage});
 
-  ///The key of the [StateBloc].
+  ///The [StateBloc.key] of the [StateBloc].
   String get blocKey => stateBloc.key;
 
   ///The [FieldID]s of the [StateField]s contained in the [StateBlocState] but
@@ -40,7 +40,7 @@ class InvalidStateBlocStateError extends Error {
   ///True if the keys of the [StateBloc] and [StateBlocState] match.
   bool get keysMatch => blocKey == stateKey;
 
-  ///The key of the [StateBlocState].
+  ///The [StateBlocState.blocKey] of the [StateBlocState].
   String get stateKey => blocState.blocKey;
 
   @override
@@ -73,12 +73,18 @@ class InvalidStateBlocStateError extends Error {
 //the next action wont be processed until all listeners on actionObservable have finished
 //(sync)
 
+///[StateBloc] interface. Extend this class to create an interface for a [StateBlocImpl].
+///
+///See [StateBlocImpl] for more information.
 abstract class StateBloc extends ValueBloc {
   ///{@template state}
   ///Gets the current [StateBlocState] of this [StateBloc].
   ///{@endtemplate}
   StateBlocState get state;
 
+  ///{@template stateFieldIDs_getter}
+  ///[FieldID]s for all registered [StateField]s.
+  ///{@endtemplate}
   Iterable<FieldID> get stateFieldIDs;
 
   ///{@template invalid_state_fields}
