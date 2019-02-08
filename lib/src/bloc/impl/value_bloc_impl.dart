@@ -47,9 +47,6 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
         .listen(fieldQuery);
   }
 
-  @override
-  Iterable<FieldID> get fieldIDs => fieldMap.keys;
-
   @protected
   @mustCallSuper
   void addAction(Action action) {

@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../action/actions.dart';
+import '../field_id.dart';
 
 //TODO: when source generation is added generate interfaces for blocs with just
 //the added fields and key visible. maybe for annotated members only
@@ -10,18 +11,22 @@ import '../action/actions.dart';
 ///
 ///See [BlocImpl] for more information.
 abstract class Bloc {
-  ///The observable with [Action]s from the dispatcher.
+  
+  ///{@macro bloc_action_observable_getter}
   @protected
   Observable<Action> get actionObservable;
 
-  ///True if this [Bloc] has been closed or [actionObservable] has finished.
+  ///{@macro bloc_closed_getter}
   bool get closed;
 
-  ///A unique identifer for this bloc.
+  ///{@macro bloc_key_getter}
   String get key;
 
   ///Dispose of all resources.
   ///
   ///{@macro closed_state_error}
   void dispose();
+
+  ///{@macro field_ids_getter}
+  Iterable<FieldID> get fieldIDs;
 }

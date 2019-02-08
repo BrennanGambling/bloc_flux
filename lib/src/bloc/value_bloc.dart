@@ -5,8 +5,10 @@ import '../field_id.dart';
 import '../query/field_query.dart';
 import 'bloc.dart';
 
+///[ValueBloc] interface. Extend this class to create an interface for a [ValueBlocImpl].
+///
+///See [ValueBlocImpl] for more information.
 abstract class ValueBloc extends Bloc {
-  Iterable<FieldID> get fieldIDs;
   Observable<Action> get outputObservable;
 
   ///{@template invalid_fields}

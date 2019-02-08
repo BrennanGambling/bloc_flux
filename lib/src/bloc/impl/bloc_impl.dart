@@ -21,7 +21,9 @@ import '../bloc.dart';
 ///analyzer will show warnings.
 ///{@endtemplate}
 abstract class BlocImpl implements Bloc {
-  ///A unique identifier for the [Bloc].
+  ///{@template bloc_key_getter}
+  ///A unique identifer for this [Bloc].
+  ///{@endtemplate}
   final String key;
 
   ///@nodoc
@@ -30,12 +32,20 @@ abstract class BlocImpl implements Bloc {
   ///Initially false but set to true when [init] is called.
   bool _init;
 
-  ///The [Observable] carrying [Action]s from the dispatcher.
+  ///{@template bloc_action_observable_getter}
+  ///The observable with [Action]s from the [Dispatcher].
+  ///{@endtemplate}
   final Observable<Action> actionObservable;
 
   ///@nodoc
   ///Internal variable for managing the closes state of this [Bloc].
   bool _closed;
+
+  ///{@template field_ids_getter}
+  ///[FieldID]s for all registered [Field]s.
+  ///{@endtemplate}
+  @override
+  Iterable<FieldID> get fieldIDs => fieldMap.keys;
 
   ///A map of all FieldIDs to Fields.
   @protected
@@ -50,7 +60,9 @@ abstract class BlocImpl implements Bloc {
     actionObservable.first.then(init);
   }
 
-  ///True if [dispose] has been called or [actionObservable] has finished.
+  ///{@template bloc_closed_getter}
+  ///True if this [Bloc] has been closed or [actionObservable] has finished.
+  ///{@endtemplate}
   bool get closed => _closed;
 
   ///Whether or not [init()] has been called.
