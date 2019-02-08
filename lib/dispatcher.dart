@@ -34,3 +34,27 @@ export 'src/dispatcher/dispatcher.dart';
 ///be instantiated.
 ///{@endtemplate}
 final Dispatcher dispatcher = Dispatcher();
+
+///@nodoc
+///Map of all [Dispatcher]s created with [getDispatcher].
+///
+///This is a private variable.
+final Map<String, Dispatcher> _dispatcherMap = Map();
+
+///Get a [Dispatcher] with [key] as a unique identifier.
+///
+///If the [key] has never been used in a call to this method a new [Dispatcher]
+///will be created.
+///
+///If a new [Dispatcher] is required with the same [key] set [overwrite] to true.
+///The previous [Dispatcher] created with [key] will be lost.
+Dispatcher getDispatcher(String key, {bool overwrite: false}) {
+  if (!_dispatcherMap.containsKey(key)) {
+    _dispatcherMap[key] = Dispatcher();
+  } else {
+    if (overwrite) {
+      _dispatcherMap[key] = Dispatcher();
+    }
+  }
+  return _dispatcherMap[key];
+}
