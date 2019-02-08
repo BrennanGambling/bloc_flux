@@ -9,6 +9,10 @@ import 'bloc.dart';
 ///
 ///See [ValueBlocImpl] for more information.
 abstract class ValueBloc extends Bloc {
+  ///{template output_observable}
+  ///The [Observable] carrying [Action]s from within this [ValueBlocImpl]
+  ///that need to be dispatched.
+  ///{@endtemplate}
   Observable<Action> get outputObservable;
 
   ///{@template invalid_fields}

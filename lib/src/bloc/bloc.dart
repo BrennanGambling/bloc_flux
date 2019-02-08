@@ -11,13 +11,15 @@ import '../field_id.dart';
 ///
 ///See [BlocImpl] for more information.
 abstract class Bloc {
-  
   ///{@macro bloc_action_observable_getter}
   @protected
   Observable<Action> get actionObservable;
 
   ///{@macro bloc_closed_getter}
   bool get closed;
+
+  ///{@macro field_ids_getter}
+  Iterable<FieldID> get fieldIDs;
 
   ///{@macro bloc_key_getter}
   String get key;
@@ -26,7 +28,4 @@ abstract class Bloc {
   ///
   ///{@macro closed_state_error}
   void dispose();
-
-  ///{@macro field_ids_getter}
-  Iterable<FieldID> get fieldIDs;
 }

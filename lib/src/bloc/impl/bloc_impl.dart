@@ -2,8 +2,8 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
-import '../../field_id.dart';
 import '../../field/field.dart';
+import '../../field_id.dart';
 import '../bloc.dart';
 
 ///The implementation for [Bloc]. Extend this class to create a basic [Bloc].
@@ -17,7 +17,7 @@ import '../bloc.dart';
 ///{@template why_impl_class}
 ///Impls classes are used due to Dart's lack of protected variable. Any variables
 ///that are declared as public but aren't intended for use other than in subclasses
-///are marked with the protected annotation. They can still be access but the 
+///are marked with the protected annotation. They can still be access but the
 ///analyzer will show warnings.
 ///{@endtemplate}
 abstract class BlocImpl implements Bloc {
@@ -33,19 +33,13 @@ abstract class BlocImpl implements Bloc {
   bool _init;
 
   ///{@template bloc_action_observable_getter}
-  ///The observable with [Action]s from the [Dispatcher].
+  ///The [Observable] carrying [Action]s from the [Dispatcher].
   ///{@endtemplate}
   final Observable<Action> actionObservable;
 
   ///@nodoc
   ///Internal variable for managing the closes state of this [Bloc].
   bool _closed;
-
-  ///{@template field_ids_getter}
-  ///[FieldID]s for all registered [Field]s.
-  ///{@endtemplate}
-  @override
-  Iterable<FieldID> get fieldIDs => fieldMap.keys;
 
   ///A map of all FieldIDs to Fields.
   @protected
@@ -64,6 +58,12 @@ abstract class BlocImpl implements Bloc {
   ///True if this [Bloc] has been closed or [actionObservable] has finished.
   ///{@endtemplate}
   bool get closed => _closed;
+
+  ///{@template field_ids_getter}
+  ///[FieldID]s for all registered [Field]s.
+  ///{@endtemplate}
+  @override
+  Iterable<FieldID> get fieldIDs => fieldMap.keys;
 
   ///Whether or not [init()] has been called.
   ///

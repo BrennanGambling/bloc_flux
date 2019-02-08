@@ -6,35 +6,40 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
 import '../../action/field_actions.dart';
+import '../../field/field.dart';
 import '../../field_id.dart';
 import '../../query/field_query.dart';
-import '../../field/field.dart';
 import '../value_bloc.dart';
 import 'bloc_impl.dart';
 
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
-  ///The subject that manages Action output to dispatcher.
+  ///The [PublishSubject] managing [outputObservable].
   @protected
   final PublishSubject<Action> outputSubject;
 
-  ///The observable for Action output to Dispatcher.
+  ///{@macro output_observable}
   @override
   final Observable<Action> outputObservable;
 
-  ///A map of FieldIDs to StreamSubscriptions for currently subscribed fields.
+  ///A map of [FieldID]s to [StreamSubscription]s for currently subscribed [Field]s.
   @protected
   final Map<FieldID, StreamSubscription<FieldValueAction>> fieldSubscriptionMap;
 
-  ///A list of all active field queries
+  ///A list of all active [FieldQuery]s/
   @protected
   final List<FieldQuery> fieldQueries;
 
-  ///StreamSubscription for fieldQuery() onData listener.
+  ///[StreamSubscription] for [fieldQuery()] onData listener.
   StreamSubscription _fieldQueryActionSubscription;
 
   ValueBlocImpl(String key, Observable<Action> actionObservable)
       : this._(key, actionObservable, PublishSubject());
 
+  ///@nodoc
+  ///Internal constructor.
+  ///
+  ///This is needed to set [outputObservable] as it is set to the [PublishSubject]
+  ///that [outputSubject] is set to.
   ValueBlocImpl._(
       String key, Observable<Action> actionObservable, this.outputSubject)
       : outputObservable = outputSubject.stream,
@@ -47,9 +52,10 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
         .listen(fieldQuery);
   }
 
+  ///Add an [Action] to be dispatched.
   @protected
   @mustCallSuper
-  void addAction(Action action) {
+  void dispacthAction(Action action) {
     outputSubject.add(action);
   }
 
@@ -61,6 +67,9 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     _fieldQueryActionSubscription?.cancel();
   }
 
+  ///Creates and cancels any [StreamSubscription]s for the updated set of
+  ///[Field]s to dispatch new values from.
+  ///
   ///This is called after [fieldQuery()] is called.
   @protected
   @mustCallSuper
@@ -85,7 +94,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
       final Field field = fieldMap[id];
       final Observable<FieldValueAction> observable =
           field.observable.map(field.getTypedValueAction);
-      fieldSubscriptionMap[id] = observable.listen(addAction);
+      fieldSubscriptionMap[id] = observable.listen(dispacthAction);
     });
 
     //Create a Set of FieldIDs for Fields that need their subscription cancelled.
@@ -98,8 +107,8 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
     });
   }
 
-  ///This method is called to add a FieldQuery to this ValueBloc via a
-  ///[FieldQueryAction].
+  ///This method is called to add a [FieldQuery] recieved via a [FieldQueryAction].
+  @protected
   @mustCallSuper
   void fieldQuery(FieldQuery fieldQuery) {
     //make sure all fields in FieldQuery are in this bloc.
@@ -108,7 +117,7 @@ abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
       //if this is a one time request dispatch the lastValues for the specified Fields.
       fieldQuery.fieldIDs.forEach((id) {
         final Field field = fieldMap[id];
-        addAction(field.getTypedValueAction(field.lastValue));
+        dispacthAction(field.getTypedValueAction(field.lastValue));
       });
     } else if (fieldQuery.cancel) {
       fieldQueries.remove(fieldQuery);
