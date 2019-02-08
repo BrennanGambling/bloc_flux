@@ -8,7 +8,12 @@ import 'impl/dispatcher_impl.dart';
 
 //TODO: document all functionality in class doc.
 
-///A standard implementation of [BaseDispatcher].
+///[Dispatcher] interface.
+///
+///**IMPLEMENT** this class to create an interface for a [DispatcherImpl].
+///This class should **NOT** be extended as it contains a factory constructor.
+///
+///See [DispatcherImpl] for more information.
 abstract class Dispatcher implements BaseDispatcher {
   factory Dispatcher() => DispatcherImpl();
 

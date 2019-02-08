@@ -39,7 +39,9 @@ abstract class BlocImpl implements Bloc {
   final Observable<Action> actionObservable;
 
   ///@nodoc
+  ///{@template _closed}
   ///Internal variable for managing the closes state of this [Bloc].
+  ///{@endtemplate}
   bool _closed;
 
   ///A map of all FieldIDs to Fields.

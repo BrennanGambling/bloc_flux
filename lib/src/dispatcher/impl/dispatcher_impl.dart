@@ -9,6 +9,13 @@ import '../../bloc/state_bloc.dart';
 import '../../bloc/value_bloc.dart';
 import '../dispatcher.dart';
 
+///[Dispatcher] implementation.
+///
+///Extend this class to create a [Dispatcher] with basic functionality and
+///management of the [ValueBloc.outputObservable] for [ValueBloc] and its
+///subclasses.
+///
+///{@macro impl_needs_interface}
 class DispatcherImpl implements Dispatcher {
   ///The [Subject] managing the [actionObservable].
   @protected
@@ -56,6 +63,9 @@ class DispatcherImpl implements Dispatcher {
   @protected
   final Map<String, StateBloc> stateBlocMap;
 
+  ///{@template input_observable_map}
+  ///A map of all added input [Observable]s with the String given when it was
+  ///added as the key and the [Observable] as the value.
   @protected
   final Map<String, Observable<Action>> inputObservableMap;
 
@@ -77,6 +87,8 @@ class DispatcherImpl implements Dispatcher {
   ///[dispose] method.
   StreamSubscription _inputObservableSubjectSubscription;
 
+  ///@nodoc
+  ///{@macro _closed}
   bool _closed;
 
   DispatcherImpl() : this._(PublishSubject(), PublishSubject());
