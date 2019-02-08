@@ -9,6 +9,11 @@ import '../field.dart';
 import '../state_field.dart';
 import 'field_impl.dart';
 
+///A single unit of output from a [StateBloc] with added state management
+///capabilities whe registered with a [StateBlocImpl].
+///
+///This class is an interface for [StateFieldImpl] and contains a factory
+///constructor to instantiate one.
 class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
   static const String stateFieldConcat = "_stateField";
   Field<FieldState<T>> _stateField;
@@ -18,12 +23,11 @@ class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
       : super(key, blocKey, inputObservable, derived, stateBloc) {
     isSerializable(T);
     final String keyConcat = key + stateFieldConcat;
-    final String blocKeyConcat = blocKey + stateFieldConcat;
     _stateField = Field(
         keyConcat,
-        blocKeyConcat,
+        blocKey,
         super.observable.map<FieldState<T>>((output) =>
-            FieldState<T>(FieldID(keyConcat, blocKeyConcat), output)));
+            FieldState<T>(FieldID(keyConcat, blocKey), output)));
     if (stateBloc != null) {
       stateBloc.addStateField(this);
     }
