@@ -6,9 +6,9 @@ import '../action/actions.dart';
 //TODO: when source generation is added generate interfaces for blocs with just
 //the added fields and key visible. maybe for annotated members only
 
-///Basic Bloc interface.
+///[Bloc] interface. Extend this class to create an interface for a [BlocImpl].
 ///
-///Extend this class to create the interface for a Bloc.
+///See [BlocImpl] for more information.
 abstract class Bloc {
   ///The observable with [Action]s from the dispatcher.
   @protected

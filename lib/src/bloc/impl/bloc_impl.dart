@@ -6,8 +6,20 @@ import '../../field_id.dart';
 import '../../field/field.dart';
 import '../bloc.dart';
 
-///An implementation of a bloc. Extend this for creating a bloc without any
-///extra features.
+///The implementation for [Bloc]. Extend this class to create a basic [Bloc].
+///
+///{@template impl_needs_interface}
+///An interface class that extends or implements [Bloc] should be created for
+///every created subclass of [BlocImpl]. The interface is not required but
+///prevents access from internal variables.
+///{@endtemplate}
+///
+///{@template why_impl_class}
+///Impls classes are used due to Dart's lack of protected variable. Any variables
+///that are declared as public but aren't intended for use other than in subclasses
+///are marked with the protected annotation. They can still be access but the 
+///analyzer will show warnings.
+///{@endtemplate}
 abstract class BlocImpl implements Bloc {
   ///A unique identifier for the [Bloc].
   final String key;
