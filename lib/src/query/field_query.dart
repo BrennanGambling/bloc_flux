@@ -99,7 +99,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
 
   ///Instantiates a [FieldQuery] from builder function.
   ///
-  ///{@macro single_and_cancel}
+  ///{@macro field_single_and_cancel}
   ///
   ///{@macro ids_blocKey_equal}
   factory FieldQuery.fromBuilder([updates(FieldQueryBuilder b)]) = _$FieldQuery;
@@ -107,7 +107,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///@ndoc
   ///Internal constructor.
   ///
-  ///{@macro single_and_cancel}
+  ///{@macro field_single_and_cancel}
   ///
   ///{@macro ids_blocKey_equal}
   FieldQuery._() {
@@ -173,7 +173,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///@nodoc
   ///Performs checks when the internal constructor is called.
   ///
-  ///{@template single_and_cancel}
+  ///{@template field_single_and_cancel}
   ///[single] and [cancel] cannot both be true as only [subscription] [FieldQuery]s
   ///can be cancelled.
   ///{@endtemplate}
