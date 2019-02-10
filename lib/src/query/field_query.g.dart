@@ -18,20 +18,20 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
   Iterable serialize(Serializers serializers, FieldQuery object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'single',
-      serializers.serialize(object.single, specifiedType: const FullType(bool)),
-      'cancel',
-      serializers.serialize(object.cancel, specifiedType: const FullType(bool)),
       'blocKey',
       serializers.serialize(object.blocKey,
           specifiedType: const FullType(String)),
+      'cancel',
+      serializers.serialize(object.cancel, specifiedType: const FullType(bool)),
+      'single',
+      serializers.serialize(object.single, specifiedType: const FullType(bool)),
     ];
-    if (object.fieldKeys != null) {
+    if (object.fieldIDs != null) {
       result
-        ..add('fieldKeys')
-        ..add(serializers.serialize(object.fieldKeys,
+        ..add('fieldIDs')
+        ..add(serializers.serialize(object.fieldIDs,
             specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+                const FullType(BuiltList, const [const FullType(FieldID)])));
     }
 
     return result;
@@ -48,23 +48,22 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'single':
-          result.single = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'blocKey':
+          result.blocKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'cancel':
           result.cancel = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'blocKey':
-          result.blocKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'fieldIDs':
+          result.fieldIDs = serializers.deserialize(value,
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(FieldID)])) as BuiltList;
           break;
-        case 'fieldKeys':
-          result.fieldKeys = serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList;
+        case 'single':
+          result.single = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -75,30 +74,30 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
 
 class _$FieldQuery extends FieldQuery {
   @override
-  final bool single;
+  final String blocKey;
   @override
   final bool cancel;
   @override
-  final String blocKey;
+  final BuiltList<FieldID> fieldIDs;
   @override
-  final BuiltList<String> fieldKeys;
+  final bool single;
   bool __all;
+  BuiltList<String> __fieldKeys;
   bool __subscription;
-  BuiltList<FieldID> __fieldIDs;
 
   factory _$FieldQuery([void updates(FieldQueryBuilder b)]) =>
       (new FieldQueryBuilder()..update(updates)).build();
 
-  _$FieldQuery._({this.single, this.cancel, this.blocKey, this.fieldKeys})
+  _$FieldQuery._({this.blocKey, this.cancel, this.fieldIDs, this.single})
       : super._() {
-    if (single == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'single');
+    if (blocKey == null) {
+      throw new BuiltValueNullFieldError('FieldQuery', 'blocKey');
     }
     if (cancel == null) {
       throw new BuiltValueNullFieldError('FieldQuery', 'cancel');
     }
-    if (blocKey == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'blocKey');
+    if (single == null) {
+      throw new BuiltValueNullFieldError('FieldQuery', 'single');
     }
   }
 
@@ -106,10 +105,10 @@ class _$FieldQuery extends FieldQuery {
   bool get all => __all ??= super.all;
 
   @override
-  bool get subscription => __subscription ??= super.subscription;
+  BuiltList<String> get fieldKeys => __fieldKeys ??= super.fieldKeys;
 
   @override
-  BuiltList<FieldID> get fieldIDs => __fieldIDs ??= super.fieldIDs;
+  bool get subscription => __subscription ??= super.subscription;
 
   @override
   FieldQuery rebuild(void updates(FieldQueryBuilder b)) =>
@@ -122,24 +121,24 @@ class _$FieldQuery extends FieldQuery {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is FieldQuery &&
-        single == other.single &&
         blocKey == other.blocKey &&
-        fieldKeys == other.fieldKeys;
+        fieldIDs == other.fieldIDs &&
+        single == other.single;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc(0, single.hashCode), blocKey.hashCode), fieldKeys.hashCode));
+    return $jf(
+        $jc($jc($jc(0, blocKey.hashCode), fieldIDs.hashCode), single.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('FieldQuery')
-          ..add('single', single)
-          ..add('cancel', cancel)
           ..add('blocKey', blocKey)
-          ..add('fieldKeys', fieldKeys))
+          ..add('cancel', cancel)
+          ..add('fieldIDs', fieldIDs)
+          ..add('single', single))
         .toString();
   }
 }
@@ -147,30 +146,30 @@ class _$FieldQuery extends FieldQuery {
 class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   _$FieldQuery _$v;
 
-  bool _single;
-  bool get single => _$this._single;
-  set single(bool single) => _$this._single = single;
+  String _blocKey;
+  String get blocKey => _$this._blocKey;
+  set blocKey(String blocKey) => _$this._blocKey = blocKey;
 
   bool _cancel;
   bool get cancel => _$this._cancel;
   set cancel(bool cancel) => _$this._cancel = cancel;
 
-  String _blocKey;
-  String get blocKey => _$this._blocKey;
-  set blocKey(String blocKey) => _$this._blocKey = blocKey;
+  BuiltList<FieldID> _fieldIDs;
+  BuiltList<FieldID> get fieldIDs => _$this._fieldIDs;
+  set fieldIDs(BuiltList<FieldID> fieldIDs) => _$this._fieldIDs = fieldIDs;
 
-  BuiltList<String> _fieldKeys;
-  BuiltList<String> get fieldKeys => _$this._fieldKeys;
-  set fieldKeys(BuiltList<String> fieldKeys) => _$this._fieldKeys = fieldKeys;
+  bool _single;
+  bool get single => _$this._single;
+  set single(bool single) => _$this._single = single;
 
   FieldQueryBuilder();
 
   FieldQueryBuilder get _$this {
     if (_$v != null) {
-      _single = _$v.single;
-      _cancel = _$v.cancel;
       _blocKey = _$v.blocKey;
-      _fieldKeys = _$v.fieldKeys;
+      _cancel = _$v.cancel;
+      _fieldIDs = _$v.fieldIDs;
+      _single = _$v.single;
       _$v = null;
     }
     return this;
@@ -193,10 +192,10 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   _$FieldQuery build() {
     final _$result = _$v ??
         new _$FieldQuery._(
-            single: single,
-            cancel: cancel,
             blocKey: blocKey,
-            fieldKeys: fieldKeys);
+            cancel: cancel,
+            fieldIDs: fieldIDs,
+            single: single);
     replace(_$result);
     return _$result;
   }
