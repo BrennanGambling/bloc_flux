@@ -16,13 +16,13 @@ part 'field_query.g.dart';
 ///of [FieldValueAction]s.
 ///
 ///## Single Mode
-///{@template single_mode}
+///{@template field_single_mode}
 ///For [single] [FieldQuery]s the most recent value of the requested [Field]s will
 ///be provided once.
 ///{@endtemplate}
 ///
 ///## Subscription Mode
-///{@template subscription_mode}
+///{@template field_subscription_mode}
 ///For [subscription] [FieldQuery]s the values of the requested [Field]s will be
 ///be provided as they are updated.
 ///{@endtemplate}
@@ -83,6 +83,119 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
           ..cancel = false;
       });
 
+  ///Instantiates a [FieldQuery] where [fieldQuery.cancel] equals true.
+  ///
+  ///Use this to cancel [fieldQuery]. The returned [FieldQuery] must still be dispatched.
+  ///
+  ///[fieldQuery] must not be a single [FieldQuery]. That is [fieldQuery.single]
+  ///should equal [false].
+  factory FieldQuery.cancel(FieldQuery fieldQuery) {
+    if (fieldQuery.single) {
+      throw ArgumentError(
+          "A FieldQuery with single set to true cannot be canceled.");
+    }
+    return (fieldQuery.toBuilder()..cancel = true).build();
+  }
+
+  ///Instantiates a [FieldQuery] from builder function.
+  ///
+  ///{@macro single_and_cancel}
+  ///
+  ///{@macro ids_blocKey_equal}
+  factory FieldQuery.fromBuilder([updates(FieldQueryBuilder b)]) = _$FieldQuery;
+
+  ///@ndoc
+  ///Internal constructor.
+  ///
+  ///{@macro single_and_cancel}
+  ///
+  ///{@macro ids_blocKey_equal}
+  FieldQuery._() {
+    _internalParameterChecks(single, cancel, blocKey, fieldIDs.toList());
+  }
+
+  ///True if this [FieldQuery] is for all [Field]s in the specified [ValueBloc].
+  @memoized
+  bool get all => fieldIDs == null;
+
+  ///The [key] of the [ValueBloc] containing the specified [Field]s.
+  String get blocKey;
+
+  ///True if this [FieldQuery] is canceling an equal [FieldQuery].
+  ///
+  ///{@template equal_field_query}
+  ///[FieldQuery] are equal if every variable other than [cancel] are equal.
+  ///{@endtemplate}
+  @BuiltValueField(compare: false)
+  bool get cancel;
+
+  ///The [FieldID]s for the [Field]s that should be queried.
+  @nullable
+  BuiltList<FieldID> get fieldIDs;
+
+  ///The keys provided to the [Field] constructor for the [Field]s that should
+  ///be queried.
+  @memoized
+  @nullable
+  BuiltList<String> get fieldKeys => fieldIDs?.map((id) => id.fieldKey);
+
+  ///True if this [FieldQuery] is a one time request.
+  ///
+  ///{@macro field_single_mode}
+  ///
+  ///[single] will always be the opposite of [subscription].
+  bool get single;
+
+  ///True if this [FieldQuery] is a subscription.
+  ///
+  ///{@macro field_subscription_mode}
+  ///
+  ///[subscription] will always be the opposite of [single].
+  @memoized
+  bool get subscription => !single;
+
+  ///@nodoc
+  ///Performs checks of fieldIDs parameter.
+  ///
+  ///{@template ids_specified}
+  ///If [fieldIDs] is specified the [FieldID.blocKey] for each element must be
+  ///the same, **otherwise an [ArgumentError] will be thrown.**
+  ///{@endtemplate}
+  static void _fieldIDsCheck(List<FieldID> fieldIDs) {
+    if (fieldIDs != null) {
+      if (!fieldIDs.every((id) => id.blocKey == fieldIDs.first.blocKey)) {
+        throw ArgumentError(
+            "If fieldIDs is specified the blocKey for each of the elements must be equal.");
+      }
+    }
+  }
+
+  ///@nodoc
+  ///Performs checks when the internal constructor is called.
+  ///
+  ///{@template single_and_cancel}
+  ///[single] and [cancel] cannot both be true as only [subscription] [FieldQuery]s
+  ///can be cancelled.
+  ///{@endtemplate}
+  ///
+  ///{@template ids_blocKey_equal}
+  ///The [FieldID.blocKey] of each element in [fieldIDs] must be equal to [blocKey].
+  ///{@endtemplate}
+  static void _internalParameterChecks(
+      bool single, bool cancel, String blocKey, List<FieldID> fieldIDs) {
+    if (single && cancel) {
+      throw StateError(
+          "single and cancel cannot both be true as only subscriptions can be canceld.");
+    }
+
+    if (fieldIDs != null) {
+      if (!fieldIDs.every((id) => id.blocKey == blocKey)) {
+        throw StateError(
+            "The FieldID.blocKey of each element in fieldIDs must be equal to blocKey.");
+      }
+    }
+  }
+
   ///@nodoc
   ///Performs checks on constructor parameters.
   ///
@@ -123,7 +236,8 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
 
     if (nonNullFields == 0) {
       if (blocKeyNull) {
-        throw ArgumentError("If none of the ID or Key parameters are specified blocKey must be.");
+        throw ArgumentError(
+            "If none of the ID or Key parameters are specified blocKey must be.");
       }
     } else if (nonNullFields > 1) {
       throw ArgumentError(
@@ -139,115 +253,4 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
 
     _fieldIDsCheck(fieldIDs);
   }
-
-  ///@nodoc
-  ///Performs checks of fieldIDs parameter.
-  ///
-  ///{@template ids_specified}
-  ///If [fieldIDs] is specified the [FieldID.blocKey] for each element must be
-  ///the same, **otherwise an [ArgumentError] will be thrown.**
-  ///{@endtemplate}
-  static void _fieldIDsCheck(List<FieldID> fieldIDs) {
-    if (fieldIDs != null) {
-      if (!fieldIDs.every((id) => id.blocKey == fieldIDs.first.blocKey)) {
-        throw ArgumentError(
-            "If fieldIDs is specified the blocKey for each of the elements must be equal.");
-      }
-    }
-  }
-
-  ///Instantiates a [FieldQuery] where [fieldQuery.cancel] equals false.
-  ///
-  ///Use this to cancel [fieldQuery]. The returned [FieldQuery] must still be dispatched.
-  ///
-  ///[fieldQuery] must not be a single [FieldQuery]. That is [fieldQuery.single]
-  ///should equal [false].
-  factory FieldQuery.cancel(FieldQuery fieldQuery) {
-    if (fieldQuery.single) {
-      throw ArgumentError(
-          "A FieldQuery with single set to true cannot be canceled.");
-    }
-    return (fieldQuery.toBuilder()..cancel = true).build();
-  }
-
-  ///Instantiates a [FieldQuery] from builder function.
-  ///
-  ///{@macro single_and_cancel}
-  ///
-  ///{@macro ids_blocKey_equal}
-  factory FieldQuery.fromBuilder([updates(FieldQueryBuilder b)]) = _$FieldQuery;
-
-  ///@ndoc
-  ///Internal constructor.
-  ///
-  ///{@macro single_and_cancel}
-  ///
-  ///{@macro ids_blocKey_equal}
-  FieldQuery._() {
-    _internalParameterChecks(single, cancel, blocKey, fieldIDs.toList());
-  }
-
-  ///@nodoc
-  ///Performs checks when the internal constructor is called.
-  ///
-  ///{@template single_and_cancel}
-  ///[single] and [cancel] cannot both be true as only [subscription] [FieldQuery]s
-  ///can be cancelled.
-  ///{@endtemplate}
-  ///
-  ///{@template ids_blocKey_equal}
-  ///The [FieldID.blocKey] of each element in [fieldIDs] must be equal to [blocKey].
-  ///{@endtemplate}
-  static void _internalParameterChecks(bool single, bool cancel, String blocKey, List<FieldID> fieldIDs) {
-    if (single && cancel) {
-      throw StateError(
-          "single and cancel cannot both be true as only subscriptions can be canceld.");
-    }
-
-    if (fieldIDs != null) {
-      if (!fieldIDs.every((id) => id.blocKey == blocKey)) {
-        throw StateError("The FieldID.blocKey of each element in fieldIDs must be equal to blocKey.");
-      }
-    }
-  }
-
-  ///True if this [FieldQuery] is for all [Field]s in the specified [ValueBloc].
-  @memoized
-  bool get all => fieldIDs == null;
-
-  ///The [key] of the [ValueBloc] containing the specified [Field]s.
-  String get blocKey;
-
-  ///True if this [FieldQuery] is canceling an equal [FieldQuery].
-  ///
-  ///{@template equal_field_query}
-  ///[FieldQuery] are equal if every variable other than [cancel] are equal.
-  ///{@endtemplate}
-  @BuiltValueField(compare: false)
-  bool get cancel;
-
-  ///The [FieldID]s for the [Field]s that should be queried.
-  @nullable
-  BuiltList<FieldID> get fieldIDs;
-
-  ///The keys provided to the [Field] constructor for the [Field]s that should
-  ///be queried.
-  @memoized
-  @nullable
-  BuiltList<String> get fieldKeys => fieldIDs?.map((id) => id.fieldKey);
-
-  ///True if this [FieldQuery] is a one time request.
-  ///
-  ///{@macro single_mode}
-  ///
-  ///[single] will always be the opposite of [subscription].
-  bool get single;
-
-  ///True if this [FieldQuery] is a subscription.
-  ///
-  ///{@macro subscription_mode}
-  ///
-  ///[subscription] will always be the opposite of [single].
-  @memoized
-  bool get subscription => !single;
 }
