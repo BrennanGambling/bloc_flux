@@ -169,7 +169,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   StateBlocState get state {
     final MapBuilder<FieldID, FieldState> mapBuilder = MapBuilder();
     stateFieldMap.forEach((id, field) => mapBuilder[id] = field.lastFieldState);
-    return StateBlocState(key, mapBuilder.build());
+    return StateBlocState(stateMap: mapBuilder.build());
   }
 
   ///{@macro stateFieldIDs_getter}

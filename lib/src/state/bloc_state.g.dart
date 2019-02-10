@@ -20,9 +20,6 @@ class _$StateBlocStateSerializer
   Iterable serialize(Serializers serializers, StateBlocState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'blocKey',
-      serializers.serialize(object.blocKey,
-          specifiedType: const FullType(String)),
       'stateMap',
       serializers.serialize(object.stateMap,
           specifiedType: const FullType(BuiltMap,
@@ -43,10 +40,6 @@ class _$StateBlocStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'blocKey':
-          result.blocKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'stateMap':
           result.stateMap = serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -63,21 +56,20 @@ class _$StateBlocStateSerializer
 
 class _$StateBlocState extends StateBlocState {
   @override
-  final String blocKey;
-  @override
   final BuiltMap<FieldID, FieldState> stateMap;
+  String __blocKey;
 
   factory _$StateBlocState([void updates(StateBlocStateBuilder b)]) =>
       (new StateBlocStateBuilder()..update(updates)).build();
 
-  _$StateBlocState._({this.blocKey, this.stateMap}) : super._() {
-    if (blocKey == null) {
-      throw new BuiltValueNullFieldError('StateBlocState', 'blocKey');
-    }
+  _$StateBlocState._({this.stateMap}) : super._() {
     if (stateMap == null) {
       throw new BuiltValueNullFieldError('StateBlocState', 'stateMap');
     }
   }
+
+  @override
+  String get blocKey => __blocKey ??= super.blocKey;
 
   @override
   StateBlocState rebuild(void updates(StateBlocStateBuilder b)) =>
@@ -90,20 +82,17 @@ class _$StateBlocState extends StateBlocState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is StateBlocState &&
-        blocKey == other.blocKey &&
-        stateMap == other.stateMap;
+    return other is StateBlocState && stateMap == other.stateMap;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, blocKey.hashCode), stateMap.hashCode));
+    return $jf($jc(0, stateMap.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('StateBlocState')
-          ..add('blocKey', blocKey)
           ..add('stateMap', stateMap))
         .toString();
   }
@@ -112,10 +101,6 @@ class _$StateBlocState extends StateBlocState {
 class StateBlocStateBuilder
     implements Builder<StateBlocState, StateBlocStateBuilder> {
   _$StateBlocState _$v;
-
-  String _blocKey;
-  String get blocKey => _$this._blocKey;
-  set blocKey(String blocKey) => _$this._blocKey = blocKey;
 
   BuiltMap<FieldID, FieldState> _stateMap;
   BuiltMap<FieldID, FieldState> get stateMap => _$this._stateMap;
@@ -126,7 +111,6 @@ class StateBlocStateBuilder
 
   StateBlocStateBuilder get _$this {
     if (_$v != null) {
-      _blocKey = _$v.blocKey;
       _stateMap = _$v.stateMap;
       _$v = null;
     }
@@ -148,8 +132,7 @@ class StateBlocStateBuilder
 
   @override
   _$StateBlocState build() {
-    final _$result =
-        _$v ?? new _$StateBlocState._(blocKey: blocKey, stateMap: stateMap);
+    final _$result = _$v ?? new _$StateBlocState._(stateMap: stateMap);
     replace(_$result);
     return _$result;
   }

@@ -22,108 +22,68 @@ part 'bloc_state.g.dart';
 //TODO: use @template and @macro comment tags to insert the example for there specific constructor pages.
 //TODO: update examples after change from String key to FieldID.
 
-///Contains the state of all of the [StateField]s in the [StateBloc] with the
-///key [key].
+///Contains the [FieldState] of all of the registered [StateField]s in the
+///[StateBloc] with a [Bloc.key] equal to [key].
 ///
-///All fields are immutable.
-///
-///To get a specific [FieldState] use the list access operator (square brackets)
-///with the [FieldState.key] as the "index".
-///
-///# Usage
-///### Setup
+///To get a specific [FieldState] use the list access operator with the
+///[FieldState.key] as the parameter:
 ///```dart
-/////keys for BlocState.
-///const String blocKey = "blocKey";
-///const String newBlocKey = "newBlocKey";
-/////keys for FieldState.
-///const String fieldKey1 = "fieldKey1";
-///const String fieldKey2 = "fieldKey2";
+///stateBlocState\[fieldState.key\];
+///```
+///The list access operator **CANNOT** be used to set or add [FieldState]s.
 ///
-/////create 2 FieldStates
-///FieldState<String> field1 = FieldState(fieldKey1, "someData");
-///FieldState<int> field2 = FieldState(fieldKey2, 4);
-///
-/////Create a Map of keys to FieldStates.
-///final Map<String, FieldState> map = Map();
-///map[field1.key] = field1;
-///map[field2.key] = field2;
-///
-/////Create BuiltMap from Map.
-///BuiltMap<String, FieldState> builtMap = BuiltMap.of(map);
+///To do use the [StateBlocState.fromBuilder()] constructor and set [stateMap].
+///[stateMap] itself cannot be directly modified as it is a [BuiltMap] but a new
+///one can be created by call the [BuiltMap.toBuilder()] function: d
+///```dart
+///(stateBlocState.stateMap.toBuilder()..add(fieldState)).build()
 ///```
 ///
-///### Basic Constructor
-///```dart
-/////Create a BlocState using the basic constructor.
-///BlocState blocState = BlocState(blocKey, builtMap);
-///```
-///
-///### [StateBlocState] from [BlocStateBuilder]
-///```dart
-/////Create a BlocState using a BlocStateBuilder.
-///BlocState blocStateFromBuilder = BlocState.fromBuilder((b) => b
-///  ..key = blocKey
-///  ..stateMap = builtMap);
-/// ```
-///
-///### [StateBlocState] from [String] ([key]) and [BuiltMap<String, FieldState>] ([stateMap])
-///```dart
-/////Create a BlocState from a Map.
-///BlocState blocStateFromMap = BlocState.fromMap(blocKey, map);
-///```
-///
-///### [StateBlocState] from an existing [StateBlocState] using [BlocStateBuilder]
-///```dart
-/////Rebuild a NEW BlocState from an existing BlocState.
-/////The original will be unchanged as BlocState is immutable.
-///BlocState blocStateRebuild = blocState.rebuild((b) => b..key = newBlocKey);
-///```
-///
-///### Creating and using a [BlocStateBuilder]
-///```dart
-/////Create a BlocStateBuilder from a BlocState.
-/////Any changes made to this Builder will not result in changes in the original
-/////BlocState object.
-///BlocStateBuilder blocStateBuilder = blocState.toBuilder();
-///
-/////change the key a few times.
-///blocStateBuilder.key = fieldKey1;
-/////Doing something else.
-///blocStateBuilder.key = newBlocKey;
-///
-/////build the BlocState.
-///BlocState blocStateBuild = blocStateBuilder.build();
-///```
-///
-///### [StateBlocState] equality
-///```dart
-/////blocState, blocStateFromMap and blocStateFromBuilder all have fields with
-/////the same values and are therefore equal.
-///assert(blocState == blocStateFromBuilder);
-///assert(blocState == blocStateFromMap);
-///
-/////blocStateBuild and blocStateRebuild both had there key changed to the
-/////newBlocKey and the stateMap is unchanges and they therefore are equal.
-///assert(blocStateBuild == blocStateRebuild);
-///```
+///The [stateMap] can also be used to get a specific [FieldState].
 @BuiltValue(nestedBuilders: false)
 abstract class StateBlocState
     implements Built<StateBlocState, StateBlocStateBuilder> {
+  ///The [Serializer] for this class.
   static Serializer<StateBlocState> get serializer =>
       _$stateBlocStateSerializer;
 
+  ///Instaniates a [StateBlocState] from a collection.
+  ///
+  ///{@template blocKey_equal}
+  ///[blocKey] will be equal to the [FieldID] of all of the [FieldState]s and [FieldID]s.
+  ///{@endtemplate}
+  ///
+  ///{@macro xor_parameters}
+  ///
+  ///{@macro not_empty}
+  ///
+  ///{@macro list_equal_ids}
+  ///
+  ///{@macro map_equal_ids}
   factory StateBlocState(
-          String blocKey, BuiltMap<FieldID, FieldState> stateMap) =>
-      StateBlocState.fromBuilder((b) => b
-        ..blocKey = blocKey
-        ..stateMap = stateMap);
+          {BuiltMap<FieldID, FieldState> stateMap,
+          BuiltList<FieldState> stateList}) =>
+      StateBlocState.fromBuilder((b) {
+        final bool stateMapNull = stateMap == null;
+        final bool stateListNull = stateList == null;
+
+        _parameterChecks(stateMap, stateList);
+
+        if (!stateMapNull) {
+          b.stateMap = stateMap;
+        } else if (!stateListNull) {
+          final MapBuilder<FieldID, FieldState> mapBuilder = MapBuilder();
+          mapBuilder
+              .addEntries(stateList.map((fd) => MapEntry(fd.fieldID, fd)));
+          b.stateMap = mapBuilder.build();
+        }
+      });
 
   ///@nodoc
   ///Currently does not work due to an issue with what appears to be a missing
   ///"key" for a List which built_value tries to cast to a String.
   ///
-  ///This method will ALWAYS THROW an [UnimplementedError](dart:core).
+  ///This method will ALWAYS THROWS an [UnimplementedError](dart:core).
   @alwaysThrows
   factory StateBlocState.deserialize(String string) => throw UnimplementedError(
       "deserialize has not yet been correctly implemented. Use fromJSON instead.");
@@ -136,20 +96,24 @@ abstract class StateBlocState
   factory StateBlocState.fromJSON(String string) => standardJSONSerializers
       .deserializeWith(StateBlocState.serializer, json.decode(string));
 
-  factory StateBlocState.fromMap(
-          String blocKey, Map<FieldID, FieldState> stateMap) =>
-      StateBlocState.fromBuilder((b) => b
-        ..blocKey = blocKey
-        ..stateMap = BuiltMap(stateMap));
-
-  StateBlocState._();
+  ///@nodoc
+  ///Internal constructor.
+  ///
+  ///{@macro not_empty}
+  ///
+  ///{@macro map_equal_ids}
+  StateBlocState._() {
+    _internalParameterChecks(stateMap);
+  }
 
   ///The key of the [StateBloc] that this [StateBlocState] represents.
-  String get blocKey;
+  ///
+  ///{@macro blocKey_equal}
+  @memoized
+  String get blocKey => stateMap.keys.first.blocKey;
 
   ///A [BuiltMap] of the [FieldState.key] to [FieldState]s.
   BuiltMap<FieldID, FieldState> get stateMap;
-  //json.encode(serializers.serialize(blocState));
 
   ///Returns the [FieldState] associated with the [FieldState.key].
   FieldState operator [](FieldID fieldID) => stateMap[fieldID];
@@ -162,10 +126,77 @@ abstract class StateBlocState
   @alwaysThrows
   static String serialize(StateBlocState blocState) => throw UnimplementedError(
       "serialize has not yet been correctly implemented. Use toJSON instead.");
-  //serializers.deserializeWith(BlocState.serializer, json.decode(string));
+  //json.encode(serializers.serialize(blocState));
 
   ///Serializes a [StateBlocState] using the [standardJSONSerializers] and
   ///the [json.encode()](dart:convert) method.
   static String toJSON(StateBlocState blocState) =>
       json.encode(standardJSONSerializers.serialize(blocState));
+
+  ///@nodoc
+  ///Performs checks on parameters when a constructor is called.
+  ///
+  ///{@macro not_empty}
+  ///
+  ///{@template map_equal_ids}
+  ///The [FieldID] keys and [FieldState.fieldID] of the [FieldState] values
+  ///**MUST BE EQUAL**, other an [ArgumentError] will be thrown.
+  ///{@endtemplate}
+  static void _internalParameterChecks(BuiltMap<FieldID, FieldState> stateMap) {
+    if (stateMap != null) {
+      if (stateMap.isEmpty) {
+        throw ArgumentError("stateMap cannot be empty.");
+      }
+      final FieldID firstID = stateMap.keys.first;
+      stateMap.forEach((id, state) {
+        if ((id != firstID) || (state.fieldID != firstID)) {
+          throw ArgumentError(
+              "All FieldID keys and FieldState.fieldID of FieldState values must be equal in stateMap.");
+        }
+      });
+    }
+  }
+  //serializers.deserializeWith(BlocState.serializer, json.decode(string));
+
+  ///@nodoc
+  ///Performs checks on constructor parameters.
+  ///
+  ///{@template xor_parameters}
+  ///Either [stateMap] **OR** [stateList] should be specified but **NOT BOTH**,
+  ///otherwise an [ArgumentError] will be thrown.
+  ///{@endtemplate}
+  ///
+  ///{@template not_empty}
+  ///The specified collection ([stateMap] or [stateList]) **MUST NOT** be empty,
+  ///otherwise an [ArgumentError] will be thrown.
+  ///{@endtemplate}
+  ///
+  ///{@template list_equal_ids}
+  ///The [FieldState.fieldID] of each of the [FieldState]s in [stateList] **MUST
+  ///BE EQUAL**, otherwise an [ArgumentError] will be thrown.
+  ///{@endtemplate}
+  static void _parameterChecks(
+      BuiltMap<FieldID, FieldState> stateMap, BuiltList<FieldState> stateList) {
+    final bool stateMapNull = stateMap == null;
+    final bool stateListNull = stateList == null;
+
+    final bool bothNull = stateMapNull && stateListNull;
+    final bool neitherNull = !stateMapNull && !stateListNull;
+
+    if (bothNull || neitherNull) {
+      throw ArgumentError(
+          "Specifiy either stateMap or stateList. One must be specified.");
+    }
+
+    if (!stateListNull) {
+      if (stateList.isEmpty) {
+        throw ArgumentError("stateList cannot be empty.");
+      }
+      if (!stateList
+          .every((state) => state.fieldID == stateList.first.fieldID)) {
+        throw ArgumentError(
+            "The FieldState.fieldIDs for each FieldState in stateList must be equal.");
+      }
+    }
+  }
 }
