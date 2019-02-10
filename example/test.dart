@@ -1,4 +1,4 @@
-import 'package:bloc_flux/bloc_flux.dart';
+/*import 'package:bloc_flux/bloc_flux.dart';
 import 'dart:convert';
 
 void main() {
@@ -26,4 +26,4 @@ void main() {
   final StateBlocState deserialized = blocFluxSerializers.deserializeWith(StateBlocState.serializer, jsonDecode(serialized));
 
   assert(blocState == deserialized);
-}
+}*/
