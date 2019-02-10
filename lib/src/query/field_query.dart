@@ -53,8 +53,8 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///If this query is a one time request set [single] to true (defaults to false).
   factory FieldQuery(
           {String blocKey,
-          List<FieldID> fieldIDs,
-          List<String> fieldKeys,
+          BuiltList<FieldID> fieldIDs,
+          BuiltList<String> fieldKeys,
           FieldID fieldID,
           String fieldKey,
           single: false}) =>
@@ -111,7 +111,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///
   ///{@macro ids_blocKey_equal}
   FieldQuery._() {
-    _internalParameterChecks(single, cancel, blocKey, fieldIDs.toList());
+    _internalParameterChecks(single, cancel, blocKey, fieldIDs);
   }
 
   ///True if this [FieldQuery] is for all [Field]s in the specified [ValueBloc].
@@ -161,7 +161,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///If [fieldIDs] is specified the [FieldID.blocKey] for each element must be
   ///the same, **otherwise an [ArgumentError] will be thrown.**
   ///{@endtemplate}
-  static void _fieldIDsCheck(List<FieldID> fieldIDs) {
+  static void _fieldIDsCheck(BuiltList<FieldID> fieldIDs) {
     if (fieldIDs != null) {
       if (!fieldIDs.every((id) => id.blocKey == fieldIDs.first.blocKey)) {
         throw ArgumentError(
@@ -182,7 +182,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///The [FieldID.blocKey] of each element in [fieldIDs] must be equal to [blocKey].
   ///{@endtemplate}
   static void _internalParameterChecks(
-      bool single, bool cancel, String blocKey, List<FieldID> fieldIDs) {
+      bool single, bool cancel, String blocKey, BuiltList<FieldID> fieldIDs) {
     if (single && cancel) {
       throw StateError(
           "single and cancel cannot both be true as only subscriptions can be canceld.");
@@ -220,8 +220,8 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///{@endtemplate}
   ///
   ///{@macro ids_specified}
-  static void _parameterChecks(String blocKey, List<FieldID> fieldIDs,
-      List<String> fieldKeys, FieldID fieldID, String fieldKey) {
+  static void _parameterChecks(String blocKey, BuiltList<FieldID> fieldIDs,
+      BuiltList<String> fieldKeys, FieldID fieldID, String fieldKey) {
     final bool blocKeyNull = blocKey == null;
     final bool fieldIDsNull = fieldIDs == null;
     final bool fieldKeysNull = fieldKeys == null;
