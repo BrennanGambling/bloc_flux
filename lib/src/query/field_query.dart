@@ -12,7 +12,8 @@ part 'field_query.g.dart';
 ///the specified [Field]s change.
 ///
 ///[FieldQuery]s can be either [single] or [subscription]. All [FieldQuery]s
-///result in the target [ValueBloc] dispatching any number of [FieldValueAction]s.
+///result in the target [ValueBloc] dispatching any number (including zero)
+///of [FieldValueAction]s.
 ///
 ///## Single Mode
 ///{@template single_mode}
