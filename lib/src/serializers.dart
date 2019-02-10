@@ -12,15 +12,22 @@ part 'serializers.g.dart';
 
 //TODO: add proper documentation.
 
+/*TODO: doc comment: When client is using built values make sure they use serializer instaniatition
+statement
+
+@SerializersFor(const [ExampleClass1, ExampleClass2])
+final Serializers serializers = (_$serializers.toBuilder()..addAll(blocFluxSerializers.serializers)).build();
+*/
+
 @SerializersFor(const [StateBlocState, FieldState])
-final Serializers serializers = _$serializers;
+final Serializers blocFluxSerializers = _$blocFluxSerializers;
 
 final Serializers standardJSONSerializers =
-    (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+    (blocFluxSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
 bool isSerializable(Type type, {bool shouldThrow: true}) {
   //TODO: make sure this works for Built class created outside of this package.
   final bool serializable =
-      serializers.serializerForType(type) != null || type == Object;
+      blocFluxSerializers.serializerForType(type) != null || type == Object;
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
     //basically that only the primitives, Built and BuiltCollections are serializable.

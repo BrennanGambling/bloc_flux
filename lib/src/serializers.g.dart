@@ -6,7 +6,7 @@ part of serializers;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializers _$serializers = (new Serializers().toBuilder()
+Serializers _$blocFluxSerializers = (new Serializers().toBuilder()
       ..add(FieldID.serializer)
       ..add(FieldState.serializer)
       ..add(StateBlocState.serializer)
