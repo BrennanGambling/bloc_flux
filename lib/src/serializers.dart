@@ -23,7 +23,7 @@ final Serializers serializers = (_$serializers.toBuilder()..addAll(blocFluxSeria
 @SerializersFor(const [StateBlocState, FieldState])
 final Serializers _blocFluxBaseSerializers = _$_blocFluxBaseSerializers;
 
-CompositeSerializers _blocFluxSerializers = _blocFluxBaseSerializers;
+CompositeSerializers _blocFluxSerializers = (CompositeSerializersBuilder()..addSerializers(_blocFluxBaseSerializers)).build();
 
 CompositeSerializers _standardJSONSerializers;
 

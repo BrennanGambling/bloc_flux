@@ -107,11 +107,11 @@ class CompositeSerializers implements Serializers {
   Object serialize(Object object,
       {FullType specifiedType = FullType.unspecified}) {
     StateError stateError;
-    Object object;
+    Object returnObject;
     bool found = false;
     _allSerializers.forEach((s) {
       try {
-        object = s.serialize(object, specifiedType: specifiedType);
+        returnObject = s.serialize(object, specifiedType: specifiedType);
         found = true;
       } catch (e) {
         if (e is StateError) {
@@ -122,7 +122,7 @@ class CompositeSerializers implements Serializers {
       }
     });
     if (found) {
-      return object;
+      return returnObject;
     } else {
       throw stateError;
     }
@@ -189,11 +189,11 @@ class CompositeSerializersBuilder implements SerializersBuilder {
   final List<SerializerPlugin> _serializerPluginList;
 
   CompositeSerializersBuilder()
-      : this._((SetBuilder()..add(Serializers())).build());
+      : this._(BuiltSet());
 
   CompositeSerializersBuilder._(BuiltSet<Serializers> serializers)
       : _serializersSet =
-            serializers.toSet().map<SerializersBuilder>((s) => s.toBuilder()),
+            serializers.map<SerializersBuilder>((s) => s.toBuilder()).toSet(),
         _serializerList = List(),
         _builderFactoryList = List(),
         _serializerPluginList = List();
@@ -217,6 +217,9 @@ class CompositeSerializersBuilder implements SerializersBuilder {
 
   @override
   Serializers build() {
+    if (_serializersSet.isEmpty) {
+      _serializersSet.add(Serializers().toBuilder());
+    }
     _serializersSet.forEach((sb) {
       sb.addAll(_serializerList);
       _builderFactoryList
@@ -224,7 +227,7 @@ class CompositeSerializersBuilder implements SerializersBuilder {
       _serializerPluginList.forEach(sb.addPlugin);
     });
     final BuiltSet<Serializers> builtSerializers =
-        _serializersSet.map<Serializers>((sb) => sb.build());
+        BuiltSet(_serializersSet.map<Serializers>((sb) => sb.build()));
     return CompositeSerializers._(builtSerializers);
   }
 }

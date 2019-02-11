@@ -1,12 +1,11 @@
 //Library for the bloc_state file and its generated implementation file.
 library bloc_state;
 
-import 'dart:convert' show json;
+import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:meta/meta.dart';
 
 import '../field_id.dart';
 import '../serializers.dart';
@@ -79,14 +78,8 @@ abstract class StateBlocState
         }
       });
 
-  ///@nodoc
-  ///Currently does not work due to an issue with what appears to be a missing
-  ///"key" for a List which built_value tries to cast to a String.
-  ///
-  ///This method will ALWAYS THROWS an [UnimplementedError](dart:core).
-  @alwaysThrows
-  factory StateBlocState.deserialize(String string) => throw UnimplementedError(
-      "deserialize has not yet been correctly implemented. Use fromJSON instead.");
+  factory StateBlocState.deserialize(String serialized) => blocFluxSerializers
+      .deserializeWith(StateBlocState.serializer, jsonDecode(serialized));
 
   factory StateBlocState.fromBuilder([updates(StateBlocStateBuilder b)]) =
       _$StateBlocState;
@@ -116,17 +109,10 @@ abstract class StateBlocState
   BuiltMap<FieldID, FieldState> get stateMap;
 
   ///Returns the [FieldState] associated with the [FieldState.key].
-  FieldState operator [](FieldID fieldID) => stateMap[fieldID];
+  FieldState operator [](FieldID fieldID) => stateMap[fieldID]; 
 
-  ///@nodoc
-  ///This method currently works but the [deserialize] does not and it therefore
-  ///is not usable right now.
-  ///
-  ///This method will ALWAYS THROW an [UnimplementedError](dart:core).
-  @alwaysThrows
-  static String serialize(StateBlocState blocState) => throw UnimplementedError(
-      "serialize has not yet been correctly implemented. Use toJSON instead.");
-  //json.encode(serializers.serialize(blocState));
+  static String serialize(StateBlocState blocState) => jsonEncode(
+      blocFluxSerializers.serializeWith(StateBlocState.serializer, blocState));
 
   ///Serializes a [StateBlocState] using the [standardJSONSerializers] and
   ///the [json.encode()](dart:convert) method.
@@ -139,7 +125,7 @@ abstract class StateBlocState
   ///{@macro not_empty}
   ///
   ///{@template map_equal_ids}
-  ///The [FieldID] keys and [FieldState.fieldID] of the [FieldState] values
+  ///The [FieldID.blocKey] keys and [FieldState.fieldID.blocKey] of the [FieldState] values
   ///**MUST BE EQUAL**, other an [ArgumentError] will be thrown.
   ///{@endtemplate}
   static void _internalParameterChecks(BuiltMap<FieldID, FieldState> stateMap) {
@@ -147,11 +133,13 @@ abstract class StateBlocState
       if (stateMap.isEmpty) {
         throw ArgumentError("stateMap cannot be empty.");
       }
-      final FieldID firstID = stateMap.keys.first;
+      final String firstID = stateMap.keys.first.blocKey;
       stateMap.forEach((id, state) {
-        if ((id != firstID) || (state.fieldID != firstID)) {
+        if ((id.blocKey != firstID) || (state.fieldID.blocKey != firstID)) {
           throw ArgumentError(
-              "All FieldID keys and FieldState.fieldID of FieldState values must be equal in stateMap.");
+              "All FieldID keys and FieldState.fieldID of FieldState values must be equal in stateMap.\n"
+              "id: $id\n"
+              "state.fieldID: ${state.fieldID}");
         }
       });
     }
