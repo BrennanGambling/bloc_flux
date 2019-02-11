@@ -2,6 +2,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
 
+typedef CompositeUpdates = CompositeSerializersBuilder Function(
+    CompositeSerializersBuilder builder);
+
 class CompositeSerializers implements Serializers {
   final BuiltSet<Serializers> _allSerializers;
 

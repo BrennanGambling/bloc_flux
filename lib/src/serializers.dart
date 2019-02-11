@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
 import 'field_id.dart';
+import 'serializers/composite_serializers.dart';
 import 'state/bloc_state.dart';
 import 'state/field_state.dart';
 
@@ -20,12 +21,38 @@ final Serializers serializers = (_$serializers.toBuilder()..addAll(blocFluxSeria
 */
 
 @SerializersFor(const [StateBlocState, FieldState])
-final Serializers blocFluxSerializers = _$blocFluxSerializers;
+final Serializers _blocFluxBaseSerializers = _$_blocFluxBaseSerializers;
 
-final Serializers standardJSONSerializers =
-    (blocFluxSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+CompositeSerializers _blocFluxSerializers = _blocFluxBaseSerializers;
+
+CompositeSerializers _standardJSONSerializers;
+
+///{@template works_non_generic}
+///These Serializers
+Serializers get blocFluxSerializers => _blocFluxSerializers;
+
+Serializers get standardJSONSerializers {
+  if (_standardJSONSerializers == null) {
+    _updateSerializers((b) => b);
+  }
+  return _standardJSONSerializers;
+}
+
+void addBuilderFactory(FullType specifiedType, Function function) =>
+    _updateSerializers((b) => b..addBuilderFactory(specifiedType, function));
+
+void addPlugin(SerializerPlugin plugin) =>
+    _updateSerializers((b) => b..addPlugin(plugin));
+
+void addSerializer(Serializer serializer) =>
+    _updateSerializers((b) => b..add(serializer));
+
+void addSerializers(Serializers serializers) =>
+    _updateSerializers((b) => b..addSerializers(serializers));
+
 bool isSerializable(Type type, {bool shouldThrow: true}) {
   //TODO: make sure this works for Built class created outside of this package.
+  //TODO: is the test for Object needed all.
   final bool serializable =
       blocFluxSerializers.serializerForType(type) != null || type == Object;
   if (!serializable && shouldThrow) {
@@ -35,4 +62,11 @@ bool isSerializable(Type type, {bool shouldThrow: true}) {
     throw StateError("Type: $type is not serializable");
   }
   return serializable;
+}
+
+void _updateSerializers(CompositeUpdates builderFunction) {
+  final CompositeSerializersBuilder builder =
+      builderFunction(_blocFluxSerializers.toBuilder());
+  _blocFluxSerializers = builder.build();
+  _standardJSONSerializers = (builder..addPlugin(StandardJsonPlugin())).build();
 }
