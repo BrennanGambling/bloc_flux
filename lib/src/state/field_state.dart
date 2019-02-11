@@ -15,10 +15,16 @@ part 'field_state.g.dart';
 any unintended side effects. This was done because the state of some 
 state fields will be mull if an initial state is not given.*/
 
-///Contains the last output of a [StateField] with the key [key] in field [data].
+///Wraps the last output of the [StateField] with [StateField.fieldID] equal
+///to [fieldID].
+///
+///[data] may be null.
+///
+///[fieldID] **MUST NOT** be null.
 @BuiltValue(nestedBuilders: false)
 abstract class FieldState<T>
     implements Built<FieldState<T>, FieldStateBuilder<T>> {
+  ///The [Serializer] for this class.
   static Serializer<FieldState> get serializer => _$fieldStateSerializer;
 
   ///Throws if [data] is not serializable.
