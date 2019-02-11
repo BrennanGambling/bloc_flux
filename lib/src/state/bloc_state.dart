@@ -78,6 +78,10 @@ abstract class StateBlocState
         }
       });
 
+  ///Deserializes a [String] using the [blocFluxSerializers] and the
+  ///[JsonCodec.decode] method.
+  ///
+  ///{@macro serializers_diff}
   factory StateBlocState.deserialize(String serialized) => blocFluxSerializers
       .deserializeWith(StateBlocState.serializer, jsonDecode(serialized));
 
@@ -85,7 +89,9 @@ abstract class StateBlocState
       _$StateBlocState;
 
   ///Deserializes a [String] using the [standardJSONSerializers] and
-  ///the [json.encode()](dart:conver) method.
+  ///the [JsonCodec.decode()] method.
+  ///
+  ///{@macro serializers_diff}
   factory StateBlocState.fromJSON(String string) => standardJSONSerializers
       .deserializeWith(StateBlocState.serializer, json.decode(string));
 
@@ -111,11 +117,17 @@ abstract class StateBlocState
   ///Returns the [FieldState] associated with the [FieldState.key].
   FieldState operator [](FieldID fieldID) => stateMap[fieldID]; 
 
+  ///Serializes a [StateBlocState] using the [blocFluxSerializers] and the
+  ///[JsonCodec.encode()] method.
+  ///
+  ///{@macro serializers_diff}
   static String serialize(StateBlocState blocState) => jsonEncode(
       blocFluxSerializers.serializeWith(StateBlocState.serializer, blocState));
 
   ///Serializes a [StateBlocState] using the [standardJSONSerializers] and
-  ///the [json.encode()](dart:convert) method.
+  ///the [JsonCodec.encode()] method.
+  ///
+  ///{@macro serializers_diff}
   static String toJSON(StateBlocState blocState) =>
       json.encode(standardJSONSerializers.serialize(blocState));
 
@@ -144,7 +156,6 @@ abstract class StateBlocState
       });
     }
   }
-  //serializers.deserializeWith(BlocState.serializer, json.decode(string));
 
   ///@nodoc
   ///Performs checks on constructor parameters.
