@@ -1,3 +1,4 @@
+///f
 library serializers;
 
 import 'package:built_collection/built_collection.dart';
@@ -13,12 +14,13 @@ part 'serializers.g.dart';
 
 //TODO: add proper documentation.
 
-/*TODO: doc comment: When client is using built values make sure they use serializer instaniatition
-statement
+//TODO: doc comment: When client is using built values make sure they use serializer instaniatition
+//statement
 
-@SerializersFor(const [ExampleClass1, ExampleClass2])
-final Serializers serializers = (_$serializers.toBuilder()..addAll(blocFluxSerializers.serializers)).build();
-*/
+
+//@SerializersFor(const [ExampleClass1, ExampleClass2])
+//final Serializers serializers = (_$serializers.toBuilder()..addAll(blocFluxSerializers.serializers)).build();
+
 
 @SerializersFor(const [StateBlocState, FieldState])
 final Serializers _blocFluxBaseSerializers = _$_blocFluxBaseSerializers;
@@ -27,10 +29,12 @@ CompositeSerializers _blocFluxSerializers = (CompositeSerializersBuilder()..addS
 
 CompositeSerializers _standardJSONSerializers;
 
-///{@template works_non_generic}
-///These Serializers
+///{@template serializers_diff}
+///Test
+///{@endtemplate}
 Serializers get blocFluxSerializers => _blocFluxSerializers;
 
+///{@macro serializers_diff}
 Serializers get standardJSONSerializers {
   if (_standardJSONSerializers == null) {
     _updateSerializers((b) => b);

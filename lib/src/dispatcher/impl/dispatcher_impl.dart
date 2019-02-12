@@ -66,6 +66,7 @@ class DispatcherImpl implements Dispatcher {
   ///{@template input_observable_map}
   ///A map of all added input [Observable]s with the String given when it was
   ///added as the key and the [Observable] as the value.
+  ///{@endtemplate}
   @protected
   final Map<String, Observable<Action>> inputObservableMap;
 

@@ -1,4 +1,5 @@
-/*import 'package:bloc_flux/bloc_flux.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:bloc_flux/bloc_flux.dart';
 import 'dart:convert';
 
 void main() {
@@ -20,10 +21,10 @@ void main() {
   map[field2.fieldID] = field2;
 
   //Create a BlocState using the basic constructor.
-  final StateBlocState blocState = StateBlocState.fromMap(blocKey, map);
+  final StateBlocState blocState = StateBlocState(stateMap: BuiltMap(map));
 
-  final String serialized = jsonEncode(blocFluxSerializers.serializeWith(StateBlocState.serializer, blocState));
-  final StateBlocState deserialized = blocFluxSerializers.deserializeWith(StateBlocState.serializer, jsonDecode(serialized));
+  final String serialized = StateBlocState.serialize(blocState);
+  final StateBlocState deserialized = StateBlocState.deserialize(serialized);
 
   assert(blocState == deserialized);
-}*/
+}
