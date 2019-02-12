@@ -43,7 +43,7 @@ abstract class FieldState<T>
 
   factory FieldState.fromJSON(String jsonString) {
     //deserialize to FieldState with Object generic
-    final FieldState<Object> fieldStateObject = standardJSONSerializers
+    final FieldState<Object> fieldStateObject = standardJsonSerializers
         .deserializeWith(FieldState.serializer, json.decode(jsonString));
     try {
       //try to cast the FieldState to a FieldState with tighter generic parameter
@@ -63,7 +63,7 @@ abstract class FieldState<T>
   }
 
   FieldState._() {
-    isSerializable(T);
+    isSerializable(T, shouldThrow: true, objectIsSerializable: true);
   }
 
   //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.
@@ -76,7 +76,7 @@ abstract class FieldState<T>
   //this should fix the issue of serializers not being made for all possible
   //generic parameter for a Built  class.
   static String toJSON(FieldState fieldState) =>
-      json.encode(standardJSONSerializers.serialize(fieldState));
+      json.encode(standardJsonSerializers.serialize(fieldState));
 }
 
 //TODO: document this.-

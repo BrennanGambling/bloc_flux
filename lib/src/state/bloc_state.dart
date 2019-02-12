@@ -88,11 +88,11 @@ abstract class StateBlocState
   factory StateBlocState.fromBuilder([updates(StateBlocStateBuilder b)]) =
       _$StateBlocState;
 
-  ///Deserializes a [String] using the [standardJSONSerializers] and
+  ///Deserializes a [String] using the [standardJsonSerializers] and
   ///the [JsonCodec.decode()] method.
   ///
   ///{@macro serializers_diff}
-  factory StateBlocState.fromJSON(String string) => standardJSONSerializers
+  factory StateBlocState.fromJSON(String string) => standardJsonSerializers
       .deserializeWith(StateBlocState.serializer, json.decode(string));
 
   ///@nodoc
@@ -115,7 +115,7 @@ abstract class StateBlocState
   BuiltMap<FieldID, FieldState> get stateMap;
 
   ///Returns the [FieldState] associated with the [FieldState.key].
-  FieldState operator [](FieldID fieldID) => stateMap[fieldID]; 
+  FieldState operator [](FieldID fieldID) => stateMap[fieldID];
 
   ///Serializes a [StateBlocState] using the [blocFluxSerializers] and the
   ///[JsonCodec.encode()] method.
@@ -124,12 +124,12 @@ abstract class StateBlocState
   static String serialize(StateBlocState blocState) => jsonEncode(
       blocFluxSerializers.serializeWith(StateBlocState.serializer, blocState));
 
-  ///Serializes a [StateBlocState] using the [standardJSONSerializers] and
+  ///Serializes a [StateBlocState] using the [standardJsonSerializers] and
   ///the [JsonCodec.encode()] method.
   ///
   ///{@macro serializers_diff}
   static String toJSON(StateBlocState blocState) =>
-      json.encode(standardJSONSerializers.serialize(blocState));
+      json.encode(standardJsonSerializers.serialize(blocState));
 
   ///@nodoc
   ///Performs checks on parameters when a constructor is called.
