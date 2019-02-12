@@ -25,31 +25,51 @@ class CompositeSerializers implements Serializers {
   }
 
   Object deserialize(Object serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    DeserializationError deserializationError;
-    StateError stateError;
-    Object object;
+      {FullType specifiedType: FullType.unspecified}) {
+    Error error;
+    Object returnObject;
     bool found = false;
+    bool success = false;
     _allSerializers.forEach((s) {
       try {
-        s.deserialize(serialized, specifiedType: specifiedType);
-        found = true;
-      } catch (e) {
-        if (e is DeserializationError) {
-          deserializationError = e;
-        } else if (e is StateError) {
-          stateError = e;
+        if (!specifiedType.isUnspecified &&
+            s.serializerForType(specifiedType.root) == null &&
+            (serialized is List && serialized.first is String)) {
+              //use this class deserialize
+          returnObject = s.deserialize(serialized);
+          success = true;
+          return;
         } else {
-          throw e;
+          Serializer serializer;
+          if (specifiedType.isUnspecified) {
+            serializer = s.serializerForWireName((serialized as List).first as String);
+          } else {
+            serializer = s.serializerForType(specifiedType.root);
+          }
+          if (serializer != null) {
+            found = true;
+            returnObject = s.deserialize(serialized, specifiedType: specifiedType);
+            success = true;
+          }
         }
+        /*final String wireName = (serialized as List).first as String;
+
+        if (serializerForWireName(wireName) != null) {
+          found = true;
+          returnObject =
+              s.deserialize(serialized, specifiedType: specifiedType);
+          success = true;
+        }*/
+      } catch (e) {
+        error = e;
       }
     });
-    if (found) {
-      return object;
-    } else if (deserializationError != null) {
-      throw deserializationError;
+    if (success) {
+      return returnObject;
+    } else if (found) {
+      throw error;
     } else {
-      throw stateError;
+      throw StateError("No serializer for type: ${serialized.runtimeType}.");
     }
   }
 
@@ -105,26 +125,45 @@ class CompositeSerializers implements Serializers {
   }
 
   Object serialize(Object object,
-      {FullType specifiedType = FullType.unspecified}) {
-    StateError stateError;
+      {FullType specifiedType: FullType.unspecified}) {
+    Error error;
     Object returnObject;
     bool found = false;
+    bool success = false;
     _allSerializers.forEach((s) {
       try {
-        returnObject = s.serialize(object, specifiedType: specifiedType);
-        found = true;
-      } catch (e) {
-        if (e is StateError) {
-          stateError = e;
+        if (!specifiedType.isUnspecified &&
+            s.serializerForType(specifiedType.root) == null) {
+          //According to the comments in built_json_serializers.dart object
+          //could be an interface in this case.
+          returnObject = s.serialize(object);
+          found = true;
+          success = true;
+          return;
         } else {
-          throw e;
+          Serializer serializer;
+          if (specifiedType.isUnspecified) {
+            serializer = s.serializerForType(object.runtimeType);
+          } else {
+            serializer = s.serializerForType(specifiedType.root);
+          }
+          if (serializer != null) {
+            found = true;
+            returnObject = s.serialize(object, specifiedType: specifiedType);
+            success = true;
+            return;
+          }
         }
+      } catch (e) {
+        error = e;
       }
     });
-    if (found) {
+    if (success) {
       return returnObject;
+    } else if (found) {
+      throw error;
     } else {
-      throw stateError;
+      throw StateError("No serializer for type: ${object.runtimeType}.");
     }
   }
 
@@ -188,8 +227,7 @@ class CompositeSerializersBuilder implements SerializersBuilder {
   final List<_BuilderFactoryPair> _builderFactoryList;
   final List<SerializerPlugin> _serializerPluginList;
 
-  CompositeSerializersBuilder()
-      : this._(BuiltSet());
+  CompositeSerializersBuilder() : this._(BuiltSet());
 
   CompositeSerializersBuilder._(BuiltSet<Serializers> serializers)
       : _serializersSet =
