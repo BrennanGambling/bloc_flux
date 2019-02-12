@@ -86,7 +86,8 @@ abstract class FieldState<T>
   }
 
   FieldState._() {
-    isSerializable(T, shouldThrow: true, objectIsSerializable: true);
+    //TODO: add option to specify a FullType.
+    isSerializable(type: T, shouldThrow: true, objectIsSerializable: true);
   }
 
   //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.

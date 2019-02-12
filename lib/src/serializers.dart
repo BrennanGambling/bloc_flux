@@ -127,29 +127,91 @@ void addSerializer(Serializer serializer) =>
 void addSerializers(Serializers serializers) =>
     _updateSerializers((b) => b..addSerializers(serializers));
 
-///Checks if [type] can be serialized using [blocFluxSerializers].
+//TODO: if all of the types in a full type are specifie but a builder factory is not avaliable is it still serializable?
+
+///Checks if the specified types can be serialized using [blocFluxSerializers].
 ///
-///If this method should throw when [type] is not serializable set [shouldThrow]
-///to true (defaults to false).
+///*** Specifiying Types to Check
+///To specifiy the types to check set **ONLY ONE** of the following optional parameters
+///1. [type]
+///2. [types]
+///3. [fullType]
+///{@template isSerializable_param}
+///Specify none or more than one of these optional parameters will result in an
+///[ArgumentError] being thrown.
+///{@endtemplate}
+///
+///If [types] is specified and is empty false will be returned.
+///
+///If [fullType] is  unspecified (`fullType.isUnspecified == true`) false will be returned.
+///
+///*** Generic Parameters
+///If any of the specified types have generic parameters they must also be checked
+///to see if they are serializable.
+///
+///Some types may return true when passed to this method but fail deserialization
+///because a builder factory is not avaliable.
+///
+///*** Other Options
+///If this method should throw when the specified type are not serializable,
+///set [shouldThrow] to true (defaults to false).
 ///
 ///If [Object] should be considered a serializable [Type] set [objectIsSerializable]
 ///to true (defaults to false). This is needed in cases such as deserialization of
 ///objects with generic parameters as a Class<Object> is created and then cast to
 ///a Class<ActualType>.
-bool isSerializable(Type type,
-    {bool shouldThrow: false, bool objectIsSerializable: false}) {
+bool isSerializable(
+    {Type type,
+    Iterable<Type> types,
+    FullType fullType,
+    bool shouldThrow: false,
+    bool objectIsSerializable: false}) {
   //TODO: make sure this works for Built class created outside of this package.
-  //TODO: is the test for Object needed all.
-  bool serializable;
+  final bool typeNull = type == null;
+  final bool typesNull = types == null;
 
-  final bool serializerForType =
+  _isSerializableParamCheck(type, types, fullType);
+
+  if (!typeNull) {
+    return _isSerializable(type, shouldThrow, objectIsSerializable);
+  } else if (!typesNull) {
+    if (types.isEmpty) {
+      if (shouldThrow) {
+        throw StateError("types is empty.");
+      } else {
+        return false;
+      }
+    } else {
+      return types
+          .every((t) => _isSerializable(t, shouldThrow, objectIsSerializable));
+    }
+  } else {
+    //TODO: should it be checked if there is a builder factory for fullType?
+    if (fullType.isUnspecified) {
+      if (shouldThrow) {
+        throw StateError("An unspecified FullType is not serializable.");
+      } else {
+        return false;
+      }
+    } else {
+      final BuiltList<Type> typesList = (ListBuilder()
+            ..add(fullType.root)
+            ..addAll(fullType.parameters))
+          .build();
+      return typesList
+          .every((t) => _isSerializable(t, shouldThrow, objectIsSerializable));
+    }
+  }
+}
+
+///@nodoc
+///Internal method for [isSerializable] that does the actual checking if a type is
+///serializable. [isSerializable] only performs the param checks and calls
+///this method once for each of the specified types.
+bool _isSerializable(Type type, bool shouldThrow, bool objectIsSerializable) {
+  final bool serializable =
       blocFluxSerializers.serializerForType(type) != null ||
           (type == Object && objectIsSerializable);
-
-  if (serializerForType) {
-  } else {
-    serializable = false;
-  }
 
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
@@ -158,6 +220,27 @@ bool isSerializable(Type type,
     throw StateError("Type: $type is not serializable");
   }
   return serializable;
+}
+
+///@nodoc
+///Internal method for checking the parameters passed into isSerializable.
+///
+///{@macro isSerializable_param}
+void _isSerializableParamCheck(
+    Type type, Iterable<Type> types, FullType fullType) {
+  final bool typeNull = type == null;
+  final bool typesNull = types == null;
+  final bool fullTypeNull = fullType == null;
+
+  int nonNullCount = 0;
+  nonNullCount += typeNull ? 0 : 1;
+  nonNullCount += typesNull ? 0 : 1;
+  nonNullCount += fullTypeNull ? 0 : 1;
+
+  if (nonNullCount != 1) {
+    throw ArgumentError(
+        "Only one of the type parameters (type, types or fullType) can be specified.");
+  }
 }
 
 ///@nodoc

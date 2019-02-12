@@ -31,7 +31,8 @@ class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
   StateFieldImpl(String key, String blocKey, Observable<T> inputObservable,
       bool derived, StateBlocImpl stateBloc)
       : super(key, blocKey, inputObservable, derived, stateBloc) {
-    isSerializable(T, shouldThrow: true);
+    //TODO: add option to specify a FullType.
+    isSerializable(type: T, shouldThrow: true);
     final String keyConcat = key + stateFieldConcat;
     _stateField = Field(
         keyConcat,
