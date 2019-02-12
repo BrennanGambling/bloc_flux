@@ -13,47 +13,18 @@ part 'state_query.g.dart';
 ///
 ///## Single Mode
 ///{@template state_single_mode}
-///For [single] [StateQuery]s the most recent [StateBlocState] of the requested 
+///For [single] [StateQuery]s the most recent [StateBlocState] of the requested
 ///[StateBloc] will be provided once.
 ///{@endtemplate}
 ///
 ///## Subscription Mode
 ///{@template state_subscription_mode}
-///For [subscription] [StateQuery]s the [StateBlocState] of the requested 
+///For [subscription] [StateQuery]s the [StateBlocState] of the requested
 ///[StateBloc] will be provided as it is updated.
 ///{@endtemplate}
 abstract class StateQuery implements Built<StateQuery, StateQueryBuilder> {
-  ///The [Bloc.key] of the [StateBloc] to query.
-  String get blocKey;
-
-  ///True if this [StateQuery] is a one time request.
-  ///
-  ///{@macro state_single_mode}
-  ///
-  ///[single] will always be the opposite of [subscription].
-  bool get single;
-
-  ///True if this [StateQuery] is canceling an equal [StateQuery].
-  ///
-  ///{@template equal_state_query}
-  ///[StateQuery] are equal if every variable other than [cancel] are equal.
-  ///{@endtemplate}
-  @BuiltValueField(compare: false)
-  bool get cancel;
-
-  ///True if this [StateQuery] is a subscription.
-  ///
-  ///{@macro state_subscription_mode}
-  ///
-  ///[subscription] will always be the opposite of [single].
-  @memoized
-  bool get subscription => !single;
-
-  ///@nodoc
-  ///Internal constructor.
-  ///
-  ///{@macro state_single_and_cancel}
-  StateQuery._();
+  ///The [Serializer] for this class.
+  static Serializer<StateQuery> get serializer => _$stateQuerySerializer;
 
   ///Instaniates a [StateQuery] for the [StateBloc] with [Bloc.key] equal to [blocKey].
   ///
@@ -71,7 +42,7 @@ abstract class StateQuery implements Built<StateQuery, StateQueryBuilder> {
   ///
   ///[stateQuery] must not be a single [StateQuery]. That is [stateQuery.single]
   ///should equal [false], **otherwise an [ArgumentError] will be thrown.**
-  factory StateQuery.cancel(StateQuery stateQuery) {
+  factory StateQuery.cancelQuery(StateQuery stateQuery) {
     if (stateQuery.single) {
       throw ArgumentError(
           "A StateQuery with single set to true cannot be canceled.");
@@ -87,6 +58,35 @@ abstract class StateQuery implements Built<StateQuery, StateQueryBuilder> {
   ///{@endtemplate}
   factory StateQuery.fromBuilder([updates(FieldIDBuilder)]) = _$StateQuery;
 
-  ///The [Serializer] for this class.
-  static Serializer<StateQuery> get serializer => _$stateQuerySerializer;
+  ///@nodoc
+  ///Internal constructor.
+  ///
+  ///{@macro state_single_and_cancel}
+  StateQuery._();
+
+  ///The [Bloc.key] of the [StateBloc] to query.
+  String get blocKey;
+
+  ///True if this [StateQuery] is canceling an equal [StateQuery].
+  ///
+  ///{@template equal_state_query}
+  ///[StateQuery] are equal if every variable other than [cancel] are equal.
+  ///{@endtemplate}
+  @BuiltValueField(compare: false)
+  bool get cancel;
+
+  ///True if this [StateQuery] is a one time request.
+  ///
+  ///{@macro state_single_mode}
+  ///
+  ///[single] will always be the opposite of [subscription].
+  bool get single;
+
+  ///True if this [StateQuery] is a subscription.
+  ///
+  ///{@macro state_subscription_mode}
+  ///
+  ///[subscription] will always be the opposite of [single].
+  @memoized
+  bool get subscription => !single;
 }

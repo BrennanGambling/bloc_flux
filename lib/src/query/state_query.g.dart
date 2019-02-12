@@ -21,10 +21,10 @@ class _$StateQuerySerializer implements StructuredSerializer<StateQuery> {
       'blocKey',
       serializers.serialize(object.blocKey,
           specifiedType: const FullType(String)),
-      'single',
-      serializers.serialize(object.single, specifiedType: const FullType(bool)),
       'cancel',
       serializers.serialize(object.cancel, specifiedType: const FullType(bool)),
+      'single',
+      serializers.serialize(object.single, specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -45,12 +45,12 @@ class _$StateQuerySerializer implements StructuredSerializer<StateQuery> {
           result.blocKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'single':
-          result.single = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'cancel':
           result.cancel = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'single':
+          result.single = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -64,23 +64,23 @@ class _$StateQuery extends StateQuery {
   @override
   final String blocKey;
   @override
-  final bool single;
-  @override
   final bool cancel;
+  @override
+  final bool single;
   bool __subscription;
 
   factory _$StateQuery([void updates(StateQueryBuilder b)]) =>
       (new StateQueryBuilder()..update(updates)).build();
 
-  _$StateQuery._({this.blocKey, this.single, this.cancel}) : super._() {
+  _$StateQuery._({this.blocKey, this.cancel, this.single}) : super._() {
     if (blocKey == null) {
       throw new BuiltValueNullFieldError('StateQuery', 'blocKey');
     }
-    if (single == null) {
-      throw new BuiltValueNullFieldError('StateQuery', 'single');
-    }
     if (cancel == null) {
       throw new BuiltValueNullFieldError('StateQuery', 'cancel');
+    }
+    if (single == null) {
+      throw new BuiltValueNullFieldError('StateQuery', 'single');
     }
   }
 
@@ -111,8 +111,8 @@ class _$StateQuery extends StateQuery {
   String toString() {
     return (newBuiltValueToStringHelper('StateQuery')
           ..add('blocKey', blocKey)
-          ..add('single', single)
-          ..add('cancel', cancel))
+          ..add('cancel', cancel)
+          ..add('single', single))
         .toString();
   }
 }
@@ -124,21 +124,21 @@ class StateQueryBuilder implements Builder<StateQuery, StateQueryBuilder> {
   String get blocKey => _$this._blocKey;
   set blocKey(String blocKey) => _$this._blocKey = blocKey;
 
-  bool _single;
-  bool get single => _$this._single;
-  set single(bool single) => _$this._single = single;
-
   bool _cancel;
   bool get cancel => _$this._cancel;
   set cancel(bool cancel) => _$this._cancel = cancel;
+
+  bool _single;
+  bool get single => _$this._single;
+  set single(bool single) => _$this._single = single;
 
   StateQueryBuilder();
 
   StateQueryBuilder get _$this {
     if (_$v != null) {
       _blocKey = _$v.blocKey;
-      _single = _$v.single;
       _cancel = _$v.cancel;
+      _single = _$v.single;
       _$v = null;
     }
     return this;
@@ -160,7 +160,7 @@ class StateQueryBuilder implements Builder<StateQuery, StateQueryBuilder> {
   @override
   _$StateQuery build() {
     final _$result = _$v ??
-        new _$StateQuery._(blocKey: blocKey, single: single, cancel: cancel);
+        new _$StateQuery._(blocKey: blocKey, cancel: cancel, single: single);
     replace(_$result);
     return _$result;
   }
