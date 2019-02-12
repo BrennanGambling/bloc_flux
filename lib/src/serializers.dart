@@ -5,6 +5,8 @@ import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
 import 'field_id.dart';
+import 'query/field_query.dart';
+import 'query/state_query.dart';
 import 'serializers/composite_serializers.dart';
 import 'state/bloc_state.dart';
 import 'state/field_state.dart';
@@ -20,7 +22,8 @@ part 'serializers.g.dart';
 ///The [Serializers] for this package.
 ///
 ///Includes [Serializers] and builder factories needed for this package only.
-@SerializersFor(const [StateBlocState, FieldState])
+@SerializersFor(
+    const [FieldID, StateBlocState, FieldState, StateQuery, FieldQuery])
 final Serializers _blocFluxBaseSerializers = _$_blocFluxBaseSerializers;
 
 ///@nodoc
@@ -137,9 +140,17 @@ bool isSerializable(Type type,
     {bool shouldThrow: false, bool objectIsSerializable: false}) {
   //TODO: make sure this works for Built class created outside of this package.
   //TODO: is the test for Object needed all.
-  final bool serializable =
+  bool serializable;
+
+  final bool serializerForType =
       blocFluxSerializers.serializerForType(type) != null ||
           (type == Object && objectIsSerializable);
+
+  if (serializerForType) {
+  } else {
+    serializable = false;
+  }
+
   if (!serializable && shouldThrow) {
     //TODO: add link to more information about this error.
     //basically that only the primitives, Built and BuiltCollections are serializable.
