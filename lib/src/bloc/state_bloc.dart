@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import '../field_id.dart';
+import '../field/field_id.dart';
 import '../query/state_query.dart';
 import '../state/bloc_state.dart';
 import '../state/field_state.dart';

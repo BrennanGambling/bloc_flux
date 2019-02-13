@@ -2,10 +2,10 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../bloc/impl/state_bloc_impl.dart';
-import '../../field_id.dart';
 import '../../serializers/serializers.dart';
 import '../../state/field_state.dart';
 import '../field.dart';
+import '../field_id.dart';
 import '../state_field.dart';
 import 'field_impl.dart';
 

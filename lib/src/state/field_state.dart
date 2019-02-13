@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-import '../field_id.dart';
+import '../field/field_id.dart';
 import '../serializers/serializers.dart';
 
 part 'field_state.g.dart';

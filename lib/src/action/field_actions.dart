@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import '../field_id.dart';
+import '../field/field_id.dart';
 import '../query/field_query.dart';
 import 'actions.dart';
 

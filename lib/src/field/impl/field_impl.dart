@@ -5,8 +5,8 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/field_actions.dart';
 import '../../bloc/impl/bloc_impl.dart';
-import '../../field_id.dart';
 import '../field.dart';
+import '../field_id.dart';
 
 ///The implementation for [Field].
 class FieldImpl<T> implements Field<T> {

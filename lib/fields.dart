@@ -5,5 +5,5 @@
 library fields;
 
 export 'src/field/field.dart';
+export 'src/field/field_id.dart';
 export 'src/field/state_field.dart';
-export 'src/field_id.dart';

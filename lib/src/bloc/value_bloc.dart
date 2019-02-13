@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import '../action/actions.dart';
-import '../field_id.dart';
+import '../field/field_id.dart';
 import '../query/field_query.dart';
 import 'bloc.dart';
 

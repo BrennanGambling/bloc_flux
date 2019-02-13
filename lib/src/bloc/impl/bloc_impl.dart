@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../action/actions.dart';
 import '../../field/field.dart';
-import '../../field_id.dart';
+import '../../field/field_id.dart';
 import '../bloc.dart';
 
 ///The implementation for [Bloc]. Extend this class to create a basic [Bloc].

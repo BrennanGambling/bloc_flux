@@ -4,7 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
-import '../field_id.dart';
+import '../field/field_id.dart';
 import '../query/field_query.dart';
 import '../query/state_query.dart';
 import '../state/bloc_state.dart';
