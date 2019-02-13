@@ -1,8 +1,11 @@
 name: bloc_flux
-description: A starting point for Dart libraries or applications.
-# version: 1.0.0
-# homepage: https://www.example.com
-# author: Brennan Gambling <email@example.com>
+description: A reactive flux-like state management library using the BLoC pattern.
+version: 1.0.0
+homepage: https://github.com/BrennanGambling/bloc_flux
+repository: https://github.com/BrennanGambling/bloc_flux
+issue_tracker: https://github.com/BrennanGambling/bloc_flux/issues
+author: Brennan Gambling <brennan.gambling@gmail.com>
+documentation: 
 
 environment:
   sdk: '>=2.0.0 <3.0.0'
