@@ -4,12 +4,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
-import 'field_id.dart';
-import 'query/field_query.dart';
-import 'query/state_query.dart';
-import 'serializers/composite_serializers.dart';
-import 'state/bloc_state.dart';
-import 'state/field_state.dart';
+import '../field_id.dart';
+import '../query/field_query.dart';
+import '../query/state_query.dart';
+import '../state/bloc_state.dart';
+import '../state/field_state.dart';
+import 'composite_serializers.dart';
 
 part 'serializers.g.dart';
 

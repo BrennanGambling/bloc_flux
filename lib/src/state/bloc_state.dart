@@ -8,7 +8,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 import '../field_id.dart';
-import '../serializers.dart';
+import '../serializers/serializers.dart';
 import 'field_state.dart';
 
 part 'bloc_state.g.dart';
