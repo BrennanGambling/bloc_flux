@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:meta/meta.dart';
 
 import '../field_id.dart';
 import '../serializers.dart';
@@ -21,11 +20,12 @@ state fields will be mull if an initial state is not given.*/
 ///Wraps the last output of the [StateField] with [StateField.fieldID] equal
 ///to [fieldID].
 ///
-///[data] can be null.
+///{@macro field_state_fieldID}
 ///
-///[fieldID] **MUST NOT** be null.
+///{@macro field_state_data}
 ///
 ///{@template generic_must_be_serializable}
+///*** Serialization
 ///[T] must be a serializable type. Use [isSerializable()] to check if a [Type]
 ///is serializable. If [isSerializable()] returns false for a [Type] that has
 ///an available [Serializer] make sure the [Serializer] has been added using
@@ -41,8 +41,10 @@ state fields will be mull if an initial state is not given.*/
 ///FieldState<ObjectWithGenerics>
 ///```
 ///
-///If generic parameters are not declared an error may be thrown on serialization/
+///If generic parameters are not declared an **error may be thrown** on serialization/
 ///deserialization if a given generic type is not serializable.
+///
+///See [isSerializable()] for more information.
 ///{@endtemplate}
 @BuiltValue(nestedBuilders: false)
 abstract class FieldState<T>
@@ -50,73 +52,153 @@ abstract class FieldState<T>
   ///The [Serializer] for this class.
   static Serializer<FieldState> get serializer => _$fieldStateSerializer;
 
-  ///Throws if [data] is not serializable.
+  ///Instaniates a [FieldState].
+  ///
+  ///{@macro field_state_fieldID}
+  ///
+  ///{@macro field_state_data}
+  ///
+  ///{@macro generic_must_be_serializable}
   factory FieldState(FieldID fieldID, T data) => FieldState.fromBuilder((b) => b
     ..fieldID = fieldID
     ..data = data);
 
-  //TODO: make sure to document the fact that an error will be
-  //thrown if the Type T is not serializable.
-  ///Throws if [data] is not serializable.
+  ///Deserialize a serialized [FieldState] using the default serialization format.
+  ///
+  ///[serialized] will first be decoded using [jsonDecode()] and then
+  ///deserialized using [blocFluxSerialization].
+  ///
+  ///{@maceo specifiedType_param}
+  ///
+  ///{@macro generic_full_type}
+  ///
+  ///{@macro generic_must_be_serializable}
+  ///
+  ///{@macro serializers_diff}
+  factory FieldState.deserialize(String serialized, {FullType specifiedType}) =>
+      FieldState._deserialize(serialized, specifiedType, blocFluxSerializers);
+
+  ///Instantiates a [FieldState] using a [FieldStateBuilder] that can be updated
+  ///using the provided function which takes a [FieldStateBuilder] as a parameter.
+  ///
+  ///{@macro field_state_fieldID}
+  ///
+  ///{@macro field_state_data}
+  ///
+  ///{@macro generic_must_be_serializable}
   factory FieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
       _$FieldState<T>;
 
-  //TODO: add reference to the serializers class where the types that are
-  //serializable is listed.
+  ///Deserialize a serialized [FieldState] using the standard json format.
+  ///
+  ///[jsonString] will first be decoded using [jsonDecode()] and then
+  ///deserialized using the [standardJsonSerializers].
+  ///
+  ///{@template specifiedType_param}
+  ///The same [specifiedType] must be used for serialization and deserialization
+  ///of an instance of [FieldState].
+  ///{@endtemplate}
+  ///
+  ///{@template generic_full_type}
+  ///If [T] is a [Type] with generic parameters, [specifiedType] should be specified,
+  ///otherwise serialization or deserialization may fail. [specifiedType] should
+  ///be the [FullType] equivalent to [T].
+  ///{@endtemplate}
+  ///
+  ///{@macro generic_must_be_serializable}
+  ///
+  ///{@macro serializers_diff}
+  factory FieldState.fromJson(String jsonString, {FullType specifiedType}) =>
+      FieldState._deserialize(
+          jsonString, specifiedType, standardJsonSerializers);
 
-  factory FieldState.fromJSON(String jsonString) {
-    //deserialize to FieldState with Object generic
-    final FieldState<Object> fieldStateObject = standardJsonSerializers
-        .deserializeWith(FieldState.serializer, json.decode(jsonString));
-    try {
-      //try to cast the FieldState to a FieldState with tighter generic parameter
-      //bounds
-      final T data = fieldStateObject.data as T;
-      return FieldState(fieldStateObject.fieldID, data);
-    } catch (e) {
-      print(e.runtimeType);
-      if (e is CastError) {
-        //if the cast to a tighter generic bounds fails throw.
-        throw JSONDeserializationCastError(
-            fieldStateObject.data.runtimeType, T, jsonString, e);
-      } else {
-        throw e;
-      }
-    }
-  }
-
+  ///@nodoc
+  ///Internal constructor checks if generic parameter [Type] [T] is serializable
+  ///by calling [isSerializable()].
   FieldState._() {
-    //TODO: add option to specify a FullType.
     isSerializable(type: T, shouldThrow: true, objectIsSerializable: true);
   }
 
-  //TODO: document the serializer helper methods and add the serializer examplke to the class documentation.
+  ///@nodoc
+  ///Internal method for deserialization.
+  ///
+  ///[fromJson()] and [deserialize()] forward [serialized] and [specifiedType] and
+  ///then provide the appropriate [Serializers] instance.
+  factory FieldState._deserialize(
+      String serialized, FullType specifiedType, Serializers serializers) {
+    FullType fullType = specifiedType;
+    if (specifiedType == null || specifiedType.isUnspecified) {
+      fullType = FullType(T);
+    } else if (fullType.root != T) {
+      throw ArgumentError(
+          "The FullType.root of specifiedType must be equal to T.");
+    }
+    addBuilderFactory(fullType, () => FieldStateBuilder<T>());
+    return serializers.deserialize(jsonDecode(serialized),
+        specifiedType: fullType);
+  }
 
+  ///The output from [StateField] this [FieldState] represents.
+  ///
+  ///{@template field_state_data}
+  ///[data] can be null.
+  ///{@endtemplate}
   @nullable
   T get data;
 
+  ///The [StateField] with [Field.fieldID] that this [FieldState] represents.
+  ///
+  ///{@template field_state_fieldID}
+  ///[fieldID] **MUST NOT** be null.
+  ///{@endtemplate}
   FieldID get fieldID;
 
-  //this should fix the issue of serializers not being made for all possible
-  //generic parameter for a Built  class.
-  static String toJSON(FieldState fieldState) =>
-      json.encode(standardJsonSerializers.serialize(fieldState));
-}
+  ///Serializes this [FieldState] using the default serialization format
+  ///
+  ///this [FieldState] is first serialized using the [standardJsonSerializers]
+  ///and then encoded to a String using [jsonEncode()].
+  ///
+  ///{@macro specifiedType_param}
+  ///
+  ///{@macro generic_full_type}
+  ///
+  ///{@macro generic_must_be_serializable}
+  ///
+  ///{@macro serializers_diff}
+  String serialize({FullType specifiedType}) =>
+      _serialize(specifiedType, blocFluxSerializers);
 
-//TODO: document this.-
+  ///Serializes this [FieldState] using the standard json format.
+  ///
+  ///this [FieldState] is first serialized using the [standardJsonSerializers]
+  ///and then encoded to a String using [jsonEncode()].
+  ///
+  ///{@macro specifiedType_param}
+  ///
+  ///{@macro generic_full_type}
+  ///
+  ///{@macro generic_must_be_serializable}
+  ///
+  ///{@macro serializers_diff}
+  String toJson({FullType specifiedType}) =>
+      _serialize(specifiedType, standardJsonSerializers);
 
-@immutable
-class JSONDeserializationCastError extends Error {
-  final Type jsonType;
-  final Type fieldStateType;
-  final String fieldStateJSON;
-  final CastError castError;
+  ///@nodoc
+  ///Internal method for serialization.
+  ///
+  ///[toJson()] and [serialize()] forward [specifiedType] and provides the
+  ///appropriate [Serializers] instance.
+  String _serialize(FullType specifiedType, Serializers serializers) {
+    FullType fullType = specifiedType;
+    //TODO: make sure this wont call isUnspecified on a null. The conditianl should stop calculating if the first is true.
+    if (specifiedType == null || specifiedType.isUnspecified) {
+      fullType = FullType(T);
+    } else if (fullType.root != T) {
+      throw ArgumentError(
+          "The FullType.root of specifiedType must be equal to T.");
+    }
 
-  JSONDeserializationCastError(
-      this.jsonType, this.fieldStateType, this.fieldStateJSON, this.castError);
-
-  @override
-  String toString() =>
-      "JSON Generic Type: $jsonType, from jsonString is not a subtype of " +
-      "FieldState Generic Type: $fieldStateType.";
+    return jsonEncode(serializers.serialize(this,
+        specifiedType: FullType(FieldState, [fullType])));
+  }
 }

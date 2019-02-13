@@ -78,8 +78,10 @@ abstract class StateBlocState
         }
       });
 
-  ///Deserializes a [String] using the [blocFluxSerializers] and the
-  ///[JsonCodec.decode] method.
+  ///Deserializes a serialized [StateBlocState] using the default serialization format.
+  ///
+  ///[serialized] is first decoded using [jsonDecode()] and then deserialized using]]
+  ///the [blocFluxSerializers].
   ///
   ///{@macro serializers_diff}
   factory StateBlocState.deserialize(String serialized) => blocFluxSerializers
@@ -88,12 +90,14 @@ abstract class StateBlocState
   factory StateBlocState.fromBuilder([updates(StateBlocStateBuilder b)]) =
       _$StateBlocState;
 
-  ///Deserializes a [String] using the [standardJsonSerializers] and
-  ///the [JsonCodec.decode()] method.
+  ///Deserializes a serialized [StateBlocState] using the standard json format.
+  ///
+  ///[jsonString] is first decoded using [jsonDecode()] and then deserialized using
+  ///the [standardJsonSerializers].
   ///
   ///{@macro serializers_diff}
-  factory StateBlocState.fromJSON(String string) => standardJsonSerializers
-      .deserializeWith(StateBlocState.serializer, json.decode(string));
+  factory StateBlocState.fromJson(String jsonString) => standardJsonSerializers
+      .deserializeWith(StateBlocState.serializer, jsonDecode(jsonString));
 
   ///@nodoc
   ///Internal constructor.
@@ -117,19 +121,26 @@ abstract class StateBlocState
   ///Returns the [FieldState] associated with the [FieldState.key].
   FieldState operator [](FieldID fieldID) => stateMap[fieldID];
 
-  ///Serializes a [StateBlocState] using the [blocFluxSerializers] and the
-  ///[JsonCodec.encode()] method.
-  ///
-  ///{@macro serializers_diff}
-  static String serialize(StateBlocState blocState) => jsonEncode(
-      blocFluxSerializers.serializeWith(StateBlocState.serializer, blocState));
+  //TODO: what should be done about the need for FullType when serialize/deserialization of FieldState.
+  //TODO: a custom serializer might be needed.
 
-  ///Serializes a [StateBlocState] using the [standardJsonSerializers] and
-  ///the [JsonCodec.encode()] method.
+  ///Serializes this [StateBlocState] using the default serialization format.
+  ///
+  ///this [StateBlocState] is first serialized using the [blocFluxSerializers]
+  ///and then encoded to a String using [jsonEncode()].
   ///
   ///{@macro serializers_diff}
-  static String toJSON(StateBlocState blocState) =>
-      json.encode(standardJsonSerializers.serialize(blocState));
+  String serialize() => jsonEncode(
+      blocFluxSerializers.serializeWith(StateBlocState.serializer, this));
+
+  ///Serializes this [StateBlocState] using the standard json format.
+  ///
+  ///this [StateBlocState] is first serialized using the [standardJsonSerializers]
+  ///and then encoded to a String using [jsonEncode()].
+  ///
+  ///{@macro serializers_diff}
+  String toJson() => jsonEncode(
+      standardJsonSerializers.serializeWith(StateBlocState.serializer, this));
 
   ///@nodoc
   ///Performs checks on parameters when a constructor is called.
