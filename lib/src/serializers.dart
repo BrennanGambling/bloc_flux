@@ -129,6 +129,11 @@ void addSerializers(Serializers serializers) =>
 
 //TODO: if all of the types in a full type are specifie but a builder factory is not avaliable is it still serializable?
 
+///Recursivly build [List] of all [Type]s contained with [FullType]s nested
+///in [fullType].
+List<Type> getNestedTypes(FullType fullType) =>
+    _getNestedTypes(List(), fullType);
+
 ///Checks if the specified types can be serialized using [blocFluxSerializers].
 ///
 ///*** Specifiying Types to Check
@@ -194,13 +199,27 @@ bool isSerializable(
         return false;
       }
     } else {
-      final BuiltList<Type> typesList = (ListBuilder()
-            ..add(fullType.root)
-            ..addAll(fullType.parameters))
-          .build();
-      return typesList
+      return getNestedTypes(fullType)
           .every((t) => _isSerializable(t, shouldThrow, objectIsSerializable));
     }
+  }
+}
+
+///@nodoc
+///Internal method for [getNestedTypes].
+///
+///This is the method that actually does the work.
+///
+///[getNestedTypes] just calls this method after instaniating a [List].
+List<Type> _getNestedTypes(List<Type> typeList, FullType fullType) {
+  if (fullType.isUnspecified) {
+    return typeList;
+  } else if (fullType.parameters.isNotEmpty) {
+    fullType.parameters.forEach((t) => _getNestedTypes(typeList, t));
+    return typeList;
+  } else {
+    typeList.add(fullType.root);
+    return typeList;
   }
 }
 
