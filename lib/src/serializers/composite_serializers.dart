@@ -31,7 +31,7 @@ class CompositeSerializers implements Serializers {
   ///
   ///The default [Serializers] is the [Serializers] instance instaniated by the
   ///[Serializers] no parameter constructor. It will have [Serializer]s for primitive
-  ///type and built collections such as [BuilltList].
+  ///type and built collections such as [BuiltList].
   CompositeSerializers()
       : this._((SetBuilder<Serializers>()..add(Serializers())).build());
 
@@ -58,7 +58,7 @@ class CompositeSerializers implements Serializers {
 
   ///See [Serializers.deserialize()].
   ///
-  ///Returns the result of calling [Serializers.deserialze] on the first instance
+  ///Returns the result of calling [Serializers.deserialize] on the first instance
   ///of [Serializers] added to this [CompositeSerializers] that has a [Serializer]
   ///for [serialized].
   ///
@@ -79,9 +79,9 @@ class CompositeSerializers implements Serializers {
   ///**** Unspecified
   ///  If the result of calling [Serializers.serializerForWireName] with the wire
   ///  name is not null a [Serializer] was found. The wire name is obtained by
-  ///  casting the object to a [List] and then casting the first element to a [String].
+  ///  casting the object to a List and then casting the first element to a String.
   ///
-  ///If none of the [Serializers] have a [Serializer] for the object a [StateError]
+  ///If none of the [Serializers] have a [Serializer] for the object a StateError
   ///is thrown.
   ///{@endtemplate}
   ///
@@ -137,7 +137,7 @@ class CompositeSerializers implements Serializers {
   ///See [Serializers.deserializeWith()].
   ///
   ///Equivalent to calling [deserialize] with a [FullType] where [FullType.root]
-  ///equals the first element in [Serializer.types] as the [specifiedType].
+  ///equals the first element in [Serializer.types] as the specifiedType.
   @override
   T deserializeWith<T>(Serializer<T> serializer, Object serialized) =>
       deserialize(serialized, specifiedType: FullType(serializer.types.first))
@@ -232,7 +232,7 @@ class CompositeSerializers implements Serializers {
   ///
   ///Returns the result of calling [Serializers.serialize] on the first instance
   ///of [Serializers] added to this [CompositeSerializers] that has a [Serializer]
-  ///for [serialized].
+  ///for [object].
   ///
   ///{@macro same_full_type}
   ///
@@ -331,7 +331,7 @@ class CompositeSerializers implements Serializers {
   ///See [Serializers.deserializeWith()].
   ///
   ///Equivalent to calling [serialize] with a [FullType] where [FullType.root]
-  ///equalls the first element in [Serializer.types] as the [specifiedType].
+  ///equalls the first element in [Serializer.types] as the specifiedType.
   @override
   Object serializeWith<T>(Serializer<T> serializer, T object) =>
       serialize(object, specifiedType: FullType(serializer.types.first));
@@ -389,7 +389,7 @@ class CompositeSerializersBuilder implements SerializersBuilder {
 
   ///Instaniates a new [CompositeSerializersBuilder].
   ///
-  ///To get a builder for an existing [CompositeSerializer] call the
+  ///To get a builder for an existing [CompositeSerializers] call the
   ///[CompositeSerializers.toBuilder()] method.
   ///
   ///If no [Serializers] are added the default [Serializers] instance (the instance
@@ -423,7 +423,7 @@ class CompositeSerializersBuilder implements SerializersBuilder {
 
   ///See [SerializersBuilder.addBuilderFactory()].
   ///
-  ///Adds a builder function ([funtion]) for [FullType] [types] for all added
+  ///Adds a builder function ([function]) for [FullType] [types] for all added
   ///[Serializers].
   @override
   void addBuilderFactory(FullType types, Function function) =>

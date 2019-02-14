@@ -1,6 +1,7 @@
 library serializers;
 
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
@@ -93,24 +94,28 @@ CompositeSerializers get standardJsonSerializers {
 
 ///Adds a builder factory to [blocFluxSerializers] and [standardJsonSerializers].
 ///
-///{@template applied_to_all}
 ///This operation will also be applied to any [Serializers] already added using
 ///the [addSerializers] method. Any [Serializers] added after will **NOT** have this
 ///operation applied to them and should therefore be added using the [addSerializers()]
 ///method before this method is called.
-///{@endtemplate}
 void addBuilderFactory(FullType specifiedType, Function function) =>
     _updateSerializers((b) => b..addBuilderFactory(specifiedType, function));
 
 ///Adds a [SerializerPlugin] to [blocFluxSerializers] and [standardJsonSerializers]
 ///
-///{@macro applied_to_all}
+///This operation will also be applied to any [Serializers] already added using
+///the [addSerializers] method. Any [Serializers] added after will **NOT** have this
+///operation applied to them and should therefore be added using the [addSerializers()]
+///method before this method is called.
 void addPlugin(SerializerPlugin plugin) =>
     _updateSerializers((b) => b..addPlugin(plugin));
 
 ///Adds a [Serializer] to [blocFluxSerializers] and [standardJsonSerializers].
 ///
-///{@macro applied_to_all}
+///This operation will also be applied to any [Serializers] already added using
+///the [addSerializers] method. Any [Serializers] added after will **NOT** have this
+///operation applied to them and should therefore be added using the [addSerializers()]
+///method before this method is called.
 void addSerializer(Serializer serializer) =>
     _updateSerializers((b) => b..add(serializer));
 

@@ -22,10 +22,10 @@ part 'bloc_state.g.dart';
 //TODO: update examples after change from String key to FieldID.
 
 ///Contains the [FieldState] of all of the registered [StateField]s in the
-///[StateBloc] with a [Bloc.key] equal to [key].
+///[StateBloc] with a [Bloc.key] equal to [blocKey].
 ///
 ///To get a specific [FieldState] use the list access operator with the
-///[FieldState.key] as the parameter:
+///[FieldState.fieldID] as the parameter:
 ///```dart
 ///stateBlocState\[fieldState.key\];
 ///```

@@ -54,7 +54,7 @@ abstract class QueryAction<T> implements InternalAction<T> {}
 
 ///An [Action] indicating a new value from a [Field].
 ///
-///[data]{@template data_not_null}&#8197;must **NOT** be null otherwise an [ArgumentError] will be thrown.{@endtemplate}
+///[data]{@template data_not_null}&#8197;must **NOT** be null otherwise an ArgumentError will be thrown.{@endtemplate}
 @immutable
 abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
   ///[data]{@macro data_not_null}

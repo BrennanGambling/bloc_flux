@@ -24,7 +24,7 @@ class FieldImpl<T> implements Field<T> {
   @override
   final ValueObservable<T> observable;
 
-  ///The [BehvaiorSubject] managing [observable].
+  ///The [BehaviorSubject] managing [observable].
   @protected
   final BehaviorSubject<T> subject;
 

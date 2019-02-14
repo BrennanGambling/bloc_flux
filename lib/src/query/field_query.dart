@@ -88,7 +88,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///Use this to cancel [fieldQuery]. The returned [FieldQuery] must still be dispatched.
   ///
   ///[fieldQuery] must not be a single [FieldQuery]. That is [fieldQuery.single]
-  ///should equal [false], **otherwise an [ArgumentError] will be thrown.**
+  ///should equal [false], **otherwise an ArgumentError will be thrown.**
   factory FieldQuery.cancelQuery(FieldQuery fieldQuery) {
     if (fieldQuery.single) {
       throw ArgumentError(
@@ -159,7 +159,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///
   ///{@template ids_specified}
   ///If [fieldIDs] is specified the [FieldID.blocKey] for each element must be
-  ///the same, **otherwise an [ArgumentError] will be thrown.**
+  ///the same, **otherwise an ArgumentError will be thrown.**
   ///{@endtemplate}
   static void _fieldIDsCheck(BuiltList<FieldID> fieldIDs) {
     if (fieldIDs != null) {
@@ -205,18 +205,18 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///  2. [fieldKeys]
   ///  3. [fieldID]
   ///  4. [fieldKey]
-  ///**If more than one of theses parameters are specified an [ArgumentError]
+  ///**If more than one of theses parameters are specified an ArgumentError
   ///will be thrown.**
   ///{@endtemplate}
   ///
   ///{@template keys_specified}
   ///If [fieldKey] or [fieldKeys] is specified [blocKey] **MUST** also be specified,
-  ///**otherwise an [ArgumentError] will be thrown.**
+  ///**otherwise an ArgumentError will be thrown.**
   ///{@endtemplate}
   ///
   ///{@template all_null}
   ///If none of the ID ([fieldID(s)]) or Key ([fieldKey(s)]) are specified the
-  ///[blocKey] **MUST** be specified, **otherwise an [ArgumentError] will be thrown.**
+  ///[blocKey] **MUST** be specified, **otherwise an ArgumentError will be thrown.**
   ///{@endtemplate}
   ///
   ///{@macro ids_specified}

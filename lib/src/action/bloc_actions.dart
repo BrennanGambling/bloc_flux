@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'package:meta/meta.dart';
 
 import '../state/bloc_state.dart';
@@ -14,7 +15,8 @@ import 'actions.dart';
 @immutable
 class BlocStateAction extends Action<StateBlocState>
     implements QueryAction<StateBlocState> {
-  ///[blocState]{@macro data_not_null}
+
+  ///[BlocStateAction.blocState]{@macro data_not_null}
   BlocStateAction(StateBlocState blocState) : super(data: blocState) {
     if (blocState == null) {
       throw ArgumentError.notNull("blocState must not be null.");
@@ -39,7 +41,7 @@ class BlocStateAction extends Action<StateBlocState>
 ///**COMMUNICATES** a state change. Use [BlocStateAction] to set the state of a
 ///[StateBloc].
 ///
-///[blocState]{@macro data_not_null}
+///[blocState] {@macro data_not_null}
 @immutable
 class BlocStateValueAction extends ValueAction<StateBlocState>
     implements QueryAction<StateBlocState> {

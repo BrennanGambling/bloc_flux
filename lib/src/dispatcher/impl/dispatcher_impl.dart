@@ -158,7 +158,7 @@ class DispatcherImpl implements Dispatcher {
   ///{@macro dispatcher_dispose}
   ///
   ///{@template dispatcher_closed}
-  ///This method will throw a [StateError] if this is closed. A [Dispatcher] is
+  ///This method will throw a StateError if this is closed. A [Dispatcher] is
   ///closed after its [dispose] method is called. To see if a [Dispatcher] is
   ///closed use getter [closed].
   ///{@endtemplate}

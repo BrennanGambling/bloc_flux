@@ -101,7 +101,7 @@ abstract class BlocImpl implements Bloc {
   ///
   ///{@template closed_state_error}
   ///**If this Bloc is already [closed] calling this method will result in a
-  ///[StateError] being thrown.** For more information on when a [Bloc]
+  ///StateError being thrown.** For more information on when a [Bloc]
   ///is considered closed see [Bloc.closed].
   ///{@endtemplate}
   @mustCallSuper

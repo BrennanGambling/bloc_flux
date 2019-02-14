@@ -35,7 +35,7 @@ abstract class Field<T> {
       FieldImpl<T>(key, blocKey, inputObservable, derived, bloc);
 
   ///{@template field_derived_getter}
-  ///True if this [Fields] output is derived from the output of another [Field].
+  ///True if this [Field]s output is derived from the output of another [Field].
   ///{@endtemplate}
   ///
   ///{@template only_call_from_bloc}
@@ -46,7 +46,7 @@ abstract class Field<T> {
   ///{@template field_fieldID_getter}
   ///The [FieldID] for this [Field].
   ///
-  ///This is derived from the [key] and [blocKey] provided to the constructor.
+  ///This is derived from the key and blocKey provided to the constructor.
   ///
   ///[fieldID] should be unique. That is the [fieldID] of this [Field] should not
   ///be equal to the [fieldID] of any other [Field].
