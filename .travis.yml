@@ -2,4 +2,4 @@ language: dart
 dart:
 - dev
 dart_task:
-- dartfmt
+- dartfmt: true
