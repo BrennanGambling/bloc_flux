@@ -23,8 +23,10 @@ void main() {
 
   addBuilderFactory(fullType, () => FieldStateBuilder<String>());
 
-  final String serializedField = json.encode(blocFluxSerializers.serialize(field1));
-  final FieldState deserializedField = blocFluxSerializers.deserialize(json.decode(serializedField));
+  final String serializedField =
+      json.encode(blocFluxSerializers.serialize(field1));
+  final FieldState deserializedField =
+      blocFluxSerializers.deserialize(json.decode(serializedField));
 
   print("${field1 == deserializedField}");
 
@@ -42,6 +44,4 @@ void main() {
   final StateBlocState deserialized = StateBlocState.deserialize(serialized);
 
   assert(blocState == deserialized);*/
-
-
 }

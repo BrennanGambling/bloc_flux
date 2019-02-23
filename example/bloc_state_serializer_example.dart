@@ -26,7 +26,8 @@ void main() {
   final String blocStateToJSON = blocState.toJson();
 
   //BlocState deserialized from blocStateToJSON.
-  final StateBlocState blocStateFromJSON = StateBlocState.fromJson(blocStateToJSON);
+  final StateBlocState blocStateFromJSON =
+      StateBlocState.fromJson(blocStateToJSON);
 
   print('''blocState:
   $blocState\n

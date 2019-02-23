@@ -15,7 +15,6 @@ import 'actions.dart';
 @immutable
 class BlocStateAction extends Action<StateBlocState>
     implements QueryAction<StateBlocState> {
-
   ///[BlocStateAction.blocState]{@macro data_not_null}
   BlocStateAction(StateBlocState blocState) : super(data: blocState) {
     if (blocState == null) {
