@@ -16,12 +16,10 @@ class Action<T> {
 
   const Action({this.data});
 
-  ///The [hashCode] of an [Action] is equal to the hashCode of [data] is [data]
-  ///is non null.
-  ///
-  ///If [data] is null a default hashCode is returned.
+  ///The [hashCode] of an [Action] is derived from the [data] fields hashCode
+  ///and the generic type parameter of this instance.
   @override
-  int get hashCode => this?.data.hashCode ?? _actionHash.hashCode;
+  int get hashCode => hash2((this?.data.hashCode ?? _actionHash.hashCode), T);
 
   ///[Action]s are equal if they both have equal generic type parameters (T) and
   ///[data] fields.
