@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 ///Contains an optional payload, [data] with any important information relating
 ///to the [Action]. If the [Action] does not require a payload data will be null.
 @immutable
-abstract class Action<T> {
+class Action<T> {
   ///The payload. May be null.
   final T data;
 
@@ -19,7 +19,7 @@ abstract class Action<T> {
 ///
 ///If the [ErrorAction] does not require a payload, [error] can be left null.
 @immutable
-abstract class ErrorAction<T, E> implements Action<T> {
+class ErrorAction<T, E> implements Action<T> {
   ///The [Action<T>] to wrap.
   final Action<T> action;
 
@@ -56,7 +56,7 @@ abstract class QueryAction<T> implements InternalAction<T> {}
 ///
 ///[data]{@template data_not_null}&#8197;must **NOT** be null otherwise an ArgumentError will be thrown.{@endtemplate}
 @immutable
-abstract class ValueAction<T> extends Action<T> implements InternalAction<T> {
+class ValueAction<T> extends Action<T> implements InternalAction<T> {
   ///[data]{@macro data_not_null}
   ValueAction(T data) : super(data: data) {
     if (data == null) {
