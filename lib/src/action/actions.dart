@@ -11,7 +11,7 @@ class Action<T> {
   ///The payload. May be null.
   final T data;
 
-  Action({this.data});
+  const Action({this.data});
 }
 
 ///A Decorator for the [Action] class which indicates the request [Action]
@@ -27,7 +27,7 @@ class ErrorAction<T, E> implements Action<T> {
   final E error;
 
   ///Creates an [ErrorAction] wrapping [action] with payload [error].
-  ErrorAction(this.action, this.error);
+  const ErrorAction(this.action, this.error);
 
   ///The [data] payload from the wrapped [Action].
   ///
