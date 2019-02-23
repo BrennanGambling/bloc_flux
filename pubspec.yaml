@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   rxdart: ^0.20.0
+  quiver: '>=2.0.0 <3.0.0'
   meta: ^1.1.7
   built_collection: ^4.1.0
   built_value: 6.3.0

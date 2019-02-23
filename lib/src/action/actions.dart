@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:quiver/core.dart';
 
 ///Indicates that something that could potentially affect the application state.
 ///
@@ -8,10 +9,25 @@ import 'package:meta/meta.dart';
 ///to the [Action]. If the [Action] does not require a payload data will be null.
 @immutable
 class Action<T> {
+  static const String _actionHash = "Action hash";
+
   ///The payload. May be null.
   final T data;
 
   const Action({this.data});
+
+  ///The [hashCode] of an [Action] is equal to the hashCode of [data] is [data]
+  ///is non null.
+  ///
+  ///If [data] is null a default hashCode is returned.
+  @override
+  int get hashCode => this?.data.hashCode ?? _actionHash.hashCode;
+
+  ///[Action]s are equal if they both have equal generic type parameters (T) and
+  ///[data] fields.
+  @override
+  bool operator ==(dynamic other) =>
+      (other is Action<T>) && (this?.data == other?.data);
 }
 
 ///A Decorator for the [Action] class which indicates the request [Action]
@@ -21,19 +37,40 @@ class Action<T> {
 @immutable
 class ErrorAction<T, E> implements Action<T> {
   ///The [Action<T>] to wrap.
+  ///
+  ///{@template action_action_null}
+  ///[action] must **NOT** be null.
+  ///{@endtemplate}
   final Action<T> action;
 
   ///The error payload. May be null.
   final E error;
 
   ///Creates an [ErrorAction] wrapping [action] with payload [error].
-  const ErrorAction(this.action, this.error);
+  ///
+  ///{@macro action_action_null}
+  ErrorAction(this.action, this.error) {
+    if (action == null) {
+      throw ArgumentError.notNull("action must not be null.");
+    }
+  }
 
   ///The [data] payload from the wrapped [Action].
   ///
   ///This is [action]'s [data] field, not the superclass's [data] field.
   @override
   T get data => action.data;
+
+  @override
+  int get hashCode => hash2(action, error);
+
+  ///[ErrorAction]s are equal if they both have equal generic type parameters (T and E)
+  ///and their [action] and [error] fields are equal.
+  @override
+  bool operator ==(dynamic other) =>
+      (other is ErrorAction<T, E>) &&
+      (this.action == other.action) &&
+      (this?.error == other?.error);
 }
 
 ///Marker interface indicating an [Action] was dispatched from another [Bloc].
@@ -63,4 +100,14 @@ class ValueAction<T> extends Action<T> implements InternalAction<T> {
       throw ArgumentError.notNull("data must not be null.");
     }
   }
+
+  ///The hashCode of a [ValueAction] is equal to the hashCode of [data].
+  @override
+  int get hashCode => data.hashCode;
+
+  ///[ValueAction]s are equal if they have the same generic type parameters (T)
+  ///and their [data] fields are equal.
+  @override
+  bool operator ==(dynamic other) =>
+      (other is ValueAction<T>) && (this.data == other.data);
 }
