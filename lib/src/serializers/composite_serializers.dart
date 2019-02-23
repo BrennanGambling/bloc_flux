@@ -63,17 +63,17 @@ class CompositeSerializers implements Serializers {
   ///for [serialized].
   ///
   ///{@template same_full_type}
-  ///The same [FullType] used to serialize an object must also be used to
+  ///The same FullType used to serialize an object must also be used to
   ///deserialize it, otherwise deserialization will fail.
   ///{@endtemplate}
   ///
   ///{@template serializer_lookup_method}
   ///The method for checking if each of the added [Serializers] has a [Serializer]
   ///for the object depends on whether or not [specifiedType] is unspecified,
-  ///that is [specifiedType] equals [FullType.unspecified].
+  ///that is [specifiedType] equals FullType.unspecified.
   ///
   ///**** Specified
-  ///  If the result of calling [Serialziers.serializerForType] with the [FullType.root]
+  ///  If the result of calling [Serialziers.serializerForType] with the FullType.root
   ///  of [specifiedType] is not null a [Serializer] was found.
   ///
   ///**** Unspecified
@@ -423,7 +423,7 @@ class CompositeSerializersBuilder implements SerializersBuilder {
 
   ///See [SerializersBuilder.addBuilderFactory()].
   ///
-  ///Adds a builder function ([function]) for [FullType] [types] for all added
+  ///Adds a builder function ([function]) for FullType [types] for all added
   ///[Serializers].
   @override
   void addBuilderFactory(FullType types, Function function) =>

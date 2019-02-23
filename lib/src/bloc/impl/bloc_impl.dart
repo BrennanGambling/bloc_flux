@@ -34,7 +34,7 @@ abstract class BlocImpl implements Bloc {
   bool _init;
 
   ///{@template bloc_action_observable_getter}
-  ///The [Observable] carrying [Action]s from the [Dispatcher].
+  ///The Observable carrying [Action]s from the [Dispatcher].
   ///{@endtemplate}
   final Observable<Action> actionObservable;
 

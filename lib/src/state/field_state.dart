@@ -26,8 +26,8 @@ state fields will be mull if an initial state is not given.*/
 ///
 ///{@template generic_must_be_serializable}
 ///*** Serialization
-///[T] must be a serializable type. Use [isSerializable()] to check if a [Type]
-///is serializable. If [isSerializable()] returns false for a [Type] that has
+///[T] must be a serializable type. Use [isSerializable()] to check if a Type
+///is serializable. If [isSerializable()] returns false for a Type that has
 ///an available [Serializer] make sure the [Serializer] has been added using
 ///this [addSerializer()] method. A [Serializers] instance can also be added using
 ///the [addSerializers()] method to add all [Serializers] is a project.

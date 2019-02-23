@@ -88,7 +88,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
   ///Use this to cancel [fieldQuery]. The returned [FieldQuery] must still be dispatched.
   ///
   ///[fieldQuery] must not be a single [FieldQuery]. That is [fieldQuery.single]
-  ///should equal [false], **otherwise an ArgumentError will be thrown.**
+  ///should equal false, **otherwise an ArgumentError will be thrown.**
   factory FieldQuery.cancelQuery(FieldQuery fieldQuery) {
     if (fieldQuery.single) {
       throw ArgumentError(

@@ -54,7 +54,7 @@ CompositeSerializers _standardJsonSerializers;
 ///*** Add Custom [Serializers]
 ///If applicable add your own [Serializers] class using the [addSerializers()]
 ///method. This should be done as it allows for use of serialization methods
-///built directly in to the state and query classes with custom [Built] objects
+///built directly in to the state and query classes with custom Built objects
 ///and use of generics. See [addSerializers()] for more information.
 ///{@endtemplate}
 ///

@@ -5,7 +5,7 @@ import '../action/actions.dart';
 ///The interface of the most basic dispatcher.
 abstract class BaseDispatcher {
   ///{@template action_observable}
-  ///The [Observable] that carries the dispatched [Action]s.
+  ///The Observable that carries the dispatched [Action]s.
   ///{@endtemplate}
   Observable<Action> get actionObservable;
 
@@ -19,7 +19,7 @@ abstract class BaseDispatcher {
   ///{@template add_input_observable}
   ///Start dispatching all [Action]s from [observable].
   ///
-  ///If an [Observable] was already added with [key] it will be replaced
+  ///If an Observable was already added with [key] it will be replaced
   ///with [observable].
   ///
   ///[key] can be passed to [removeInputObservable] to stop dispatching the
