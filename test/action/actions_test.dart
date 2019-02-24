@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 import 'package:bloc_flux/bloc_flux.dart';
+import 'package:built_collection/built_collection.dart';
 
 void main() {
   group("actions.dart tests", () {
@@ -40,6 +41,8 @@ void main() {
       expect(errorAction, isNot(equals(diffErrorAction)));
       expect(errorAction, isNot(equals(nullError)));
 
+      expect(errorAction.action.data, equals(errorAction.data));
+
       expect(errorAction.hashCode, equals(errorAction2.hashCode));
       expect(errorAction.hashCode, isNot(equals(diffErrorAction.hashCode)));
       expect(errorAction.hashCode, isNot(equals(nullError.hashCode)));
@@ -58,5 +61,24 @@ void main() {
       expect(valueAction.hashCode, isNot(equals(diffValueAction)));
     });
   });
+
+  group("bloc_actions.dart tests", () {
+    const String blocKey = "blocKey";
+    final FieldID fieldIDA = FieldID(blocKey, "fieldKeyA");
+    final FieldID fieldIDB = FieldID(blocKey, "fieldKeyB");
+    test("BlocStateAction test", () {
+      //TODO: blocstateaction tests.
+
+    });
+    test("BlocStateValueAction test", () {
+      //TODO: blocstatevalueaction tests.
+    });
+    test("StateQueryAction test", () {
+      //TODO:
+    });
+  });
+}
+
+BuiltList<FieldState> buildStateBlocState() {
 }
 
