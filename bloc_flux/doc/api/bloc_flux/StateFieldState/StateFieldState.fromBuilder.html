@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the StateFieldState.fromBuilder constructor from the Class StateFieldState class from the bloc_flux library, for the Dart programming language.">
+  <title>StateFieldState.fromBuilder constructor - StateFieldState class - bloc_flux library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+  
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">bloc_flux</a></li>
+    <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+    <li><a href="bloc_flux/StateFieldState-class.html">StateFieldState<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
+    <li class="self-crumb">StateFieldState.fromBuilder factory constructor</li>
+  </ol>
+  <div class="self-name">StateFieldState.fromBuilder</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="index.html">bloc_flux</a></li>
+      <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+      <li><a href="bloc_flux/StateFieldState-class.html">StateFieldState<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
+      <li class="self-crumb">StateFieldState.fromBuilder factory constructor</li>
+    </ol>
+    
+    <h5>StateFieldState class</h5>
+    <ol>
+      <li class="section-title"><a href="bloc_flux/StateFieldState-class.html#constructors">Constructors</a></li>
+      <li><a href="bloc_flux/StateFieldState/StateFieldState.html">StateFieldState</a></li>
+      <li><a href="bloc_flux/StateFieldState/StateFieldState.deserialize.html">deserialize</a></li>
+      <li><a href="bloc_flux/StateFieldState/StateFieldState.fromBuilder.html">fromBuilder</a></li>
+      <li><a href="bloc_flux/StateFieldState/StateFieldState.fromJson.html">fromJson</a></li>
+    
+      <li class="section-title">
+        <a href="bloc_flux/StateFieldState-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="bloc_flux/StateFieldState/data.html">data</a></li>
+      <li><a href="bloc_flux/StateFieldState/fieldID.html">fieldID</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/StateFieldState-class.html#instance-methods">Methods</a></li>
+      <li><a href="bloc_flux/StateFieldState/serialize.html">serialize</a></li>
+      <li><a href="bloc_flux/StateFieldState/toJson.html">toJson</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/rebuild.html">rebuild</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/toBuilder.html">toBuilder</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="bloc_flux/StateFieldState-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="bloc_flux/StateFieldState/operator_equals.html">operator ==</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/StateFieldState-class.html#static-properties">Static properties</a></li>
+      <li><a href="bloc_flux/StateFieldState/serializer.html">serializer</a></li>
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-constructor">StateFieldState&lt;<wbr><span class="type-parameter">T</span>&gt;.fromBuilder</span> constructor</h1></div>
+
+    <section class="multi-line-signature">
+      
+      <span class="name ">StateFieldState&lt;<wbr><span class="type-parameter">T</span>&gt;.fromBuilder</span>(<wbr>[<span class="parameter" id="fromBuilder-param-updates"><span class="type-annotation">dynamic</span> <span class="parameter-name">updates</span>(<span class="parameter" id="updates-param-b"><span class="type-annotation"><a href="bloc_flux/StateFieldStateBuilder-class.html">StateFieldStateBuilder</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">b</span></span>)</span> ])
+    </section>
+
+    <section class="desc markdown">
+      <p>Instantiates a <a href="bloc_flux/StateFieldState-class.html">StateFieldState</a> using a <code>FieldStateBuilder</code> that can be updated
+using the provided function which takes a <code>FieldStateBuilder</code> as a parameter.</p>
+<p><a href="bloc_flux/StateFieldState/fieldID.html">fieldID</a> <strong>MUST NOT</strong> be null.</p>
+<p><a href="bloc_flux/StateFieldState/data.html">data</a> can be null.</p>
+<p>*** Serialization
+<code>T</code> must be a serializable type. Use <a href="bloc_flux/isSerializable.html">isSerializable()</a> to check if a Type
+is serializable. If <a href="bloc_flux/isSerializable.html">isSerializable()</a> returns false for a Type that has
+an available <code>Serializer</code> make sure the <code>Serializer</code> has been added using
+this <a href="bloc_flux/addSerializer.html">addSerializer()</a> method. A <code>Serializers</code> instance can also be added using
+the <a href="bloc_flux/addSerializers.html">addSerializers()</a> method to add all <code>Serializers</code> is a project.</p>
+<p>If <code>T</code> has generic parameters perfer to declare them when declaring <code>T</code>:</p>
+<pre class="language-dart"><code class="language-dart">FieldState&lt;ObjectWithGenerics&lt;ASerializableType&gt;&gt;
+</code></pre>
+<p>instead of:</p>
+<pre class="language-dart"><code class="language-dart">FieldState&lt;ObjectWithGenerics&gt;
+</code></pre>
+<p>If generic parameters are not declared an <strong>error may be thrown</strong> on serialization/
+deserialization if a given generic type is not serializable.</p>
+<p>See <a href="bloc_flux/isSerializable.html">isSerializable()</a> for more information.</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">factory StateFieldState.fromBuilder([updates(StateFieldStateBuilder&lt;T&gt; b)]) =
+    _$StateFieldState&lt;T&gt;;</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    bloc_flux 1.0.0
+  </span>
+
+  
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

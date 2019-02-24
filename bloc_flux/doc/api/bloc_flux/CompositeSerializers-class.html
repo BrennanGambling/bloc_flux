@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the CompositeSerializers class from the bloc_flux library, for the Dart programming language.">
+  <title>CompositeSerializers class - bloc_flux library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+  
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">bloc_flux</a></li>
+    <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+    <li class="self-crumb">CompositeSerializers class</li>
+  </ol>
+  <div class="self-name">CompositeSerializers</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="index.html">bloc_flux</a></li>
+      <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+      <li class="self-crumb">CompositeSerializers class</li>
+    </ol>
+    
+    <h5>bloc_flux library</h5>
+    <ol>
+      <li class="section-title"><a href="bloc_flux/bloc_flux-library.html#classes">Classes</a></li>
+      <li><a href="bloc_flux/Action-class.html">Action</a></li>
+      <li><a href="bloc_flux/BaseDispatcher-class.html">BaseDispatcher</a></li>
+      <li><a href="bloc_flux/Bloc-class.html">Bloc</a></li>
+      <li><a href="bloc_flux/BlocImpl-class.html">BlocImpl</a></li>
+      <li><a href="bloc_flux/BlocStateAction-class.html">BlocStateAction</a></li>
+      <li><a href="bloc_flux/BlocStateValueAction-class.html">BlocStateValueAction</a></li>
+      <li><a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a></li>
+      <li><a href="bloc_flux/CompositeSerializersBuilder-class.html">CompositeSerializersBuilder</a></li>
+      <li><a href="bloc_flux/Dispatcher-class.html">Dispatcher</a></li>
+      <li><a href="bloc_flux/DispatcherImpl-class.html">DispatcherImpl</a></li>
+      <li><a href="bloc_flux/ErrorAction-class.html">ErrorAction</a></li>
+      <li><a href="bloc_flux/Field-class.html">Field</a></li>
+      <li><a href="bloc_flux/FieldID-class.html">FieldID</a></li>
+      <li><a href="bloc_flux/FieldIDBuilder-class.html">FieldIDBuilder</a></li>
+      <li><a href="bloc_flux/FieldImpl-class.html">FieldImpl</a></li>
+      <li><a href="bloc_flux/FieldQuery-class.html">FieldQuery</a></li>
+      <li><a href="bloc_flux/FieldQueryAction-class.html">FieldQueryAction</a></li>
+      <li><a href="bloc_flux/FieldQueryBuilder-class.html">FieldQueryBuilder</a></li>
+      <li><a href="bloc_flux/FieldValueAction-class.html">FieldValueAction</a></li>
+      <li><a href="bloc_flux/FieldView-class.html">FieldView</a></li>
+      <li><a href="bloc_flux/InternalAction-class.html">InternalAction</a></li>
+      <li><a href="bloc_flux/QueryAction-class.html">QueryAction</a></li>
+      <li><a href="bloc_flux/StateBloc-class.html">StateBloc</a></li>
+      <li><a href="bloc_flux/StateBlocImpl-class.html">StateBlocImpl</a></li>
+      <li><a href="bloc_flux/StateBlocState-class.html">StateBlocState</a></li>
+      <li><a href="bloc_flux/StateBlocStateBuilder-class.html">StateBlocStateBuilder</a></li>
+      <li><a href="bloc_flux/StateField-class.html">StateField</a></li>
+      <li><a href="bloc_flux/StateFieldImpl-class.html">StateFieldImpl</a></li>
+      <li><a href="bloc_flux/StateFieldState-class.html">StateFieldState</a></li>
+      <li><a href="bloc_flux/StateFieldStateBuilder-class.html">StateFieldStateBuilder</a></li>
+      <li><a href="bloc_flux/StateQuery-class.html">StateQuery</a></li>
+      <li><a href="bloc_flux/StateQueryAction-class.html">StateQueryAction</a></li>
+      <li><a href="bloc_flux/StateQueryBuilder-class.html">StateQueryBuilder</a></li>
+      <li><a href="bloc_flux/ValueAction-class.html">ValueAction</a></li>
+      <li><a href="bloc_flux/ValueBloc-class.html">ValueBloc</a></li>
+      <li><a href="bloc_flux/ValueBlocImpl-class.html">ValueBlocImpl</a></li>
+    
+    
+    
+      <li class="section-title"><a href="bloc_flux/bloc_flux-library.html#properties">Properties</a></li>
+      <li><a href="bloc_flux/blocFluxSerializers.html">blocFluxSerializers</a></li>
+      <li><a href="dispatcher/dispatcher.html">dispatcher</a></li>
+      <li><a href="bloc_flux/standardJsonSerializers.html">standardJsonSerializers</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/bloc_flux-library.html#functions">Functions</a></li>
+      <li><a href="bloc_flux/addBuilderFactory.html">addBuilderFactory</a></li>
+      <li><a href="bloc_flux/addPlugin.html">addPlugin</a></li>
+      <li><a href="bloc_flux/addSerializer.html">addSerializer</a></li>
+      <li><a href="bloc_flux/addSerializers.html">addSerializers</a></li>
+      <li><a href="dispatcher/getDispatcher.html">getDispatcher</a></li>
+      <li><a href="bloc_flux/getNestedTypes.html">getNestedTypes</a></li>
+      <li><a href="bloc_flux/isSerializable.html">isSerializable</a></li>
+    
+    
+      <li class="section-title"><a href="bloc_flux/bloc_flux-library.html#typedefs">Typedefs</a></li>
+      <li><a href="bloc_flux/CompositeUpdates.html">CompositeUpdates</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/bloc_flux-library.html#exceptions">Exceptions</a></li>
+      <li><a href="bloc_flux/InvalidStateBlocStateError-class.html">InvalidStateBlocStateError</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-class">CompositeSerializers</span> class </h1></div>
+
+    <section class="desc markdown">
+      <p>A composite structure for the <code>Serializers</code> class.</p>
+<p>This class allows for a clients <code>Serializers</code> instance to be used along side
+this packages <code>Serializers</code> instance. This is important due to the fact that
+not all properties of <code>Serializers</code> can be copied (such as builder factories).
+It also means that clients do not have to individually add each <code>Serializer</code>
+and builder factory that the serialization methods in the state and query need
+access to.</p>
+<p>Because these method calls are applied to a collection of <code>Serializers</code> the
+behavior may be slightly different from the behavior when they are called
+on a single instance of <code>Serializers</code>.</p>
+    </section>
+    
+    <section>
+      <dl class="dl-horizontal">
+
+        <dt>Implemented types</dt>
+        <dd>
+          <ul class="comma-separated clazz-relationships">
+            <li>Serializers</li>
+          </ul>
+        </dd>
+
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="CompositeSerializers" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/CompositeSerializers.html">CompositeSerializers</a></span><span class="signature">()</span>
+        </dt>
+        <dd>
+          Instaniates an instance of <a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a> containing an instance
+of the default <code>Serializers</code>. <a href="bloc_flux/CompositeSerializers/CompositeSerializers.html">[...]</a>
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="serializers" class="property">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/serializers.html">serializers</a></span>
+          <span class="signature">&#8594; Iterable<span class="signature">&lt;<wbr><span class="type-parameter">Serializer</span>&gt;</span></span>         
+        </dt>
+        <dd>
+          All of the <code>Serializer</code>s contained by this <a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a> <code>Serializers</code>.
+                  <div class="features">final</div>
+</dd>
+        <dt id="hashCode" class="property inherited">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/hashCode.html">hashCode</a></span>
+          <span class="signature">&#8594; int</span>         
+        </dt>
+        <dd class="inherited">
+          The hash code for this object. <a href="bloc_flux/CompositeSerializers/hashCode.html">[...]</a>
+                  <div class="features">read-only, inherited</div>
+</dd>
+        <dt id="runtimeType" class="property inherited">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/runtimeType.html">runtimeType</a></span>
+          <span class="signature">&#8594; Type</span>         
+        </dt>
+        <dd class="inherited">
+          A representation of the runtime type of the object.
+                  <div class="features">read-only, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="allHaveBuilders" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/allHaveBuilders.html">allHaveBuilders</a></span><span class="signature">(<wbr><span class="parameter" id="allHaveBuilders-param-fullType"><span class="type-annotation">FullType</span> <span class="parameter-name">fullType</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+                  </dt>
+        <dd>
+          Returns true if <a href="bloc_flux/CompositeSerializers/hasBuilder.html">Serilizers.hasBuilder()</a> returns true on <strong>ALL</strong> of the
+added <code>Serializers</code>. <a href="bloc_flux/CompositeSerializers/allHaveBuilders.html">[...]</a>
+                  
+</dd>
+        <dt id="deserialize" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/deserialize.html">deserialize</a></span><span class="signature">(<wbr><span class="parameter" id="deserialize-param-serialized"><span class="type-annotation">Object</span> <span class="parameter-name">serialized</span>, {</span> <span class="parameter" id="deserialize-param-specifiedType"><span class="type-annotation">FullType</span> <span class="parameter-name">specifiedType</span>: <span class="default-value">FullType.unspecified</span></span> })
+            <span class="returntype parameter">&#8594; Object</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/deserialize.html">Serializers.deserialize()</a>. <a href="bloc_flux/CompositeSerializers/deserialize.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="deserializeWith" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/deserializeWith.html">deserializeWith</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="deserializeWith-param-serializer"><span class="type-annotation">Serializer<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">serializer</span>, </span> <span class="parameter" id="deserializeWith-param-serialized"><span class="type-annotation">Object</span> <span class="parameter-name">serialized</span></span>)
+            <span class="returntype parameter">&#8594; T</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/deserializeWith.html">Serializers.deserializeWith()</a>. <a href="bloc_flux/CompositeSerializers/deserializeWith.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="expectBuilder" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/expectBuilder.html">expectBuilder</a></span><span class="signature">(<wbr><span class="parameter" id="expectBuilder-param-fullType"><span class="type-annotation">FullType</span> <span class="parameter-name">fullType</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/expectBuilder.html">Serializers.expectBuilder()</a>. <a href="bloc_flux/CompositeSerializers/expectBuilder.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="hasBuilder" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/hasBuilder.html">hasBuilder</a></span><span class="signature">(<wbr><span class="parameter" id="hasBuilder-param-fullType"><span class="type-annotation">FullType</span> <span class="parameter-name">fullType</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/hasBuilder.html">Serializers.hasBuilder()</a>. <a href="bloc_flux/CompositeSerializers/hasBuilder.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="newBuilder" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/newBuilder.html">newBuilder</a></span><span class="signature">(<wbr><span class="parameter" id="newBuilder-param-fullType"><span class="type-annotation">FullType</span> <span class="parameter-name">fullType</span></span>)
+            <span class="returntype parameter">&#8594; Object</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/newBuilder.html">Serializers.newBuilder</a> <a href="bloc_flux/CompositeSerializers/newBuilder.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="serialize" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/serialize.html">serialize</a></span><span class="signature">(<wbr><span class="parameter" id="serialize-param-object"><span class="type-annotation">Object</span> <span class="parameter-name">object</span>, {</span> <span class="parameter" id="serialize-param-specifiedType"><span class="type-annotation">FullType</span> <span class="parameter-name">specifiedType</span>: <span class="default-value">FullType.unspecified</span></span> })
+            <span class="returntype parameter">&#8594; Object</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/serialize.html">Serializers.serialize()</a>. <a href="bloc_flux/CompositeSerializers/serialize.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="serializerForType" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/serializerForType.html">serializerForType</a></span><span class="signature">(<wbr><span class="parameter" id="serializerForType-param-type"><span class="type-annotation">Type</span> <span class="parameter-name">type</span></span>)
+            <span class="returntype parameter">&#8594; Serializer</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/serializerForType.html">Serializers.serializerForType()</a>. <a href="bloc_flux/CompositeSerializers/serializerForType.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="serializerForWireName" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/serializerForWireName.html">serializerForWireName</a></span><span class="signature">(<wbr><span class="parameter" id="serializerForWireName-param-wireName"><span class="type-annotation">String</span> <span class="parameter-name">wireName</span></span>)
+            <span class="returntype parameter">&#8594; Serializer</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/serializerForWireName.html">Serializers.serializerForWireName()</a>. <a href="bloc_flux/CompositeSerializers/serializerForWireName.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="serializeWith" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/serializeWith.html">serializeWith</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="serializeWith-param-serializer"><span class="type-annotation">Serializer<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">serializer</span>, </span> <span class="parameter" id="serializeWith-param-object"><span class="type-annotation">T</span> <span class="parameter-name">object</span></span>)
+            <span class="returntype parameter">&#8594; Object</span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/deserializeWith.html">Serializers.deserializeWith()</a>. <a href="bloc_flux/CompositeSerializers/serializeWith.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="toBuilder" class="callable">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/toBuilder.html">toBuilder</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; <a href="bloc_flux/CompositeSerializersBuilder-class.html">CompositeSerializersBuilder</a></span>
+          </span>
+                  </dt>
+        <dd>
+          See <a href="bloc_flux/CompositeSerializers/toBuilder.html">Serializers.toBuilder()</a>. <a href="bloc_flux/CompositeSerializers/toBuilder.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="noSuchMethod" class="callable inherited">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Invoked when a non-existent method or property is accessed. <a href="bloc_flux/CompositeSerializers/noSuchMethod.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toString" class="callable inherited">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/toString.html">toString</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a string representation of this object.
+                  <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+          <span class="name"><a href="bloc_flux/CompositeSerializers/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation">dynamic</span> <span class="parameter-name">other</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          The equality operator. <a href="bloc_flux/CompositeSerializers/operator_equals.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+      <li class="section-title"><a href="bloc_flux/CompositeSerializers-class.html#constructors">Constructors</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/CompositeSerializers.html">CompositeSerializers</a></li>
+    
+      <li class="section-title">
+        <a href="bloc_flux/CompositeSerializers-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="bloc_flux/CompositeSerializers/serializers.html">serializers</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/CompositeSerializers-class.html#instance-methods">Methods</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/allHaveBuilders.html">allHaveBuilders</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/deserialize.html">deserialize</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/deserializeWith.html">deserializeWith</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/expectBuilder.html">expectBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/hasBuilder.html">hasBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/newBuilder.html">newBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serialize.html">serialize</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializerForType.html">serializerForType</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializerForWireName.html">serializerForWireName</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializeWith.html">serializeWith</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/toBuilder.html">toBuilder</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="bloc_flux/CompositeSerializers-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    bloc_flux 1.0.0
+  </span>
+
+  
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

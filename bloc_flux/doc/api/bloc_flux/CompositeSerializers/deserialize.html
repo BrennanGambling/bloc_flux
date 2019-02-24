@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the deserialize method from the CompositeSerializers class, for the Dart programming language.">
+  <title>deserialize method - CompositeSerializers class - bloc_flux library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+  
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">bloc_flux</a></li>
+    <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+    <li><a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a></li>
+    <li class="self-crumb">deserialize method</li>
+  </ol>
+  <div class="self-name">deserialize</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="index.html">bloc_flux</a></li>
+      <li><a href="bloc_flux/bloc_flux-library.html">bloc_flux</a></li>
+      <li><a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a></li>
+      <li class="self-crumb">deserialize method</li>
+    </ol>
+    
+    <h5>CompositeSerializers class</h5>
+    <ol>
+      <li class="section-title"><a href="bloc_flux/CompositeSerializers-class.html#constructors">Constructors</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/CompositeSerializers.html">CompositeSerializers</a></li>
+    
+      <li class="section-title">
+        <a href="bloc_flux/CompositeSerializers-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="bloc_flux/CompositeSerializers/serializers.html">serializers</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="bloc_flux/CompositeSerializers-class.html#instance-methods">Methods</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/allHaveBuilders.html">allHaveBuilders</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/deserialize.html">deserialize</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/deserializeWith.html">deserializeWith</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/expectBuilder.html">expectBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/hasBuilder.html">hasBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/newBuilder.html">newBuilder</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serialize.html">serialize</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializerForType.html">serializerForType</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializerForWireName.html">serializerForWireName</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/serializeWith.html">serializeWith</a></li>
+      <li><a href="bloc_flux/CompositeSerializers/toBuilder.html">toBuilder</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="bloc_flux/CompositeSerializers-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="bloc_flux/CompositeSerializers/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-method">deserialize</span> method</h1></div>
+
+    <section class="multi-line-signature">
+      <div>
+        <ol class="annotation-list">
+          <li>@override</li>
+        </ol>
+      </div>
+      <span class="returntype">Object</span>
+            <span class="name ">deserialize</span>
+(<wbr><span class="parameter" id="deserialize-param-serialized"><span class="type-annotation">Object</span> <span class="parameter-name">serialized</span>, {</span> <span class="parameter" id="deserialize-param-specifiedType"><span class="type-annotation">FullType</span> <span class="parameter-name">specifiedType</span>: <span class="default-value">FullType.unspecified</span></span> })
+      <div class="features">override</div>
+    </section>
+    <section class="desc markdown">
+      <p>See <a href="bloc_flux/CompositeSerializers/deserialize.html">Serializers.deserialize()</a>.</p>
+<p>Returns the result of calling <a href="bloc_flux/CompositeSerializers/deserialize.html">Serializers.deserialize</a> on the first instance
+of <code>Serializers</code> added to this <a href="bloc_flux/CompositeSerializers-class.html">CompositeSerializers</a> that has a <code>Serializer</code>
+for <code>serialized</code>.</p>
+<p>The same FullType used to serialize an object must also be used to
+deserialize it, otherwise deserialization will fail.
+The method for checking if each of the added <code>Serializers</code> has a <code>Serializer</code>
+for the object depends on whether or not <code>specifiedType</code> is unspecified,
+that is <code>specifiedType</code> equals FullType.unspecified.</p>
+<p>**** Specified
+ If the result of calling <a href="bloc_flux/CompositeSerializers/serializerForType.html">Serialziers.serializerForType</a> with the FullType.root
+ of <code>specifiedType</code> is not null a <code>Serializer</code> was found.</p>
+<p>**** Unspecified
+ If the result of calling <a href="bloc_flux/CompositeSerializers/serializerForWireName.html">Serializers.serializerForWireName</a> with the wire
+ name is not null a <code>Serializer</code> was found. The wire name is obtained by
+ casting the object to a List and then casting the first element to a String.</p>
+<p>If none of the <code>Serializers</code> have a <code>Serializer</code> for the object a StateError
+is thrown.
+If a <code>Serializers</code> had a <code>Serializer</code> but failed to deserialize <code>serialized</code>,
+the last <code>Error</code> thrown (and caught) will be thrown.</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">@override
+Object deserialize(Object serialized,
+    {FullType specifiedType = FullType.unspecified}) {
+  Error error;
+  Object returnObject;
+  bool found = false;
+  bool success = false;
+  _allSerializers.forEach((s) {
+    if (success) {
+      return;
+    }
+    try {
+      if (!specifiedType.isUnspecified &amp;&amp;
+          s.serializerForType(specifiedType.root) == null &amp;&amp;
+          (serialized is List &amp;&amp; serialized.first is String)) {
+        returnObject = s.deserialize(serialized);
+        success = true;
+        return;
+      } else {
+        Serializer serializer;
+        if (specifiedType.isUnspecified) {
+          serializer =
+              s.serializerForWireName((serialized as List).first as String);
+        } else {
+          serializer = s.serializerForType(specifiedType.root);
+        }
+        if (serializer != null) {
+          found = true;
+          returnObject =
+              s.deserialize(serialized, specifiedType: specifiedType);
+          success = true;
+          return;
+        }
+      }
+    } catch (e) {
+      error = e;
+    }
+  });
+  if (success) {
+    return returnObject;
+  } else if (found) {
+    throw error;
+  } else {
+    throw StateError(&quot;No serializer for type: ${serialized.runtimeType}.&quot;);
+  }
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    bloc_flux 1.0.0
+  </span>
+
+  
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
