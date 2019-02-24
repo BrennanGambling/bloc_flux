@@ -16,6 +16,7 @@ dependencies:
   meta: ^1.1.7
   built_collection: ^4.1.0
   built_value: 6.3.0
+  mockito: ^4.0.0
 
 dev_dependencies:
   test: ^1.0.0
