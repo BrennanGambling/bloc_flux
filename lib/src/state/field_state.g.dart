@@ -6,13 +6,15 @@ part of field_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<StateFieldState> _$fieldStateSerializer = _$FieldStateSerializer();
+Serializer<StateFieldState> _$stateFieldStateSerializer =
+    _$StateFieldStateSerializer();
 
-class _$FieldStateSerializer implements StructuredSerializer<StateFieldState> {
+class _$StateFieldStateSerializer
+    implements StructuredSerializer<StateFieldState> {
   @override
-  final Iterable<Type> types = const [StateFieldState, _$FieldState];
+  final Iterable<Type> types = const [StateFieldState, _$StateFieldState];
   @override
-  final String wireName = 'FieldState';
+  final String wireName = 'StateFieldState';
 
   @override
   Iterable serialize(Serializers serializers, StateFieldState object,
@@ -47,8 +49,8 @@ class _$FieldStateSerializer implements StructuredSerializer<StateFieldState> {
         isUnderspecified ? FullType.object : specifiedType.parameters[0];
 
     final result = isUnderspecified
-        ? FieldStateBuilder<Object>()
-        : serializers.newBuilder(specifiedType) as FieldStateBuilder;
+        ? StateFieldStateBuilder<Object>()
+        : serializers.newBuilder(specifiedType) as StateFieldStateBuilder;
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -71,30 +73,31 @@ class _$FieldStateSerializer implements StructuredSerializer<StateFieldState> {
   }
 }
 
-class _$FieldState<T> extends StateFieldState<T> {
+class _$StateFieldState<T> extends StateFieldState<T> {
   @override
   final T data;
   @override
   final FieldID fieldID;
 
-  factory _$FieldState([void updates(FieldStateBuilder<T> b)]) =>
-      (FieldStateBuilder<T>()..update(updates)).build();
+  factory _$StateFieldState([void updates(StateFieldStateBuilder<T> b)]) =>
+      (StateFieldStateBuilder<T>()..update(updates)).build();
 
-  _$FieldState._({this.data, this.fieldID}) : super._() {
+  _$StateFieldState._({this.data, this.fieldID}) : super._() {
     if (fieldID == null) {
-      throw BuiltValueNullFieldError('FieldState', 'fieldID');
+      throw BuiltValueNullFieldError('StateFieldState', 'fieldID');
     }
     if (T == dynamic) {
-      throw BuiltValueMissingGenericsError('FieldState', 'T');
+      throw BuiltValueMissingGenericsError('StateFieldState', 'T');
     }
   }
 
   @override
-  StateFieldState<T> rebuild(void updates(FieldStateBuilder<T> b)) =>
+  StateFieldState<T> rebuild(void updates(StateFieldStateBuilder<T> b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  FieldStateBuilder<T> toBuilder() => FieldStateBuilder<T>()..replace(this);
+  StateFieldStateBuilder<T> toBuilder() =>
+      StateFieldStateBuilder<T>()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -111,16 +114,16 @@ class _$FieldState<T> extends StateFieldState<T> {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('FieldState')
+    return (newBuiltValueToStringHelper('StateFieldState')
           ..add('data', data)
           ..add('fieldID', fieldID))
         .toString();
   }
 }
 
-class FieldStateBuilder<T>
-    implements Builder<StateFieldState<T>, FieldStateBuilder<T>> {
-  _$FieldState<T> _$v;
+class StateFieldStateBuilder<T>
+    implements Builder<StateFieldState<T>, StateFieldStateBuilder<T>> {
+  _$StateFieldState<T> _$v;
 
   T _data;
   T get data => _$this._data;
@@ -130,9 +133,9 @@ class FieldStateBuilder<T>
   FieldID get fieldID => _$this._fieldID;
   set fieldID(FieldID fieldID) => _$this._fieldID = fieldID;
 
-  FieldStateBuilder();
+  StateFieldStateBuilder();
 
-  FieldStateBuilder<T> get _$this {
+  StateFieldStateBuilder<T> get _$this {
     if (_$v != null) {
       _data = _$v.data;
       _fieldID = _$v.fieldID;
@@ -146,17 +149,18 @@ class FieldStateBuilder<T>
     if (other == null) {
       throw ArgumentError.notNull('other');
     }
-    _$v = other as _$FieldState<T>;
+    _$v = other as _$StateFieldState<T>;
   }
 
   @override
-  void update(void updates(FieldStateBuilder<T> b)) {
+  void update(void updates(StateFieldStateBuilder<T> b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$FieldState<T> build() {
-    final _$result = _$v ?? _$FieldState<T>._(data: data, fieldID: fieldID);
+  _$StateFieldState<T> build() {
+    final _$result =
+        _$v ?? _$StateFieldState<T>._(data: data, fieldID: fieldID);
     replace(_$result);
     return _$result;
   }

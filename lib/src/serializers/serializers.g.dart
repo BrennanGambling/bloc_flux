@@ -9,8 +9,8 @@ part of serializers;
 Serializers _$_blocFluxBaseSerializers = (Serializers().toBuilder()
       ..add(FieldID.serializer)
       ..add(FieldQuery.serializer)
-      ..add(StateFieldState.serializer)
       ..add(StateBlocState.serializer)
+      ..add(StateFieldState.serializer)
       ..add(StateQuery.serializer)
       ..addBuilderFactory(const FullType(BuiltList, [FullType(FieldID)]),
           () => ListBuilder<FieldID>())

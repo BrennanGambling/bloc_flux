@@ -48,9 +48,10 @@ state fields will be mull if an initial state is not given.*/
 ///{@endtemplate}
 @BuiltValue(nestedBuilders: false)
 abstract class StateFieldState<T>
-    implements Built<StateFieldState<T>, FieldStateBuilder<T>> {
+    implements Built<StateFieldState<T>, StateFieldStateBuilder<T>> {
   ///The [Serializer] for this class.
-  static Serializer<StateFieldState> get serializer => _$fieldStateSerializer;
+  static Serializer<StateFieldState> get serializer =>
+      _$stateFieldStateSerializer;
 
   ///Instaniates a [StateFieldState].
   ///
@@ -89,8 +90,8 @@ abstract class StateFieldState<T>
   ///{@macro field_state_data}
   ///
   ///{@macro generic_must_be_serializable}
-  factory StateFieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
-      _$FieldState<T>;
+  factory StateFieldState.fromBuilder([updates(StateFieldStateBuilder<T> b)]) =
+      _$StateFieldState<T>;
 
   ///Deserialize a serialized [StateFieldState] using the standard json format.
   ///
@@ -137,7 +138,7 @@ abstract class StateFieldState<T>
       throw ArgumentError(
           "The FullType.root of specifiedType must be equal to T.");
     }
-    addBuilderFactory(fullType, () => FieldStateBuilder<T>());
+    addBuilderFactory(fullType, () => StateFieldStateBuilder<T>());
     return serializers.deserialize(jsonDecode(serialized),
         specifiedType: fullType);
   }

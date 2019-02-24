@@ -21,7 +21,7 @@ void main() {
 
   final FullType fullType = FullType(StateFieldState, [FullType(String)]);
 
-  addBuilderFactory(fullType, () => FieldStateBuilder<String>());
+  addBuilderFactory(fullType, () => StateFieldStateBuilder<String>());
 
   final String serializedField =
       json.encode(blocFluxSerializers.serialize(field1));
