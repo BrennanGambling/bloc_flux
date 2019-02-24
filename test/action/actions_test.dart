@@ -1,6 +1,8 @@
-import 'package:test/test.dart';
 import 'package:bloc_flux/bloc_flux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:test/test.dart';
+
+import '../mocks/mock_queries.dart';
+import '../mocks/mock_states.dart';
 
 void main() {
   group("actions.dart tests", () {
@@ -59,24 +61,79 @@ void main() {
       expect(valueAction, isNot(equals(diffValueAction)));
 
       expect(valueAction.hashCode, equals(valueAction2.hashCode));
-      expect(valueAction.hashCode, isNot(equals(diffValueAction)));
+      expect(valueAction.hashCode, isNot(equals(diffValueAction.hashCode)));
     });
   });
 
   group("bloc_actions.dart tests", () {
-    const String blocKey = "blocKey";
-    final FieldID fieldIDA = FieldID(blocKey, "fieldKeyA");
-    final FieldID fieldIDB = FieldID(blocKey, "fieldKeyB");
+    final StateBlocState stateBlocState = MockStateBlocState.getExampleMock();
+    final StateBlocState diffStateBlocState =
+        MockStateBlocState.getExampleMock(diff: true);
     test("BlocStateAction test", () {
-      //TODO: blocstateaction tests.
+      final BlocStateAction blocStateAction = BlocStateAction(stateBlocState);
+      final BlocStateAction blocStateAction2 = BlocStateAction(stateBlocState);
+      final BlocStateAction diffBlocStateAction =
+          BlocStateAction(diffStateBlocState);
+
+      expect(() => BlocStateAction(null), throwsA(isArgumentError));
+
+      expect(blocStateAction.blocState, equals(blocStateAction.data));
+      expect(
+          blocStateAction.blocKey, equals(blocStateAction.blocState.blocKey));
+
+      expect(blocStateAction, equals(blocStateAction2));
+      expect(blocStateAction, isNot(equals(diffBlocStateAction)));
     });
     test("BlocStateValueAction test", () {
-      //TODO: blocstatevalueaction tests.
+      final BlocStateValueAction blocStateValueAction =
+          BlocStateValueAction(stateBlocState);
+      final BlocStateValueAction blocStateValueAction2 =
+          BlocStateValueAction(stateBlocState);
+      final BlocStateValueAction diffBlocStateValueAction =
+          BlocStateValueAction(diffStateBlocState);
+
+      expect(() => BlocStateValueAction(null), throwsA(isArgumentError));
+
+      expect(blocStateValueAction.blocState, equals(blocStateValueAction.data));
+      expect(blocStateValueAction.blocKey,
+          equals(blocStateValueAction.blocState.blocKey));
+
+      expect(blocStateValueAction, equals(blocStateValueAction2));
+      expect(blocStateValueAction, isNot(equals(diffBlocStateValueAction)));
     });
     test("StateQueryAction test", () {
+      final StateQuery stateQuery = MockStateQuery.getExampleMock();
+      final StateQuery diffStateQuery =
+          MockStateQuery.getExampleMock(diff: true);
+
+      final StateQueryAction stateQueryAction = StateQueryAction(stateQuery);
+      final StateQueryAction stateQueryAction2 = StateQueryAction(stateQuery);
+      final StateQueryAction diffStateQueryAction =
+          StateQueryAction(diffStateQuery);
+
+      expect(() => StateQueryAction(null), throwsA(isArgumentError));
+
+      expect(stateQueryAction.stateQuery, equals(stateQueryAction.data));
+      expect(stateQueryAction.blocKey,
+          equals(stateQueryAction.stateQuery.blocKey));
+      expect(
+          stateQueryAction.cancel, equals(stateQueryAction.stateQuery.cancel));
+      expect(
+          stateQueryAction.single, equals(stateQueryAction.stateQuery.single));
+      expect(stateQueryAction.subscription,
+          equals(stateQueryAction.stateQuery.subscription));
+
+      expect(stateQueryAction, equals(stateQueryAction2));
+      expect(stateQueryAction, isNot(equals(diffStateQueryAction)));
+    });
+  });
+
+  group("field_actions.dart tests", () {
+    test("FieldQueryAction test", () {
+      //TODO:
+    });
+    test("FieldValueAction test", () {
       //TODO:
     });
   });
 }
-
-BuiltList<StateFieldState> buildStateBlocState() {}
