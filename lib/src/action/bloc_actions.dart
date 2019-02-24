@@ -1,8 +1,9 @@
 import 'dart:core';
+
 import 'package:meta/meta.dart';
 
-import '../state/bloc_state.dart';
 import '../query/state_query.dart';
+import '../state/bloc_state.dart';
 import 'actions.dart';
 
 ///Dispatch an instance of this [Action] to set the state of the [StateBloc].
@@ -70,6 +71,15 @@ class StateQueryAction extends Action<StateQuery>
   ///Helper method for getting the [StateQuery.blocKey] from [stateField].
   String get blocKey => data.blocKey;
 
+  ///Helper method for getting the [StateQuery.cancel] from [stateField].
+  bool get cancel => data.cancel;
+
+  ///Helper method for getting the [StateQuery.single] from [stateField].
+  bool get single => data.single;
+
   ///Helper method for getting the [stateQuery].
   StateQuery get stateQuery => data;
+
+  ///Helper method for getting the [StateQuery.subscription] from [stateField].
+  bool get subscription => data.subscription;
 }
