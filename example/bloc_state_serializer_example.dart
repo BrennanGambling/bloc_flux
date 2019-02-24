@@ -11,11 +11,11 @@ void main() {
   final FieldID fieldID2 = FieldID(blocKey, fieldKey2);
 
   //create 2 FieldStates
-  FieldState<String> field1 = FieldState(fieldID1, "someData");
-  FieldState<int> field2 = FieldState(fieldID2, 4);
+  StateFieldState<String> field1 = StateFieldState(fieldID1, "someData");
+  StateFieldState<int> field2 = StateFieldState(fieldID2, 4);
 
   //Create a Map of keys to FieldStates.
-  final Map<FieldID, FieldState> map = Map();
+  final Map<FieldID, StateFieldState> map = Map();
   map[field1.fieldID] = field1;
   map[field2.fieldID] = field2;
 

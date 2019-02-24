@@ -6,7 +6,7 @@ part of field_query;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<FieldQuery> _$fieldQuerySerializer = new _$FieldQuerySerializer();
+Serializer<FieldQuery> _$fieldQuerySerializer = _$FieldQuerySerializer();
 
 class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
   @override
@@ -30,8 +30,7 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
       result
         ..add('fieldIDs')
         ..add(serializers.serialize(object.fieldIDs,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(FieldID)])));
+            specifiedType: const FullType(BuiltList, [FullType(FieldID)])));
     }
 
     return result;
@@ -40,7 +39,7 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
   @override
   FieldQuery deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new FieldQueryBuilder();
+    final result = FieldQueryBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -58,8 +57,8 @@ class _$FieldQuerySerializer implements StructuredSerializer<FieldQuery> {
           break;
         case 'fieldIDs':
           result.fieldIDs = serializers.deserialize(value,
-              specifiedType: const FullType(
-                  BuiltList, const [const FullType(FieldID)])) as BuiltList;
+                  specifiedType: const FullType(BuiltList, [FullType(FieldID)]))
+              as BuiltList;
           break;
         case 'single':
           result.single = serializers.deserialize(value,
@@ -86,18 +85,18 @@ class _$FieldQuery extends FieldQuery {
   bool __subscription;
 
   factory _$FieldQuery([void updates(FieldQueryBuilder b)]) =>
-      (new FieldQueryBuilder()..update(updates)).build();
+      (FieldQueryBuilder()..update(updates)).build();
 
   _$FieldQuery._({this.blocKey, this.cancel, this.fieldIDs, this.single})
       : super._() {
     if (blocKey == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'blocKey');
+      throw BuiltValueNullFieldError('FieldQuery', 'blocKey');
     }
     if (cancel == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'cancel');
+      throw BuiltValueNullFieldError('FieldQuery', 'cancel');
     }
     if (single == null) {
-      throw new BuiltValueNullFieldError('FieldQuery', 'single');
+      throw BuiltValueNullFieldError('FieldQuery', 'single');
     }
   }
 
@@ -115,7 +114,7 @@ class _$FieldQuery extends FieldQuery {
       (toBuilder()..update(updates)).build();
 
   @override
-  FieldQueryBuilder toBuilder() => new FieldQueryBuilder()..replace(this);
+  FieldQueryBuilder toBuilder() => FieldQueryBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -178,7 +177,7 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   @override
   void replace(FieldQuery other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$FieldQuery;
   }
@@ -191,7 +190,7 @@ class FieldQueryBuilder implements Builder<FieldQuery, FieldQueryBuilder> {
   @override
   _$FieldQuery build() {
     final _$result = _$v ??
-        new _$FieldQuery._(
+        _$FieldQuery._(
             blocKey: blocKey,
             cancel: cancel,
             fieldIDs: fieldIDs,

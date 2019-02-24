@@ -9,12 +9,11 @@ void main() {
     final Action<String> action = Action(data: testData);
     final Action<String> diffAction = Action(data: diffData);
     test("Action test", () {
-      
       final Action<String> action2 = Action(data: testData);
       final Action<String> nullData = Action();
       final Action<String> nullData2 = Action();
       final Action<dynamic> noGenericType = Action<dynamic>(data: testData);
-      
+
       expect(action, equals(action2));
       expect(action, isNot(equals(diffAction)));
       expect(action == noGenericType, equals(false));
@@ -30,8 +29,10 @@ void main() {
     test("ErrorAction test", () {
       final Error error = Error();
       final ErrorAction<String, Error> errorAction = ErrorAction(action, error);
-      final ErrorAction<String, Error> errorAction2 = ErrorAction(action, error);
-      final ErrorAction<String, Error> diffErrorAction = ErrorAction(diffAction, error);
+      final ErrorAction<String, Error> errorAction2 =
+          ErrorAction(action, error);
+      final ErrorAction<String, Error> diffErrorAction =
+          ErrorAction(diffAction, error);
       final ErrorAction<String, Error> nullError = ErrorAction(action, null);
 
       expect(() => ErrorAction(null, error), throwsA(isArgumentError));
@@ -68,7 +69,6 @@ void main() {
     final FieldID fieldIDB = FieldID(blocKey, "fieldKeyB");
     test("BlocStateAction test", () {
       //TODO: blocstateaction tests.
-
     });
     test("BlocStateValueAction test", () {
       //TODO: blocstatevalueaction tests.
@@ -79,6 +79,4 @@ void main() {
   });
 }
 
-BuiltList<FieldState> buildStateBlocState() {
-}
-
+BuiltList<StateFieldState> buildStateBlocState() {}

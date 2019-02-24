@@ -27,7 +27,7 @@ class InvalidStateBlocStateError extends Error {
   final bool causedByInitialState;
 
   InvalidStateBlocStateError(this.stateBloc, this.blocState,
-      {this.causedByInitialState: false, this.extraMessage});
+      {this.causedByInitialState = false, this.extraMessage});
 
   ///The [StateBloc.key] of the [StateBloc].
   String get blocKey => stateBloc.key;
@@ -88,7 +88,7 @@ abstract class StateBloc extends ValueBloc {
   Iterable<FieldID> get stateFieldIDs;
 
   ///{@template invalid_state_fields}
-  ///Returns an [Iterable] of all of the [FieldID]s of the [FieldState]s  in
+  ///Returns an [Iterable] of all of the [FieldID]s of the [StateFieldState]s  in
   ///[blocState] without a matching registered [StateField]
   ///
   ///**OR**
@@ -100,7 +100,7 @@ abstract class StateBloc extends ValueBloc {
   ///{@macro closed_state_error}
   ///
   ///{@template field_state_match}
-  ///A [FieldState] and a [StateField] are considered matching if they have
+  ///A [StateFieldState] and a [StateField] are considered matching if they have
   ///equal [FieldID]s.
   ///{@endtemplate}
   Iterable<FieldID> invalidStateFields(StateBlocState blocState);
@@ -112,11 +112,11 @@ abstract class StateBloc extends ValueBloc {
   ///{@macro closed_state_error}
   ///
   ///{@template bloc_state_valid}
-  ///A [StateBlocState] is considered valid if all of the [FieldState]s it
+  ///A [StateBlocState] is considered valid if all of the [StateFieldState]s it
   ///contains have matching [StateField]s in this [StateBloc] and the
   ///[StateBlocState.blocKey] is equal to [key].
   ///
-  ///The generic types of the [FieldState]s must also be the same type or a
+  ///The generic types of the [StateFieldState]s must also be the same type or a
   ///subtype of the matching [StateField]s generic type. This can be checked
   ///using the [Field.isValidType] method.
   ///{@endtemplate}

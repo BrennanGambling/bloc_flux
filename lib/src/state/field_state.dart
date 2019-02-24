@@ -47,23 +47,24 @@ state fields will be mull if an initial state is not given.*/
 ///See [isSerializable()] for more information.
 ///{@endtemplate}
 @BuiltValue(nestedBuilders: false)
-abstract class FieldState<T>
-    implements Built<FieldState<T>, FieldStateBuilder<T>> {
+abstract class StateFieldState<T>
+    implements Built<StateFieldState<T>, FieldStateBuilder<T>> {
   ///The [Serializer] for this class.
-  static Serializer<FieldState> get serializer => _$fieldStateSerializer;
+  static Serializer<StateFieldState> get serializer => _$fieldStateSerializer;
 
-  ///Instaniates a [FieldState].
+  ///Instaniates a [StateFieldState].
   ///
   ///{@macro field_state_fieldID}
   ///
   ///{@macro field_state_data}
   ///
   ///{@macro generic_must_be_serializable}
-  factory FieldState(FieldID fieldID, T data) => FieldState.fromBuilder((b) => b
-    ..fieldID = fieldID
-    ..data = data);
+  factory StateFieldState(FieldID fieldID, T data) =>
+      StateFieldState.fromBuilder((b) => b
+        ..fieldID = fieldID
+        ..data = data);
 
-  ///Deserialize a serialized [FieldState] using the default serialization format.
+  ///Deserialize a serialized [StateFieldState] using the default serialization format.
   ///
   ///[serialized] will first be decoded using [jsonDecode()] and then
   ///deserialized using [blocFluxSerialization].
@@ -75,10 +76,12 @@ abstract class FieldState<T>
   ///{@macro generic_must_be_serializable}
   ///
   ///{@macro serializers_diff}
-  factory FieldState.deserialize(String serialized, {FullType specifiedType}) =>
-      FieldState._deserialize(serialized, specifiedType, blocFluxSerializers);
+  factory StateFieldState.deserialize(String serialized,
+          {FullType specifiedType}) =>
+      StateFieldState._deserialize(
+          serialized, specifiedType, blocFluxSerializers);
 
-  ///Instantiates a [FieldState] using a [FieldStateBuilder] that can be updated
+  ///Instantiates a [StateFieldState] using a [FieldStateBuilder] that can be updated
   ///using the provided function which takes a [FieldStateBuilder] as a parameter.
   ///
   ///{@macro field_state_fieldID}
@@ -86,17 +89,17 @@ abstract class FieldState<T>
   ///{@macro field_state_data}
   ///
   ///{@macro generic_must_be_serializable}
-  factory FieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
+  factory StateFieldState.fromBuilder([updates(FieldStateBuilder<T> b)]) =
       _$FieldState<T>;
 
-  ///Deserialize a serialized [FieldState] using the standard json format.
+  ///Deserialize a serialized [StateFieldState] using the standard json format.
   ///
   ///[jsonString] will first be decoded using [jsonDecode()] and then
   ///deserialized using the [standardJsonSerializers].
   ///
   ///{@template specifiedType_param}
   ///The same [specifiedType] must be used for serialization and deserialization
-  ///of an instance of [FieldState].
+  ///of an instance of [StateFieldState].
   ///{@endtemplate}
   ///
   ///{@template generic_full_type}
@@ -108,14 +111,15 @@ abstract class FieldState<T>
   ///{@macro generic_must_be_serializable}
   ///
   ///{@macro serializers_diff}
-  factory FieldState.fromJson(String jsonString, {FullType specifiedType}) =>
-      FieldState._deserialize(
+  factory StateFieldState.fromJson(String jsonString,
+          {FullType specifiedType}) =>
+      StateFieldState._deserialize(
           jsonString, specifiedType, standardJsonSerializers);
 
   ///@nodoc
   ///Internal constructor checks if generic parameter [Type] [T] is serializable
   ///by calling [isSerializable()].
-  FieldState._() {
+  StateFieldState._() {
     isSerializable(type: T, shouldThrow: true, objectIsSerializable: true);
   }
 
@@ -124,7 +128,7 @@ abstract class FieldState<T>
   ///
   ///[fromJson()] and [deserialize()] forward [serialized] and [specifiedType] and
   ///then provide the appropriate [Serializers] instance.
-  factory FieldState._deserialize(
+  factory StateFieldState._deserialize(
       String serialized, FullType specifiedType, Serializers serializers) {
     FullType fullType = specifiedType;
     if (specifiedType == null || specifiedType.isUnspecified) {
@@ -138,7 +142,7 @@ abstract class FieldState<T>
         specifiedType: fullType);
   }
 
-  ///The output from [StateField] this [FieldState] represents.
+  ///The output from [StateField] this [StateFieldState] represents.
   ///
   ///{@template field_state_data}
   ///[data] can be null.
@@ -146,16 +150,16 @@ abstract class FieldState<T>
   @nullable
   T get data;
 
-  ///The [StateField] with [Field.fieldID] that this [FieldState] represents.
+  ///The [StateField] with [Field.fieldID] that this [StateFieldState] represents.
   ///
   ///{@template field_state_fieldID}
   ///[fieldID] **MUST NOT** be null.
   ///{@endtemplate}
   FieldID get fieldID;
 
-  ///Serializes this [FieldState] using the default serialization format
+  ///Serializes this [StateFieldState] using the default serialization format
   ///
-  ///this [FieldState] is first serialized using the [standardJsonSerializers]
+  ///this [StateFieldState] is first serialized using the [standardJsonSerializers]
   ///and then encoded to a String using [jsonEncode()].
   ///
   ///{@macro specifiedType_param}
@@ -168,9 +172,9 @@ abstract class FieldState<T>
   String serialize({FullType specifiedType}) =>
       _serialize(specifiedType, blocFluxSerializers);
 
-  ///Serializes this [FieldState] using the standard json format.
+  ///Serializes this [StateFieldState] using the standard json format.
   ///
-  ///this [FieldState] is first serialized using the [standardJsonSerializers]
+  ///this [StateFieldState] is first serialized using the [standardJsonSerializers]
   ///and then encoded to a String using [jsonEncode()].
   ///
   ///{@macro specifiedType_param}
@@ -199,6 +203,6 @@ abstract class FieldState<T>
     }
 
     return jsonEncode(serializers.serialize(this,
-        specifiedType: FullType(FieldState, [fullType])));
+        specifiedType: FullType(StateFieldState, [fullType])));
   }
 }

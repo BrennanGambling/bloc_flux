@@ -89,7 +89,7 @@ class CompositeSerializers implements Serializers {
   ///the last [Error] thrown (and caught) will be thrown.
   @override
   Object deserialize(Object serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     Error error;
     Object returnObject;
     bool found = false;
@@ -242,7 +242,7 @@ class CompositeSerializers implements Serializers {
   ///the last [Error] thrown (and caught) will be thrown.
   @override
   Object serialize(Object object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     Error error;
     Object returnObject;
     bool found = false;

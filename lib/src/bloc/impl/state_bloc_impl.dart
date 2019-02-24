@@ -112,7 +112,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///
   ///{@macro bloc_state_valid}
   StateBlocImpl(String key, Observable<Action> actionObservable,
-      {this.initialState, bool forceDispatch: false})
+      {this.initialState, bool forceDispatch = false})
       : stateFieldMap = Map(),
         stateQueries = List(),
         _forceDispatch = forceDispatch,
@@ -160,14 +160,14 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///[permanentForceDispatch] has been called one or more times.
   bool get isForceDispatchPermanent => _permanentForceDispatch;
 
-  ///The [StateBlocState] containing the [FieldState]s of all registered
+  ///The [StateBlocState] containing the [StateFieldState]s of all registered
   ///[StateField]s before the last [Action] was recieved.
   StateBlocState get lastState => _lastState;
 
   ///{@macro state}
   @override
   StateBlocState get state {
-    final MapBuilder<FieldID, FieldState> mapBuilder = MapBuilder();
+    final MapBuilder<FieldID, StateFieldState> mapBuilder = MapBuilder();
     stateFieldMap.forEach((id, field) => mapBuilder[id] = field.lastFieldState);
     return StateBlocState(stateMap: mapBuilder.build());
   }
@@ -185,7 +185,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///If [stateField] should **NOT** be added to the [BlocImpl.fieldMap] set
   ///[addToFieldMap] to false. When not specified it defaults to true.
   @mustCallSuper
-  void addStateField(StateField stateField, {bool addToFieldMap: true}) {
+  void addStateField(StateField stateField, {bool addToFieldMap = true}) {
     final FieldID fieldID = stateField.fieldID;
     stateFieldMap[fieldID] = stateField;
     if (!fieldMap.containsKey(fieldID) && addToFieldMap) {
@@ -290,7 +290,7 @@ abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///[removeFromFieldMap] to false. When not specified it defaults to true.
   @mustCallSuper
   void removeStateField(StateField stateField,
-      {bool removeFromFieldMap: true}) {
+      {bool removeFromFieldMap = true}) {
     final FieldID fieldID = stateField.fieldID;
     stateFieldMap.remove(fieldID);
     if (fieldMap.containsKey(fieldID) && removeFromFieldMap) {

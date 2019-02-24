@@ -20,16 +20,16 @@ abstract class StateField<T> implements Field<T> {
   ///
   ///{@macro derived_parameter}
   factory StateField(String key, String blocKey, Observable<T> inputObservable,
-          {bool derived: false, StateBlocImpl stateBloc}) =>
+          {bool derived = false, StateBlocImpl stateBloc}) =>
       StateFieldImpl(key, blocKey, inputObservable, derived, stateBloc);
 
   ///{@macro fieldStateObservable_getter}
   ///
   ///{@macro only_call_from_bloc}
-  ValueObservable<FieldState<T>> get fieldStateObservable;
+  ValueObservable<StateFieldState<T>> get fieldStateObservable;
 
   ///{@macro lastFieldState_getter}
   ///
   ///{@macro only_call_from_bloc}
-  FieldState<T> get lastFieldState;
+  StateFieldState<T> get lastFieldState;
 }

@@ -21,15 +21,15 @@ part 'bloc_state.g.dart';
 //TODO: use @template and @macro comment tags to insert the example for there specific constructor pages.
 //TODO: update examples after change from String key to FieldID.
 
-///Contains the [FieldState] of all of the registered [StateField]s in the
+///Contains the [StateFieldState] of all of the registered [StateField]s in the
 ///[StateBloc] with a [Bloc.key] equal to [blocKey].
 ///
-///To get a specific [FieldState] use the list access operator with the
-///[FieldState.fieldID] as the parameter:
+///To get a specific [StateFieldState] use the list access operator with the
+///[StateFieldState.fieldID] as the parameter:
 ///```dart
 ///stateBlocState\[fieldState.key\];
 ///```
-///The list access operator **CANNOT** be used to set or add [FieldState]s.
+///The list access operator **CANNOT** be used to set or add [StateFieldState]s.
 ///
 ///To do use the [StateBlocState.fromBuilder()] constructor and set [stateMap].
 ///[stateMap] itself cannot be directly modified as it is a [BuiltMap] but a new
@@ -38,7 +38,7 @@ part 'bloc_state.g.dart';
 ///(stateBlocState.stateMap.toBuilder()..add(fieldState)).build()
 ///```
 ///
-///The [stateMap] can also be used to get a specific [FieldState].
+///The [stateMap] can also be used to get a specific [StateFieldState].
 @BuiltValue(nestedBuilders: false)
 abstract class StateBlocState
     implements Built<StateBlocState, StateBlocStateBuilder> {
@@ -49,7 +49,7 @@ abstract class StateBlocState
   ///Instaniates a [StateBlocState] from a collection.
   ///
   ///{@template blocKey_equal}
-  ///[blocKey] will be equal to the [FieldID] of all of the [FieldState]s and [FieldID]s.
+  ///[blocKey] will be equal to the [FieldID] of all of the [StateFieldState]s and [FieldID]s.
   ///{@endtemplate}
   ///
   ///{@macro xor_parameters}
@@ -60,8 +60,8 @@ abstract class StateBlocState
   ///
   ///{@macro map_equal_ids}
   factory StateBlocState(
-          {BuiltMap<FieldID, FieldState> stateMap,
-          BuiltList<FieldState> stateList}) =>
+          {BuiltMap<FieldID, StateFieldState> stateMap,
+          BuiltList<StateFieldState> stateList}) =>
       StateBlocState.fromBuilder((b) {
         final bool stateMapNull = stateMap == null;
         final bool stateListNull = stateList == null;
@@ -71,7 +71,7 @@ abstract class StateBlocState
         if (!stateMapNull) {
           b.stateMap = stateMap;
         } else if (!stateListNull) {
-          final MapBuilder<FieldID, FieldState> mapBuilder = MapBuilder();
+          final MapBuilder<FieldID, StateFieldState> mapBuilder = MapBuilder();
           mapBuilder
               .addEntries(stateList.map((fd) => MapEntry(fd.fieldID, fd)));
           b.stateMap = mapBuilder.build();
@@ -115,11 +115,11 @@ abstract class StateBlocState
   @memoized
   String get blocKey => stateMap.keys.first.blocKey;
 
-  ///A [BuiltMap] of the [FieldState.key] to [FieldState]s.
-  BuiltMap<FieldID, FieldState> get stateMap;
+  ///A [BuiltMap] of the [StateFieldState.key] to [StateFieldState]s.
+  BuiltMap<FieldID, StateFieldState> get stateMap;
 
-  ///Returns the [FieldState] associated with the [FieldState.key].
-  FieldState operator [](FieldID fieldID) => stateMap[fieldID];
+  ///Returns the [StateFieldState] associated with the [StateFieldState.key].
+  StateFieldState operator [](FieldID fieldID) => stateMap[fieldID];
 
   //TODO: what should be done about the need for FullType when serialize/deserialization of FieldState.
   //TODO: a custom serializer might be needed.
@@ -148,10 +148,11 @@ abstract class StateBlocState
   ///{@macro not_empty}
   ///
   ///{@template map_equal_ids}
-  ///The [FieldID.blocKey] keys and [FieldState.fieldID.blocKey] of the [FieldState] values
+  ///The [FieldID.blocKey] keys and [FieldState.fieldID.blocKey] of the [StateFieldState] values
   ///**MUST BE EQUAL**, other an [ArgumentError] will be thrown.
   ///{@endtemplate}
-  static void _internalParameterChecks(BuiltMap<FieldID, FieldState> stateMap) {
+  static void _internalParameterChecks(
+      BuiltMap<FieldID, StateFieldState> stateMap) {
     if (stateMap != null) {
       if (stateMap.isEmpty) {
         throw ArgumentError("stateMap cannot be empty.");
@@ -182,11 +183,11 @@ abstract class StateBlocState
   ///{@endtemplate}
   ///
   ///{@template list_equal_ids}
-  ///The [FieldState.fieldID] of each of the [FieldState]s in [stateList] **MUST
+  ///The [StateFieldState.fieldID] of each of the [StateFieldState]s in [stateList] **MUST
   ///BE EQUAL**, otherwise an [ArgumentError] will be thrown.
   ///{@endtemplate}
-  static void _parameterChecks(
-      BuiltMap<FieldID, FieldState> stateMap, BuiltList<FieldState> stateList) {
+  static void _parameterChecks(BuiltMap<FieldID, StateFieldState> stateMap,
+      BuiltList<StateFieldState> stateList) {
     final bool stateMapNull = stateMap == null;
     final bool stateListNull = stateList == null;
 

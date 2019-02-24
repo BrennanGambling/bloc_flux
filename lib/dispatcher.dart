@@ -48,7 +48,7 @@ final Map<String, Dispatcher> _dispatcherMap = Map();
 ///
 ///If a new [Dispatcher] is required with the same [key] set [overwrite] to true.
 ///The previous [Dispatcher] created with [key] will be lost.
-Dispatcher getDispatcher(String key, {bool overwrite: false}) {
+Dispatcher getDispatcher(String key, {bool overwrite = false}) {
   if (!_dispatcherMap.containsKey(key)) {
     _dispatcherMap[key] = Dispatcher();
   } else {

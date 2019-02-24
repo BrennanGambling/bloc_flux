@@ -7,7 +7,7 @@ part of bloc_state;
 // **************************************************************************
 
 Serializer<StateBlocState> _$stateBlocStateSerializer =
-    new _$StateBlocStateSerializer();
+    _$StateBlocStateSerializer();
 
 class _$StateBlocStateSerializer
     implements StructuredSerializer<StateBlocState> {
@@ -22,8 +22,8 @@ class _$StateBlocStateSerializer
     final result = <Object>[
       'stateMap',
       serializers.serialize(object.stateMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(FieldID), const FullType(FieldState)])),
+          specifiedType: const FullType(
+              BuiltMap, [FullType(FieldID), FullType(StateFieldState)])),
     ];
 
     return result;
@@ -32,7 +32,7 @@ class _$StateBlocStateSerializer
   @override
   StateBlocState deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StateBlocStateBuilder();
+    final result = StateBlocStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -42,10 +42,9 @@ class _$StateBlocStateSerializer
       switch (key) {
         case 'stateMap':
           result.stateMap = serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(FieldID),
-                const FullType(FieldState)
-              ])) as BuiltMap;
+                  specifiedType: const FullType(
+                      BuiltMap, [FullType(FieldID), FullType(StateFieldState)]))
+              as BuiltMap;
           break;
       }
     }
@@ -56,15 +55,15 @@ class _$StateBlocStateSerializer
 
 class _$StateBlocState extends StateBlocState {
   @override
-  final BuiltMap<FieldID, FieldState> stateMap;
+  final BuiltMap<FieldID, StateFieldState> stateMap;
   String __blocKey;
 
   factory _$StateBlocState([void updates(StateBlocStateBuilder b)]) =>
-      (new StateBlocStateBuilder()..update(updates)).build();
+      (StateBlocStateBuilder()..update(updates)).build();
 
   _$StateBlocState._({this.stateMap}) : super._() {
     if (stateMap == null) {
-      throw new BuiltValueNullFieldError('StateBlocState', 'stateMap');
+      throw BuiltValueNullFieldError('StateBlocState', 'stateMap');
     }
   }
 
@@ -76,8 +75,7 @@ class _$StateBlocState extends StateBlocState {
       (toBuilder()..update(updates)).build();
 
   @override
-  StateBlocStateBuilder toBuilder() =>
-      new StateBlocStateBuilder()..replace(this);
+  StateBlocStateBuilder toBuilder() => StateBlocStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -102,9 +100,9 @@ class StateBlocStateBuilder
     implements Builder<StateBlocState, StateBlocStateBuilder> {
   _$StateBlocState _$v;
 
-  BuiltMap<FieldID, FieldState> _stateMap;
-  BuiltMap<FieldID, FieldState> get stateMap => _$this._stateMap;
-  set stateMap(BuiltMap<FieldID, FieldState> stateMap) =>
+  BuiltMap<FieldID, StateFieldState> _stateMap;
+  BuiltMap<FieldID, StateFieldState> get stateMap => _$this._stateMap;
+  set stateMap(BuiltMap<FieldID, StateFieldState> stateMap) =>
       _$this._stateMap = stateMap;
 
   StateBlocStateBuilder();
@@ -120,7 +118,7 @@ class StateBlocStateBuilder
   @override
   void replace(StateBlocState other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$StateBlocState;
   }
@@ -132,7 +130,7 @@ class StateBlocStateBuilder
 
   @override
   _$StateBlocState build() {
-    final _$result = _$v ?? new _$StateBlocState._(stateMap: stateMap);
+    final _$result = _$v ?? _$StateBlocState._(stateMap: stateMap);
     replace(_$result);
     return _$result;
   }

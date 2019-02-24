@@ -13,24 +13,25 @@ void main() {
   final FieldID fieldID2 = FieldID(blocKey, fieldKey2);
 
   //create 2 FieldStates
-  FieldState<String> field1 = FieldState(fieldID1, "someData");
-  FieldState<int> field2 = FieldState(fieldID2, 4);
+  StateFieldState<String> field1 = StateFieldState(fieldID1, "someData");
+  StateFieldState<int> field2 = StateFieldState(fieldID2, 4);
 /*
   String serializedField = field1.serialize();
   FieldState<String> deserializedField = FieldState.deserialize(serializedField);*/
 
-  final FullType fullType = FullType(FieldState, [FullType(String)]);
+  final FullType fullType = FullType(StateFieldState, [FullType(String)]);
 
   addBuilderFactory(fullType, () => FieldStateBuilder<String>());
 
   final String serializedField =
       json.encode(blocFluxSerializers.serialize(field1));
-  final FieldState deserializedField =
+  final StateFieldState deserializedField =
       blocFluxSerializers.deserialize(json.decode(serializedField));
 
   print("${field1 == deserializedField}");
 
-  blocFluxSerializers.expectBuilder(FullType(FieldState, [FullType(String)]));
+  blocFluxSerializers
+      .expectBuilder(FullType(StateFieldState, [FullType(String)]));
 
   //Create a Map of keys to FieldStates.
   /*final Map<FieldID, FieldState> map = Map();

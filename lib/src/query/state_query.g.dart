@@ -6,7 +6,7 @@ part of state_query;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<StateQuery> _$stateQuerySerializer = new _$StateQuerySerializer();
+Serializer<StateQuery> _$stateQuerySerializer = _$StateQuerySerializer();
 
 class _$StateQuerySerializer implements StructuredSerializer<StateQuery> {
   @override
@@ -33,7 +33,7 @@ class _$StateQuerySerializer implements StructuredSerializer<StateQuery> {
   @override
   StateQuery deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StateQueryBuilder();
+    final result = StateQueryBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -70,17 +70,17 @@ class _$StateQuery extends StateQuery {
   bool __subscription;
 
   factory _$StateQuery([void updates(StateQueryBuilder b)]) =>
-      (new StateQueryBuilder()..update(updates)).build();
+      (StateQueryBuilder()..update(updates)).build();
 
   _$StateQuery._({this.blocKey, this.cancel, this.single}) : super._() {
     if (blocKey == null) {
-      throw new BuiltValueNullFieldError('StateQuery', 'blocKey');
+      throw BuiltValueNullFieldError('StateQuery', 'blocKey');
     }
     if (cancel == null) {
-      throw new BuiltValueNullFieldError('StateQuery', 'cancel');
+      throw BuiltValueNullFieldError('StateQuery', 'cancel');
     }
     if (single == null) {
-      throw new BuiltValueNullFieldError('StateQuery', 'single');
+      throw BuiltValueNullFieldError('StateQuery', 'single');
     }
   }
 
@@ -92,7 +92,7 @@ class _$StateQuery extends StateQuery {
       (toBuilder()..update(updates)).build();
 
   @override
-  StateQueryBuilder toBuilder() => new StateQueryBuilder()..replace(this);
+  StateQueryBuilder toBuilder() => StateQueryBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -147,7 +147,7 @@ class StateQueryBuilder implements Builder<StateQuery, StateQueryBuilder> {
   @override
   void replace(StateQuery other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$StateQuery;
   }
@@ -159,8 +159,8 @@ class StateQueryBuilder implements Builder<StateQuery, StateQueryBuilder> {
 
   @override
   _$StateQuery build() {
-    final _$result = _$v ??
-        new _$StateQuery._(blocKey: blocKey, cancel: cancel, single: single);
+    final _$result =
+        _$v ?? _$StateQuery._(blocKey: blocKey, cancel: cancel, single: single);
     replace(_$result);
     return _$result;
   }

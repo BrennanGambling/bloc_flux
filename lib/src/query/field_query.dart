@@ -57,7 +57,7 @@ abstract class FieldQuery implements Built<FieldQuery, FieldQueryBuilder> {
           BuiltList<String> fieldKeys,
           FieldID fieldID,
           String fieldKey,
-          single: false}) =>
+          single = false}) =>
       FieldQuery.fromBuilder((builder) {
         final bool fieldIDsNull = fieldIDs == null;
         final bool fieldKeysNull = fieldKeys == null;

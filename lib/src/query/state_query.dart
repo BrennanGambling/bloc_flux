@@ -30,7 +30,7 @@ abstract class StateQuery implements Built<StateQuery, StateQueryBuilder> {
   ///
   ///Be default this constructor returns a subscription [StateQuery] to instaniate
   ///a single [StateQuery] specifiy [single] as true (defaults to true).
-  factory StateQuery(String blocKey, {single: false}) =>
+  factory StateQuery(String blocKey, {single = false}) =>
       StateQuery.fromBuilder((b) => b
         ..blocKey = blocKey
         ..single = single

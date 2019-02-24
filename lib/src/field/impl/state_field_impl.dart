@@ -21,9 +21,9 @@ class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
 
   ///@nodoc
   ///{@template _stateField}
-  ///The internal [Field] managing the [FieldState].
+  ///The internal [Field] managing the [StateFieldState].
   ///{@endtemplate}
-  Field<FieldState<T>> _stateField;
+  Field<StateFieldState<T>> _stateField;
 
   ///{@macro state_field_constructor}
   ///
@@ -37,20 +37,20 @@ class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
     _stateField = Field(
         keyConcat,
         blocKey,
-        super.observable.map<FieldState<T>>(
-            (output) => FieldState<T>(FieldID(keyConcat, blocKey), output)));
+        super.observable.map<StateFieldState<T>>((output) =>
+            StateFieldState<T>(FieldID(keyConcat, blocKey), output)));
     if (stateBloc != null) {
       stateBloc.addStateField(this);
     }
   }
 
   ///{@template fieldStateObservable_getter}
-  ///The [Observable] carrying the [FieldState]s derived from the output of this
+  ///The [Observable] carrying the [StateFieldState]s derived from the output of this
   ///[StateField].
   ///{@endtemplate}
   ///
   ///{@macro only_call_from_bloc}
-  ValueObservable<FieldState<T>> get fieldStateObservable =>
+  ValueObservable<StateFieldState<T>> get fieldStateObservable =>
       stateField.observable;
 
   ///{@template lastFieldState_getter}
@@ -58,11 +58,11 @@ class StateFieldImpl<T> extends FieldImpl<T> implements StateField<T> {
   ///{@endtemplate}
   ///
   ///{@macro only_call_from_bloc}
-  FieldState<T> get lastFieldState => stateField.lastValue;
+  StateFieldState<T> get lastFieldState => stateField.lastValue;
 
   //TODO: document that T must be serializable.
 
   ///The [Field] managing the state of this [StateField].
   @protected
-  Field<FieldState<T>> get stateField => _stateField;
+  Field<StateFieldState<T>> get stateField => _stateField;
 }

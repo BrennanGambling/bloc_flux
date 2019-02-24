@@ -31,7 +31,7 @@ abstract class Field<T> {
   ///set the [derived] optional to true (defaults to false).
   ///{@endtemplate}
   factory Field(String key, String blocKey, Observable<T> inputObservable,
-          {bool derived: false, BlocImpl bloc}) =>
+          {bool derived = false, BlocImpl bloc}) =>
       FieldImpl<T>(key, blocKey, inputObservable, derived, bloc);
 
   ///{@template field_derived_getter}

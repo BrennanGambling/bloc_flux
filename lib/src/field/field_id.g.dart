@@ -6,7 +6,7 @@ part of field_id;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<FieldID> _$fieldIDSerializer = new _$FieldIDSerializer();
+Serializer<FieldID> _$fieldIDSerializer = _$FieldIDSerializer();
 
 class _$FieldIDSerializer implements StructuredSerializer<FieldID> {
   @override
@@ -32,7 +32,7 @@ class _$FieldIDSerializer implements StructuredSerializer<FieldID> {
   @override
   FieldID deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new FieldIDBuilder();
+    final result = FieldIDBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -62,14 +62,14 @@ class _$FieldID extends FieldID {
   final String fieldKey;
 
   factory _$FieldID([void updates(FieldIDBuilder b)]) =>
-      (new FieldIDBuilder()..update(updates)).build();
+      (FieldIDBuilder()..update(updates)).build();
 
   _$FieldID._({this.blocKey, this.fieldKey}) : super._() {
     if (blocKey == null) {
-      throw new BuiltValueNullFieldError('FieldID', 'blocKey');
+      throw BuiltValueNullFieldError('FieldID', 'blocKey');
     }
     if (fieldKey == null) {
-      throw new BuiltValueNullFieldError('FieldID', 'fieldKey');
+      throw BuiltValueNullFieldError('FieldID', 'fieldKey');
     }
   }
 
@@ -78,7 +78,7 @@ class _$FieldID extends FieldID {
       (toBuilder()..update(updates)).build();
 
   @override
-  FieldIDBuilder toBuilder() => new FieldIDBuilder()..replace(this);
+  FieldIDBuilder toBuilder() => FieldIDBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -127,7 +127,7 @@ class FieldIDBuilder implements Builder<FieldID, FieldIDBuilder> {
   @override
   void replace(FieldID other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$FieldID;
   }
@@ -139,8 +139,7 @@ class FieldIDBuilder implements Builder<FieldID, FieldIDBuilder> {
 
   @override
   _$FieldID build() {
-    final _$result =
-        _$v ?? new _$FieldID._(blocKey: blocKey, fieldKey: fieldKey);
+    final _$result = _$v ?? _$FieldID._(blocKey: blocKey, fieldKey: fieldKey);
     replace(_$result);
     return _$result;
   }

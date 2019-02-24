@@ -24,7 +24,7 @@ part 'serializers.g.dart';
 ///
 ///Includes [Serializers] and builder factories needed for this package only.
 @SerializersFor(
-    const [FieldID, StateBlocState, FieldState, StateQuery, FieldQuery])
+    [FieldID, StateBlocState, StateFieldState, StateQuery, FieldQuery])
 final Serializers _blocFluxBaseSerializers = _$_blocFluxBaseSerializers;
 
 ///@nodoc
@@ -174,8 +174,8 @@ bool isSerializable(
     {Type type,
     Iterable<Type> types,
     FullType fullType,
-    bool shouldThrow: false,
-    bool objectIsSerializable: false}) {
+    bool shouldThrow = false,
+    bool objectIsSerializable = false}) {
   //TODO: make sure this works for Built class created outside of this package.
   final bool typeNull = type == null;
   final bool typesNull = types == null;

@@ -6,16 +6,16 @@ part of field_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<FieldState> _$fieldStateSerializer = new _$FieldStateSerializer();
+Serializer<StateFieldState> _$fieldStateSerializer = _$FieldStateSerializer();
 
-class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
+class _$FieldStateSerializer implements StructuredSerializer<StateFieldState> {
   @override
-  final Iterable<Type> types = const [FieldState, _$FieldState];
+  final Iterable<Type> types = const [StateFieldState, _$FieldState];
   @override
   final String wireName = 'FieldState';
 
   @override
-  Iterable serialize(Serializers serializers, FieldState object,
+  Iterable serialize(Serializers serializers, StateFieldState object,
       {FullType specifiedType = FullType.unspecified}) {
     final isUnderspecified =
         specifiedType.isUnspecified || specifiedType.parameters.isEmpty;
@@ -38,7 +38,7 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
   }
 
   @override
-  FieldState deserialize(Serializers serializers, Iterable serialized,
+  StateFieldState deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final isUnderspecified =
         specifiedType.isUnspecified || specifiedType.parameters.isEmpty;
@@ -47,7 +47,7 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
         isUnderspecified ? FullType.object : specifiedType.parameters[0];
 
     final result = isUnderspecified
-        ? new FieldStateBuilder<Object>()
+        ? FieldStateBuilder<Object>()
         : serializers.newBuilder(specifiedType) as FieldStateBuilder;
 
     final iterator = serialized.iterator;
@@ -71,35 +71,35 @@ class _$FieldStateSerializer implements StructuredSerializer<FieldState> {
   }
 }
 
-class _$FieldState<T> extends FieldState<T> {
+class _$FieldState<T> extends StateFieldState<T> {
   @override
   final T data;
   @override
   final FieldID fieldID;
 
   factory _$FieldState([void updates(FieldStateBuilder<T> b)]) =>
-      (new FieldStateBuilder<T>()..update(updates)).build();
+      (FieldStateBuilder<T>()..update(updates)).build();
 
   _$FieldState._({this.data, this.fieldID}) : super._() {
     if (fieldID == null) {
-      throw new BuiltValueNullFieldError('FieldState', 'fieldID');
+      throw BuiltValueNullFieldError('FieldState', 'fieldID');
     }
     if (T == dynamic) {
-      throw new BuiltValueMissingGenericsError('FieldState', 'T');
+      throw BuiltValueMissingGenericsError('FieldState', 'T');
     }
   }
 
   @override
-  FieldState<T> rebuild(void updates(FieldStateBuilder<T> b)) =>
+  StateFieldState<T> rebuild(void updates(FieldStateBuilder<T> b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  FieldStateBuilder<T> toBuilder() => new FieldStateBuilder<T>()..replace(this);
+  FieldStateBuilder<T> toBuilder() => FieldStateBuilder<T>()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is FieldState &&
+    return other is StateFieldState &&
         data == other.data &&
         fieldID == other.fieldID;
   }
@@ -119,7 +119,7 @@ class _$FieldState<T> extends FieldState<T> {
 }
 
 class FieldStateBuilder<T>
-    implements Builder<FieldState<T>, FieldStateBuilder<T>> {
+    implements Builder<StateFieldState<T>, FieldStateBuilder<T>> {
   _$FieldState<T> _$v;
 
   T _data;
@@ -142,9 +142,9 @@ class FieldStateBuilder<T>
   }
 
   @override
-  void replace(FieldState<T> other) {
+  void replace(StateFieldState<T> other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$FieldState<T>;
   }
@@ -156,7 +156,7 @@ class FieldStateBuilder<T>
 
   @override
   _$FieldState<T> build() {
-    final _$result = _$v ?? new _$FieldState<T>._(data: data, fieldID: fieldID);
+    final _$result = _$v ?? _$FieldState<T>._(data: data, fieldID: fieldID);
     replace(_$result);
     return _$result;
   }
