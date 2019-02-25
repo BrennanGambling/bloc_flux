@@ -14,13 +14,13 @@ dependencies:
   quiver: '>=2.0.0 <3.0.0'
   meta: ^1.1.7
   built_collection: ^4.1.0
-  built_value: 6.3.0
+  built_value: ^6.3.0
   mockito: ^4.0.0
 
 dev_dependencies:
   test: ^1.0.0
   build_runner: ^1.1.3
-  built_value_generator: 6.3.0
+  built_value_generator: ^6.3.0
   bloc_flux_testing: ^0.1.0
 
 dependency_overrides:
