@@ -1,14 +1,16 @@
 name: bloc_flux_testing
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# homepage: https://www.example.com
-# author: Brennan Gambling <email@example.com>
+description: Utilities for bloc_flux testing.
+version: 0.1.0
+homepage: https://github.com/BrennanGambling/bloc_flux/tree/master/bloc_flux_testing
+repository: https://github.com/BrennanGambling/bloc_flux
+issue_tracker: https://github.com/BrennanGambling/bloc_flux/issues
+author: Brennan Gambling <brennan.gambling@gmail.com>
 
 environment:
   sdk: '>=2.1.0 <3.0.0'
 
 dependencies:
-  bloc_flux: ^1.0.0
+  bloc_flux: ^0.1.0
 
 dependency_overrides:
   bloc_flux:
