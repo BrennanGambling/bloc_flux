@@ -11,6 +11,10 @@ environment:
 
 dependencies:
   bloc_flux: ^0.1.0
+  built_collection: ^4.1.0
+  mockito: ^4.0.0
+  quiver: ^2.0.1
+  built_value: ^6.3.0
 
 dependency_overrides:
   bloc_flux:
