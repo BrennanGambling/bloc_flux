@@ -16,6 +16,6 @@ dependencies:
   quiver: ^2.0.1
   built_value: ^6.3.0
 
-dependency_overrides:
-  bloc_flux:
-    path: ../bloc_flux
+#dependency_overrides:
+#  bloc_flux:
+#    path: ../bloc_flux
