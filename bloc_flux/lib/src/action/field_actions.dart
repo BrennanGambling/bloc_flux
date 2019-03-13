@@ -9,6 +9,7 @@ import 'actions.dart';
 ///Dispatch an instance of this [Action] to register a [FieldQuery].
 ///
 ///[fieldQuery]{@macro data_not_null}
+///{@category Actions}
 @immutable
 class FieldQueryAction extends Action<FieldQuery>
     implements QueryAction<FieldQuery> {
@@ -48,6 +49,7 @@ class FieldQueryAction extends Action<FieldQuery>
 ///has been registered for.
 ///
 ///[fieldID]{@macro data_not_null}
+///{@category Actions}
 @immutable
 class FieldValueAction<T> extends ValueAction<T> implements QueryAction<T> {
   ///The [FieldID] of the [Field] that emitted [data].

@@ -1,0 +1,6 @@
+dartdoc:
+  categories: 
+    "Actions":
+      markdown: doc/components/actions_doc.md
+      name: Actions
+  categoryOrder: ["Actions"]

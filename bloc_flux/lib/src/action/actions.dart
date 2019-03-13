@@ -7,6 +7,7 @@ import 'package:quiver/core.dart';
 ///
 ///Contains an optional payload, [data] with any important information relating
 ///to the [Action]. If the [Action] does not require a payload data will be null.
+///{@category Actions}
 @immutable
 class Action<T> {
   static const String _actionHash = "Action hash";
@@ -32,6 +33,7 @@ class Action<T> {
 ///resulted in an error represented by [error].
 ///
 ///If the [ErrorAction] does not require a payload, [error] can be left null.
+///{@category Actions}
 @immutable
 class ErrorAction<T, E> implements Action<T> {
   ///The [Action<T>] to wrap.
@@ -77,6 +79,7 @@ class ErrorAction<T, E> implements Action<T> {
 ///**DO NOT** extend this class as the super classes [Action.data] field will be
 ///left null as the super constructor is not called.
 ///{@endtemplate}
+///{@category Actions}
 @immutable
 abstract class InternalAction<T> implements Action<T> {}
 
@@ -84,12 +87,14 @@ abstract class InternalAction<T> implements Action<T> {}
 ///[FieldQuery] functionality.
 ///
 ///{@macro dont_extend_super_not_called}
+//////{@category Actions}
 @immutable
 abstract class QueryAction<T> implements InternalAction<T> {}
 
 ///An [Action] indicating a new value from a [Field].
 ///
 ///[data]{@template data_not_null}&#8197;must **NOT** be null otherwise an ArgumentError will be thrown.{@endtemplate}
+///{@category Actions}
 @immutable
 class ValueAction<T> extends Action<T> implements InternalAction<T> {
   ///[data]{@macro data_not_null}

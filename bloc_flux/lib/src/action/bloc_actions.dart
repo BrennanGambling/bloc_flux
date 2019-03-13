@@ -13,6 +13,7 @@ import 'actions.dart';
 ///change.
 ///
 ///[blocState]{@macro data_not_null}
+///{@category Actions}
 @immutable
 class BlocStateAction extends Action<StateBlocState>
     implements QueryAction<StateBlocState> {
@@ -42,6 +43,7 @@ class BlocStateAction extends Action<StateBlocState>
 ///[StateBloc].
 ///
 ///[blocState] {@macro data_not_null}
+///{@category Actions}
 @immutable
 class BlocStateValueAction extends ValueAction<StateBlocState>
     implements QueryAction<StateBlocState> {
@@ -58,6 +60,7 @@ class BlocStateValueAction extends ValueAction<StateBlocState>
 ///Dispatch an instance of this [Action] to register a [StateQuery].
 ///
 ///[stateQuery]{@macro data_not_null}
+///{@category Actions}
 @immutable
 class StateQueryAction extends Action<StateQuery>
     implements QueryAction<StateQuery> {
