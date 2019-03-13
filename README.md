@@ -127,16 +127,16 @@ Please file feature requests and bugs at the [issue tracker][tracker].
 [general_architecture_img]: https://github.com/BrennanGambling/bloc_flux/blob/master/bloc_flux/doc/images/main/bloc_flux_architecture.png?raw=true
 [counter_architecture_img]: https://github.com/BrennanGambling/bloc_flux/blob/master/bloc_flux/doc/images/main/counter_example_architecture.png?raw=true
 
-[action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/Action-class.html
-[bloc_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/Bloc-class.html
-[dispatcher_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/Dispatcher-class.html
-[field_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/Field-class.html
+[action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Action-class.html
+[bloc_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Bloc-class.html
+[dispatcher_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Dispatcher-class.html
+[field_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Field-class.html
 
-[actionObservable_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/BaseDispatcher/actionObservable.html
-[dispatch_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/BaseDispatcher/dispatch.html
-[addInputObservable_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/BaseDispatcher/addInputObservable.html
-[value_bloc_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/ValueBloc-class.html
-[field_value_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/FieldValueAction-class.html
-[field_value_action_data_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/Action/data.html
-[field_id_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/FieldValueAction-class.html
-[field_query_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/FieldQuery-class.html
+[actionObservable_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/BaseDispatcher/actionObservable.html
+[dispatch_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/BaseDispatcher/dispatch.html
+[addInputObservable_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/BaseDispatcher/addInputObservable.html
+[value_bloc_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/ValueBloc-class.html
+[field_value_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/FieldValueAction-class.html
+[field_value_action_data_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Action/data.html
+[field_id_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/FieldID-class.html
+[field_query_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/FieldQuery-class.html
