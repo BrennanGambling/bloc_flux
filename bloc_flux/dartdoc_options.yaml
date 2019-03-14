@@ -3,4 +3,22 @@ dartdoc:
     "Actions":
       markdown: doc/components/actions_doc.md
       name: Actions
-  categoryOrder: ["Actions"]
+    "Blocs":
+      markdown: doc/components/blocs_doc.md
+      name: Blocs
+    "Dispatcher":
+      markdown: doc/components/dispatcher_doc.md
+      name: Dispatcher
+    "Fields":
+      markdown: doc/components/fields_doc.md
+      name: Fields
+    "Queries":
+      markdown: doc/components/queries_doc.md
+      name: Queries
+    "Serialization":
+      markdown: doc/components/serialization_doc.md
+      name: Serialization
+    "States":
+      markdown: doc/components/states_doc.md
+      name: States
+  categoryOrder: ["Actions", "Blocs", "Dispatcher", "Fields", "Queries", "Serialization", "States"]

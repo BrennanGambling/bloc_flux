@@ -12,23 +12,42 @@ Marker interfaces **should NOT** be extended as they do not provide a constructo
 
 ## Action Classes
 
-#### Action
+#### [Action][action_api]
 The class that all Actions must implement or extend.
 
-#### ErrorAction
+#### [ErrorAction][error_action_api]
 A wrapper for Action indicating the event the Action represents can fail.
 The ErrorAction also includes a `E error` field for data related to the potential error.
 
-#### ValueAction
+#### [ValueAction][value_action_api]
 An Action that has a non null `data` field.
 Attempting to instaniate a ValueAction with a null `data` field will result in an `ArgumentError` being thrown.
 
 ## Action Marker Interfaces
 
-#### InternalAction
+#### [InternalAction][internal_action_api]
 Marker interface indicating an Action was dispatched from another Bloc.
 
-#### QueryAction
+#### [QueryAction][query_action_api]
 Marker interface indicating an Action is related to the StateQuery or FieldQuery functionality.
 
-[]
+# Bloc Actions
+Below are the Actions that are directly related to Bloc functionality.
+
+## Bloc Action Classes
+
+#### [BlocStateAction][bloc_state_action_api]
+An Action used to set the state of a StateBloc.
+
+#### [BlocStateValueAction][bloc_state_value_action_api]
+A ValueAction containing the state of a StateBloc.
+
+#### [StateQueryAction][state_query_action_api]
+An Action used to register a StateQuery.
+
+[action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/Action-class.html
+[error_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/ErrorAction-class.html
+[value_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/ValueAction-class.html
+
+[internal_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/InternalAction-class.html
+[query_action_api]: https://pub.dartlang.org/documentation/bloc_flux/latest/bloc_flux/QueryAction-class.html

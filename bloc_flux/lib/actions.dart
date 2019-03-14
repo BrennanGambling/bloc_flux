@@ -1,5 +1,4 @@
 ///All actions.
-///{@category Actions}
 library actions;
 
 export 'src/action/actions.dart';
