@@ -11,6 +11,7 @@ import '../field/field_id.dart';
 ///
 ///See [BlocImpl] for more information.
 abstract class Bloc {
+  //TODO: this should probably be removed as it should not be needed outside of a Bloc.
   ///{@macro bloc_action_observable_getter}
   @protected
   Observable<Action> get actionObservable;
