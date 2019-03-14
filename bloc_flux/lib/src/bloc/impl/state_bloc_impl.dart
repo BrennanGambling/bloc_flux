@@ -35,6 +35,7 @@ import 'value_bloc_impl.dart';
 ///
 ///For requesting the [StateBlocState] the [StateQueryAction.blocKey] must be
 ///equal to [key].
+///{@category Blocs}
 abstract class StateBlocImpl extends ValueBlocImpl implements StateBloc {
   ///The map of all [StateField] [FieldID]s to registered [StateField]s.
   @protected

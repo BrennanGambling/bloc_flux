@@ -8,6 +8,7 @@ import 'bloc.dart';
 ///[ValueBloc] interface. Extend this class to create an interface for a [ValueBlocImpl].
 ///
 ///See [ValueBlocImpl] for more information.
+///{@category Blocs}
 abstract class ValueBloc extends Bloc {
   ///{template output_observable}
   ///The [Observable] carrying [Action]s from within this [ValueBlocImpl]

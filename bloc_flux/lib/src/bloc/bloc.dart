@@ -10,6 +10,7 @@ import '../field/field_id.dart';
 ///[Bloc] interface. Extend this class to create an interface for a [BlocImpl].
 ///
 ///See [BlocImpl] for more information.
+///{@category Blocs}
 abstract class Bloc {
   //TODO: this should probably be removed as it should not be needed outside of a Bloc.
   ///{@macro bloc_action_observable_getter}

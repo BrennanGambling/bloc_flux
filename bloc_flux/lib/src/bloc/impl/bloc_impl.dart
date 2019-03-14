@@ -21,6 +21,7 @@ import '../bloc.dart';
 ///are marked with the protected annotation. They can still be access but the
 ///analyzer will show warnings.
 ///{@endtemplate}
+///{@category Blocs}
 abstract class BlocImpl implements Bloc {
   ///{@template bloc_key_getter}
   ///A unique identifer for this [Bloc].

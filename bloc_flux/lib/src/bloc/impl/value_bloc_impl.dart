@@ -25,6 +25,7 @@ import 'bloc_impl.dart';
 ///(if this [ValueBloc] is registered with one) in the form of a [FieldValueAction].
 ///
 ///{@macro impl_needs_interface}
+///{@category Blocs}
 abstract class ValueBlocImpl extends BlocImpl implements ValueBloc {
   ///The [PublishSubject] managing [outputObservable].
   @protected

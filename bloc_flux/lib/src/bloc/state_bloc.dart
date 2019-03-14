@@ -8,6 +8,7 @@ import 'value_bloc.dart';
 
 ///Error thrown when a [StateBlocState] [blocState] provided to [stateBloc]
 ///is invalid.
+///{@category Blocs}
 @immutable
 class InvalidStateBlocStateError extends Error {
   ///The [StateBloc] provided with invalid [StateBlocState] [blocState].
@@ -76,6 +77,7 @@ class InvalidStateBlocStateError extends Error {
 ///[StateBloc] interface. Extend this class to create an interface for a [StateBlocImpl].
 ///
 ///See [StateBlocImpl] for more information.
+///{@category Blocs}
 abstract class StateBloc extends ValueBloc {
   ///{@template state}
   ///Gets the current [StateBlocState] of this [StateBloc].
