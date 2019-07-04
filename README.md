@@ -1,5 +1,8 @@
 A reactive flux-like state management library using the BLoC pattern.
 
+## Important
+As of know this project has many issues and is unstable. Currently I am planning on completely restructuring the package and completely redoing any of the classes or packages with the State prefix due to issues with immutability and serialization.
+
 # Overview
 The goal of the bloc_flux package is to take the best parts of the Flux and BLoC state management patterns.
 
