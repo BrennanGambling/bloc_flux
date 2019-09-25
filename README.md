@@ -1,8 +1,5 @@
 A reactive flux-like state management library using the BLoC pattern.
 
-## Important
-Currently in active development. Do not use in production.
-
 # Overview
 The goal of the bloc_flux package is to take the best parts of the Flux and BLoC state management patterns.
 
